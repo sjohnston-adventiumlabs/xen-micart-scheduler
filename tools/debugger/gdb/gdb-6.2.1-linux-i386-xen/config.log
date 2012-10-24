@@ -1,0 +1,65 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:604: checking host system type
+configure:625: checking target system type
+configure:643: checking build system type
+configure:698: checking for a BSD compatible install
+configure:751: checking whether ln works
+configure:775: checking whether ln -s works
+configure:1784: checking for gcc
+configure:1897: checking whether the C compiler (gcc  ) works
+configure:1913: gcc -o conftest    conftest.c  1>&5
+configure:1939: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:1944: checking whether we are using GNU C
+configure:1953: gcc -E conftest.c
+configure:1972: checking whether gcc accepts -g
+configure:2039: checking for gnatbind
+configure:2104: checking whether compiler driver understands Ada
+configure:2137: checking how to compare bootstrapped objects
+configure:2210: checking for correct version of gmp.h
+configure:2223: gcc -c -g -O2   conftest.c 1>&5
+configure:2236: checking for mpf_init in -lgmp
+configure:2248: gcc -o conftest -g -O2    conftest.c  -lgmp 1>&5
+configure:2721: checking for bison
+configure:2756: checking for bison
+configure:2791: checking for gm4
+configure:2791: checking for gnum4
+configure:2791: checking for m4
+configure:2826: checking for flex
+configure:2861: checking for flex
+configure:2896: checking for makeinfo
+configure:3494: checking for x86_64-unknown-linux-gnu-ar
+configure:3527: checking for ar
+configure:3566: checking for x86_64-unknown-linux-gnu-as
+configure:3599: checking for as
+configure:3638: checking for x86_64-unknown-linux-gnu-dlltool
+configure:3671: checking for dlltool
+configure:3710: checking for x86_64-unknown-linux-gnu-ld
+configure:3743: checking for ld
+configure:3782: checking for x86_64-unknown-linux-gnu-nm
+configure:3815: checking for nm
+configure:3854: checking for x86_64-unknown-linux-gnu-ranlib
+configure:3887: checking for ranlib
+configure:3926: checking for x86_64-unknown-linux-gnu-windres
+configure:3959: checking for windres
+configure:3998: checking for x86_64-unknown-linux-gnu-objcopy
+configure:4031: checking for objcopy
+configure:4070: checking for x86_64-unknown-linux-gnu-objdump
+configure:4103: checking for objdump
+configure:4149: checking for x86_64-unknown-linux-gnu-ar
+configure:4182: checking for ar
+configure:4221: checking for x86_64-unknown-linux-gnu-as
+configure:4254: checking for as
+configure:4293: checking for x86_64-unknown-linux-gnu-dlltool
+configure:4326: checking for dlltool
+configure:4365: checking for x86_64-unknown-linux-gnu-ld
+configure:4398: checking for ld
+configure:4437: checking for x86_64-unknown-linux-gnu-nm
+configure:4470: checking for nm
+configure:4509: checking for x86_64-unknown-linux-gnu-ranlib
+configure:4542: checking for ranlib
+configure:4581: checking for x86_64-unknown-linux-gnu-windres
+configure:4614: checking for windres
+configure:4699: checking whether to enable maintainer-specific portions of Makefiles
+configure:4746: checking if symbolic links between directories work

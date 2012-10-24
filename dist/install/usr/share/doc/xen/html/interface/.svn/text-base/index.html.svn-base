@@ -1,0 +1,3419 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>interface</TITLE>
+<META NAME="description" CONTENT="interface">
+<META NAME="keywords" CONTENT="interface">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="interface.css">
+
+</HEAD>
+
+<BODY >
+
+<P>
+
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="463" HEIGHT="219" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="\includegraphics{figs/xenlogo.eps}">
+
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT"><FONT SIZE="+4"><B>Interface manual</B></FONT></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><FONT SIZE="+3">Xen v3.0 for x86</FONT></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><FONT SIZE="+2">Xen is Copyright (c) 2002-2005, The Xen Team</FONT></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><FONT SIZE="+2">University of Cambridge, UK</FONT></TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<B>DISCLAIMER: This documentation is always under active development
+and as such there may be mistakes and omissions -- watch out for
+these and please report any you find to the developer's mailing list.
+The latest version is always available on-line.  Contributions of
+material, suggestions and corrections are welcome.  </B>
+
+<P>
+
+<P>
+
+ <BR>
+
+<H2><A NAME="SECTION00100000000000000000">
+Contents</A>
+</H2>
+<!--Table of Contents-->
+
+<UL>
+<LI><A NAME="tex2html62"
+  HREF="interface.html#SECTION00200000000000000000">1. Introduction</A>
+<LI><A NAME="tex2html63"
+  HREF="interface.html#SECTION00300000000000000000">2. Virtual Architecture</A>
+<UL>
+<LI><A NAME="tex2html64"
+  HREF="interface.html#SECTION00310000000000000000">2.1 CPU state</A>
+<LI><A NAME="tex2html65"
+  HREF="interface.html#SECTION00320000000000000000">2.2 Exceptions</A>
+<LI><A NAME="tex2html66"
+  HREF="interface.html#SECTION00330000000000000000">2.3 Interrupts and events</A>
+<LI><A NAME="tex2html67"
+  HREF="interface.html#SECTION00340000000000000000">2.4 Time</A>
+<LI><A NAME="tex2html68"
+  HREF="interface.html#SECTION00350000000000000000">2.5 Xen CPU Scheduling</A>
+<LI><A NAME="tex2html69"
+  HREF="interface.html#SECTION00360000000000000000">2.6 Privileged operations</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html70"
+  HREF="interface.html#SECTION00400000000000000000">3. Memory</A>
+<UL>
+<LI><A NAME="tex2html71"
+  HREF="interface.html#SECTION00410000000000000000">3.1 Memory Allocation</A>
+<LI><A NAME="tex2html72"
+  HREF="interface.html#SECTION00420000000000000000">3.2 Pseudo-Physical Memory</A>
+<LI><A NAME="tex2html73"
+  HREF="interface.html#SECTION00430000000000000000">3.3 Page Table Updates</A>
+<LI><A NAME="tex2html74"
+  HREF="interface.html#SECTION00440000000000000000">3.4 Writable Page Tables</A>
+<LI><A NAME="tex2html75"
+  HREF="interface.html#SECTION00450000000000000000">3.5 Shadow Page Tables</A>
+<LI><A NAME="tex2html76"
+  HREF="interface.html#SECTION00460000000000000000">3.6 Segment Descriptor Tables</A>
+<LI><A NAME="tex2html77"
+  HREF="interface.html#SECTION00470000000000000000">3.7 Start of Day</A>
+<LI><A NAME="tex2html78"
+  HREF="interface.html#SECTION00480000000000000000">3.8 VM assists</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html79"
+  HREF="interface.html#SECTION00500000000000000000">4. Xen Info Pages</A>
+<UL>
+<LI><A NAME="tex2html80"
+  HREF="interface.html#SECTION00510000000000000000">4.1 Shared info page</A>
+<LI><A NAME="tex2html81"
+  HREF="interface.html#SECTION00520000000000000000">4.2 Start info page</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html82"
+  HREF="interface.html#SECTION00600000000000000000">5. Event Channels</A>
+<UL>
+<LI><A NAME="tex2html83"
+  HREF="interface.html#SECTION00610000000000000000">5.1 Hypercall interface</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html84"
+  HREF="interface.html#SECTION00700000000000000000">6. Grant tables</A>
+<UL>
+<LI><A NAME="tex2html85"
+  HREF="interface.html#SECTION00710000000000000000">6.1 Interface</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html86"
+  HREF="interface.html#SECTION00800000000000000000">7. Xenstore</A>
+<UL>
+<LI><A NAME="tex2html87"
+  HREF="interface.html#SECTION00810000000000000000">7.1 Guidelines</A>
+<LI><A NAME="tex2html88"
+  HREF="interface.html#SECTION00820000000000000000">7.2 Store layout</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html89"
+  HREF="interface.html#SECTION00900000000000000000">8. Devices</A>
+<UL>
+<LI><A NAME="tex2html90"
+  HREF="interface.html#SECTION00910000000000000000">8.1 Network I/O</A>
+<LI><A NAME="tex2html91"
+  HREF="interface.html#SECTION00920000000000000000">8.2 Block I/O</A>
+<LI><A NAME="tex2html92"
+  HREF="interface.html#SECTION00930000000000000000">8.3 Virtual TPM</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html93"
+  HREF="interface.html#SECTION001000000000000000000">9. Further Information</A>
+<UL>
+<LI><A NAME="tex2html94"
+  HREF="interface.html#SECTION001010000000000000000">9.1 Other documentation</A>
+<LI><A NAME="tex2html95"
+  HREF="interface.html#SECTION001020000000000000000">9.2 Online references</A>
+<LI><A NAME="tex2html96"
+  HREF="interface.html#SECTION001030000000000000000">9.3 Mailing lists</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html97"
+  HREF="interface.html#SECTION001100000000000000000">A. Xen Hypercalls</A>
+<UL>
+<LI><A NAME="tex2html98"
+  HREF="interface.html#SECTION001110000000000000000">A.1 Invoking Hypercalls</A>
+<LI><A NAME="tex2html99"
+  HREF="interface.html#SECTION001120000000000000000">A.2 Virtual CPU Setup</A>
+<LI><A NAME="tex2html100"
+  HREF="interface.html#SECTION001130000000000000000">A.3 Scheduling and Timer</A>
+<LI><A NAME="tex2html101"
+  HREF="interface.html#SECTION001140000000000000000">A.4 Page Table Management</A>
+<LI><A NAME="tex2html102"
+  HREF="interface.html#SECTION001150000000000000000">A.5 Segmentation Support</A>
+<LI><A NAME="tex2html103"
+  HREF="interface.html#SECTION001160000000000000000">A.6 Context Switching</A>
+<LI><A NAME="tex2html104"
+  HREF="interface.html#SECTION001170000000000000000">A.7 Physical Memory Management</A>
+<LI><A NAME="tex2html105"
+  HREF="interface.html#SECTION001180000000000000000">A.8 Inter-Domain Communication</A>
+<LI><A NAME="tex2html106"
+  HREF="interface.html#SECTION001190000000000000000">A.9 IO Configuration</A>
+<LI><A NAME="tex2html107"
+  HREF="interface.html#SECTION0011100000000000000000">A.10 Administrative Operations</A>
+<LI><A NAME="tex2html108"
+  HREF="interface.html#SECTION0011110000000000000000">A.11 Access Control Module Hypercalls</A>
+<LI><A NAME="tex2html109"
+  HREF="interface.html#SECTION0011120000000000000000">A.12 Debugging Hypercalls</A>
+</UL></UL>
+<!--End of Table of Contents-->
+
+<P>
+
+=10000
+=10000
+1.1
+
+<P>
+
+<H1><A NAME="SECTION00200000000000000000">
+1. Introduction</A>
+</H1>
+
+<P>
+Xen allows the hardware resources of a machine to be virtualized and
+dynamically partitioned, allowing multiple different <EM>guest</EM>
+operating system images to be run simultaneously.  Virtualizing the
+machine in this manner provides considerable flexibility, for example
+allowing different users to choose their preferred operating system
+(e.g., Linux, NetBSD, or a custom operating system).  Furthermore, Xen
+provides secure partitioning between virtual machines (known as
+<EM>domains</EM> in Xen terminology), and enables better resource
+accounting and QoS isolation than can be achieved with a conventional
+operating system. 
+
+<P>
+Xen essentially takes a `whole machine' virtualization approach as
+pioneered by IBM VM/370.  However, unlike VM/370 or more recent
+efforts such as VMware and Virtual PC, Xen does not attempt to
+completely virtualize the underlying hardware.  Instead parts of the
+hosted guest operating systems are modified to work with the VMM; the
+operating system is effectively ported to a new target architecture,
+typically requiring changes in just the machine-dependent code.  The
+user-level API is unchanged, and so existing binaries and operating
+system distributions work without modification.
+
+<P>
+In addition to exporting virtualized instances of CPU, memory, network
+and block devices, Xen exposes a control interface to manage how these
+resources are shared between the running domains. Access to the
+control interface is restricted: it may only be used by one
+specially-privileged VM, known as <EM>domain 0</EM>.  This domain is a
+required part of any Xen-based server and runs the application software
+that manages the control-plane aspects of the platform.  Running the
+control software in <I>domain 0</I>, distinct from the hypervisor
+itself, allows the Xen framework to separate the notions of 
+mechanism and policy within the system.
+
+<P>
+
+<H1><A NAME="SECTION00300000000000000000">
+2. Virtual Architecture</A>
+</H1>
+
+<P>
+In a Xen/x86 system, only the hypervisor runs with full processor
+privileges (<I>ring 0</I> in the x86 four-ring model). It has full
+access to the physical memory available in the system and is
+responsible for allocating portions of it to running domains.  
+
+<P>
+On a 32-bit x86 system, guest operating systems may use <I>rings 1</I>,
+<I>2</I> and <I>3</I> as they see fit.  Segmentation is used to prevent
+the guest OS from accessing the portion of the address space that is
+reserved for Xen.  We expect most guest operating systems will use
+ring 1 for their own operation and place applications in ring 3.
+
+<P>
+On 64-bit systems it is not possible to protect the hypervisor from
+untrusted guest code running in rings 1 and 2. Guests are therefore
+restricted to run in ring 3 only. The guest kernel is protected from its
+applications by context switching between the kernel and currently
+running application.
+
+<P>
+In this chapter we consider the basic virtual architecture provided by
+Xen: CPU state, exception and interrupt handling, and time.
+Other aspects such as memory and device access are discussed in later
+chapters.
+
+<P>
+
+<H1><A NAME="SECTION00310000000000000000">
+2.1 CPU state</A>
+</H1>
+
+<P>
+All privileged state must be handled by Xen.  The guest OS has no
+direct access to CR3 and is not permitted to update privileged bits in
+EFLAGS. Guest OSes use <I>hypercalls</I> to invoke operations in Xen;
+these are analogous to system calls but occur from ring 1 to ring 0.
+
+<P>
+A list of all hypercalls is given in Appendix&nbsp;<A HREF="#a:hypercalls">A</A>.
+
+<P>
+
+<H1><A NAME="SECTION00320000000000000000">
+2.2 Exceptions</A>
+</H1>
+
+<P>
+A virtual IDT is provided -- a domain can submit a table of trap
+handlers to Xen via the <B>set_trap_table</B> hypercall.  The
+exception stack frame presented to a virtual trap handler is identical
+to its native equivalent.
+
+<P>
+
+<H1><A NAME="SECTION00330000000000000000">
+2.3 Interrupts and events</A>
+</H1>
+
+<P>
+Interrupts are virtualized by mapping them to <I>event channels</I>,
+which are delivered asynchronously to the target domain using a callback
+supplied via the <B>set_callbacks</B> hypercall.  A guest OS can map
+these events onto its standard interrupt dispatch mechanisms.  Xen is
+responsible for determining the target domain that will handle each
+physical interrupt source. For more details on the binding of event
+sources to event channels, see Chapter&nbsp;<A HREF="#c:devices">8</A>.
+
+<P>
+
+<H1><A NAME="SECTION00340000000000000000">
+2.4 Time</A>
+</H1>
+
+<P>
+Guest operating systems need to be aware of the passage of both real
+(or wallclock) time and their own `virtual time' (the time for which
+they have been executing). Furthermore, Xen has a notion of time which
+is used for scheduling. The following notions of time are provided:
+
+<P>
+<DL>
+<DT><STRONG>Cycle counter time.</STRONG></DT>
+<DD><P>
+This provides a fine-grained time reference.  The cycle counter time
+  is used to accurately extrapolate the other time references.  On SMP
+  machines it is currently assumed that the cycle counter time is
+  synchronized between CPUs.  The current x86-based implementation
+  achieves this within inter-CPU communication latencies.
+
+<P>
+</DD>
+<DT><STRONG>System time.</STRONG></DT>
+<DD><P>
+This is a 64-bit counter which holds the number of nanoseconds that
+  have elapsed since system boot.
+
+<P>
+</DD>
+<DT><STRONG>Wall clock time.</STRONG></DT>
+<DD><P>
+This is the time of day in a Unix-style <B>struct timeval</B>
+  (seconds and microseconds since 1 January 1970, adjusted by leap
+  seconds).  An NTP client hosted by <I>domain 0</I> can keep this
+  value accurate.
+
+<P>
+</DD>
+<DT><STRONG>Domain virtual time.</STRONG></DT>
+<DD><P>
+This progresses at the same pace as system time, but only while a
+  domain is executing -- it stops while a domain is de-scheduled.
+  Therefore the share of the CPU that a domain receives is indicated
+  by the rate at which its virtual time increases.
+
+<P>
+</DD>
+</DL>
+
+<P>
+Xen exports timestamps for system time and wall-clock time to guest
+operating systems through a shared page of memory.  Xen also provides
+the cycle counter time at the instant the timestamps were calculated,
+and the CPU frequency in Hertz.  This allows the guest to extrapolate
+system and wall-clock times accurately based on the current cycle
+counter time.
+
+<P>
+Since all time stamps need to be updated and read <I>atomically</I>
+a version number is also stored in the shared info page, which is
+incremented before and after updating the timestamps. Thus a guest can
+be sure that it read a consistent state by checking the two version
+numbers are equal and even.
+
+<P>
+Xen includes a periodic ticker which sends a timer event to the
+currently executing domain every 10ms.  The Xen scheduler also sends a
+timer event whenever a domain is scheduled; this allows the guest OS
+to adjust for the time that has passed while it has been inactive.  In
+addition, Xen allows each domain to request that they receive a timer
+event sent at a specified system time by using the <B>  set_timer_op</B> hypercall.  Guest OSes may use this timer to
+implement timeout values when they block.
+
+<P>
+
+<H1><A NAME="SECTION00350000000000000000">
+2.5 Xen CPU Scheduling</A>
+</H1>
+
+<P>
+Xen offers a uniform API for CPU schedulers.  It is possible to choose
+from a number of schedulers at boot and it should be easy to add more.
+The SEDF and Credit schedulers are part of the normal Xen
+distribution.  SEDF will be going away and its use should be
+avoided once the credit scheduler has stabilized and become the default.
+The Credit scheduler provides proportional fair shares of the
+host's CPUs to the running domains. It does this while transparently
+load balancing runnable VCPUs across the whole system.
+
+<P>
+
+<H4><A NAME="SECTION00350010000000000000">
+Note: SMP host support</A>
+</H4>
+Xen has always supported SMP host systems. When using the credit scheduler,
+a domain's VCPUs will be dynamically moved across physical CPUs to maximise
+domain and system throughput. VCPUs can also be manually restricted to be
+mapped only on a subset of the host's physical CPUs, using the pinning
+mechanism.
+
+<P>
+
+<H1><A NAME="SECTION00360000000000000000">
+2.6 Privileged operations</A>
+</H1>
+
+<P>
+Xen exports an extended interface to privileged domains (viz. <I>  Domain 0</I>). This allows such domains to build and boot other domains
+on the server, and provides control interfaces for managing
+scheduling, memory, networking, and block devices.
+
+<P>
+
+<H1><A NAME="SECTION00400000000000000000"></A>
+<A NAME="c:memory"></A>
+<BR>
+3. Memory
+</H1> 
+
+<P>
+Xen is responsible for managing the allocation of physical memory to
+domains, and for ensuring safe use of the paging and segmentation
+hardware.
+
+<P>
+
+<H1><A NAME="SECTION00410000000000000000">
+3.1 Memory Allocation</A>
+</H1>
+
+<P>
+As well as allocating a portion of physical memory for its own private
+use, Xen also reserves s small fixed portion of every virtual address
+space. This is located in the top 64MB on 32-bit systems, the top
+168MB on PAE systems, and a larger portion in the middle of the
+address space on 64-bit systems. Unreserved physical memory is
+available for allocation to domains at a page granularity.  Xen tracks
+the ownership and use of each page, which allows it to enforce secure
+partitioning between domains.
+
+<P>
+Each domain has a maximum and current physical memory allocation.  A
+guest OS may run a `balloon driver' to dynamically adjust its current
+memory allocation up to its limit.
+
+<P>
+
+<H1><A NAME="SECTION00420000000000000000">
+3.2 Pseudo-Physical Memory</A>
+</H1>
+
+<P>
+Since physical memory is allocated and freed on a page granularity,
+there is no guarantee that a domain will receive a contiguous stretch
+of physical memory. However most operating systems do not have good
+support for operating in a fragmented physical address space. To aid
+porting such operating systems to run on top of Xen, we make a
+distinction between <I>machine memory</I> and <I>pseudo-physical
+  memory</I>.
+
+<P>
+Put simply, machine memory refers to the entire amount of memory
+installed in the machine, including that reserved by Xen, in use by
+various domains, or currently unallocated. We consider machine memory
+to comprise a set of 4kB <I>machine page frames</I> numbered
+consecutively starting from 0. Machine frame numbers mean the same
+within Xen or any domain.
+
+<P>
+Pseudo-physical memory, on the other hand, is a per-domain
+abstraction. It allows a guest operating system to consider its memory
+allocation to consist of a contiguous range of physical page frames
+starting at physical frame 0, despite the fact that the underlying
+machine page frames may be sparsely allocated and in any order.
+
+<P>
+To achieve this, Xen maintains a globally readable <I>  machine-to-physical</I> table which records the mapping from machine
+page frames to pseudo-physical ones. In addition, each domain is
+supplied with a <I>physical-to-machine</I> table which performs the
+inverse mapping. Clearly the machine-to-physical table has size
+proportional to the amount of RAM installed in the machine, while each
+physical-to-machine table has size proportional to the memory
+allocation of the given domain.
+
+<P>
+Architecture dependent code in guest operating systems can then use
+the two tables to provide the abstraction of pseudo-physical memory.
+In general, only certain specialized parts of the operating system
+(such as page table management) needs to understand the difference
+between machine and pseudo-physical addresses.
+
+<P>
+
+<H1><A NAME="SECTION00430000000000000000">
+3.3 Page Table Updates</A>
+</H1>
+
+<P>
+In the default mode of operation, Xen enforces read-only access to
+page tables and requires guest operating systems to explicitly request
+any modifications.  Xen validates all such requests and only applies
+updates that it deems safe.  This is necessary to prevent domains from
+adding arbitrary mappings to their page tables.
+
+<P>
+To aid validation, Xen associates a type and reference count with each
+memory page. A page has one of the following mutually-exclusive types
+at any point in time: page directory (<I>PD</I>), page table (<I>  PT</I>), local descriptor table (<I>LDT</I>), global descriptor table
+(<I>GDT</I>), or writable (<I>RW</I>). Note that a guest OS may always
+create readable mappings of its own memory regardless of its current
+type.
+
+<P>
+This mechanism is used to maintain the invariants required for safety;
+for example, a domain cannot have a writable mapping to any part of a
+page table as this would require the page concerned to simultaneously
+be of types <I>PT</I> and <I>RW</I>.
+
+<P>
+<BR><I>mmu_update(mmu_update_t *req, int count, int *success_count, domid_t domid)</I>
+
+<P>
+This hypercall is used to make updates to either the domain's
+pagetables or to the machine to physical mapping table.  It supports
+submitting a queue of updates, allowing batching for maximal
+performance.  Explicitly queuing updates using this interface will
+cause any outstanding writable pagetable state to be flushed from the
+system.
+
+<P>
+
+<H1><A NAME="SECTION00440000000000000000">
+3.4 Writable Page Tables</A>
+</H1>
+
+<P>
+Xen also provides an alternative mode of operation in which guests
+have the illusion that their page tables are directly writable.  Of
+course this is not really the case, since Xen must still validate
+modifications to ensure secure partitioning. To this end, Xen traps
+any write attempt to a memory page of type <I>PT</I> (i.e., that is
+currently part of a page table).  If such an access occurs, Xen
+temporarily allows write access to that page while at the same time
+<I>disconnecting</I> it from the page table that is currently in use.
+This allows the guest to safely make updates to the page because the
+newly-updated entries cannot be used by the MMU until Xen revalidates
+and reconnects the page.  Reconnection occurs automatically in a
+number of situations: for example, when the guest modifies a different
+page-table page, when the domain is preempted, or whenever the guest
+uses Xen's explicit page-table update interfaces.
+
+<P>
+Writable pagetable functionality is enabled when the guest requests
+it, using a <B>vm_assist</B> hypercall.  Writable pagetables do <EM>not</EM> provide full virtualisation of the MMU, so the memory management
+code of the guest still needs to be aware that it is running on Xen.
+Since the guest's page tables are used directly, it must translate
+pseudo-physical addresses to real machine addresses when building page
+table entries.  The guest may not attempt to map its own pagetables
+writably, since this would violate the memory type invariants; page
+tables will automatically be made writable by the hypervisor, as
+necessary.
+
+<P>
+
+<H1><A NAME="SECTION00450000000000000000">
+3.5 Shadow Page Tables</A>
+</H1>
+
+<P>
+Finally, Xen also supports a form of <I>shadow page tables</I> in
+which the guest OS uses a independent copy of page tables which are
+unknown to the hardware (i.e. which are never pointed to by <TT>  cr3</TT>). Instead Xen propagates changes made to the guest's tables to
+the real ones, and vice versa. This is useful for logging page writes
+(e.g. for live migration or checkpoint). A full version of the shadow
+page tables also allows guest OS porting with less effort.
+
+<P>
+
+<H1><A NAME="SECTION00460000000000000000">
+3.6 Segment Descriptor Tables</A>
+</H1>
+
+<P>
+At start of day a guest is supplied with a default GDT, which does not reside
+within its own memory allocation.  If the guest wishes to use other
+than the default `flat' ring-1 and ring-3 segments that this GDT
+provides, it must register a custom GDT and/or LDT with Xen, allocated
+from its own memory.
+
+<P>
+The following hypercall is used to specify a new GDT:
+
+<P>
+<BLOCKQUOTE>
+int <B>set_gdt</B>(unsigned long *<EM>frame_list</EM>, int <EM>    entries</EM>)
+</BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><I>frame_list</I>: An array of up to 14 machine page frames within
+  which the GDT resides.  Any frame registered as a GDT frame may only
+  be mapped read-only within the guest's address space (e.g., no
+  writable mappings, no use as a page-table page, and so on). Only 14
+  pages may be specified because pages 15 and 16 are reserved for
+  the hypervisor's GDT entries.
+</BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><I>entries</I>: The number of descriptor-entry slots in the GDT.
+
+</BLOCKQUOTE>
+
+<P>
+The LDT is updated via the generic MMU update mechanism (i.e., via the
+<B>mmu_update</B> hypercall.
+
+<P>
+
+<H1><A NAME="SECTION00470000000000000000">
+3.7 Start of Day</A>
+</H1>
+
+<P>
+The start-of-day environment for guest operating systems is rather
+different to that provided by the underlying hardware. In particular,
+the processor is already executing in protected mode with paging
+enabled.
+
+<P>
+<I>Domain 0</I> is created and booted by Xen itself. For all subsequent
+domains, the analogue of the boot-loader is the <I>domain builder</I>,
+user-space software running in <I>domain 0</I>. The domain builder is
+responsible for building the initial page tables for a domain and
+loading its kernel image at the appropriate virtual address.
+
+<P>
+
+<H1><A NAME="SECTION00480000000000000000">
+3.8 VM assists</A>
+</H1>
+
+<P>
+Xen provides a number of ``assists'' for guest memory management.
+These are available on an ``opt-in'' basis to provide commonly-used
+extra functionality to a guest.
+
+<P>
+<BR><I>vm_assist(unsigned int cmd, unsigned int type)</I>
+
+<P>
+The <B>cmd</B> parameter describes the action to be taken, whilst the
+<B>type</B> parameter describes the kind of assist that is being
+referred to.  Available commands are as follows:
+
+<P>
+<DL>
+<DT><STRONG>VMASST_CMD_enable</STRONG></DT>
+<DD>Enable a particular assist type
+</DD>
+<DT><STRONG>VMASST_CMD_disable</STRONG></DT>
+<DD>Disable a particular assist type
+</DD>
+</DL>
+
+<P>
+And the available types are:
+
+<P>
+<DL>
+<DT><STRONG>VMASST_TYPE_4gb_segments</STRONG></DT>
+<DD>Provide emulated support for
+  instructions that rely on 4GB segments (such as the techniques used
+  by some TLS solutions).
+</DD>
+<DT><STRONG>VMASST_TYPE_4gb_segments_notify</STRONG></DT>
+<DD>Provide a callback to the
+  guest if the above segment fixups are used: allows the guest to
+  display a warning message during boot.
+</DD>
+<DT><STRONG>VMASST_TYPE_writable_pagetables</STRONG></DT>
+<DD>Enable writable pagetable
+  mode - described above.
+</DD>
+</DL>
+
+<P>
+
+<H1><A NAME="SECTION00500000000000000000">
+4. Xen Info Pages</A>
+</H1>
+
+<P>
+The <B>Shared info page</B> is used to share various CPU-related state
+between the guest OS and the hypervisor.  This information includes VCPU
+status, time information and event channel (virtual interrupt) state.
+The <B>Start info page</B> is used to pass build-time information to
+the guest when it boots and when it is resumed from a suspended state.
+This chapter documents the fields included in the <B>shared_info_t</B> and <B>start_info_t</B> structures for use by the
+guest OS.
+
+<P>
+
+<H1><A NAME="SECTION00510000000000000000">
+4.1 Shared info page</A>
+</H1>
+
+<P>
+The <B>shared_info_t</B> is accessed at run time by both Xen and the
+guest OS.  It is used to pass information relating to the
+virtual CPU and virtual machine state between the OS and the
+hypervisor.
+
+<P>
+The structure is declared in <B>xen/include/public/xen.h</B>:
+
+<P>
+<PRE>
+typedef struct shared_info {
+    vcpu_info_t vcpu_info[XEN_LEGACY_MAX_VCPUS];
+
+    /*
+     * A domain can create "event channels" on which it can send and receive
+     * asynchronous event notifications. There are three classes of event that
+     * are delivered by this mechanism:
+     *  1. Bi-directional inter- and intra-domain connections. Domains must
+     *     arrange out-of-band to set up a connection (usually by allocating
+     *     an unbound 'listener' port and advertising that via a storage service
+     *     such as xenstore).
+     *  2. Physical interrupts. A domain with suitable hardware-access
+     *     privileges can bind an event-channel port to a physical interrupt
+     *     source.
+     *  3. Virtual interrupts ('events'). A domain can bind an event-channel
+     *     port to a virtual interrupt source, such as the virtual-timer
+     *     device or the emergency console.
+     * 
+     * Event channels are addressed by a "port index". Each channel is
+     * associated with two bits of information:
+     *  1. PENDING -- notifies the domain that there is a pending notification
+     *     to be processed. This bit is cleared by the guest.
+     *  2. MASK -- if this bit is clear then a 0-&gt;1 transition of PENDING
+     *     will cause an asynchronous upcall to be scheduled. This bit is only
+     *     updated by the guest. It is read-only within Xen. If a channel
+     *     becomes pending while the channel is masked then the 'edge' is lost
+     *     (i.e., when the channel is unmasked, the guest must manually handle
+     *     pending notifications as no upcall will be scheduled by Xen).
+     * 
+     * To expedite scanning of pending notifications, any 0-&gt;1 pending
+     * transition on an unmasked channel causes a corresponding bit in a
+     * per-vcpu selector word to be set. Each bit in the selector covers a
+     * 'C long' in the PENDING bitfield array.
+     */
+    unsigned long evtchn_pending[sizeof(unsigned long) * 8];
+    unsigned long evtchn_mask[sizeof(unsigned long) * 8];
+
+    /*
+     * Wallclock time: updated only by control software. Guests should base
+     * their gettimeofday() syscall on this wallclock-base value.
+     */
+    uint32_t wc_version;      /* Version counter: see vcpu_time_info_t. */
+    uint32_t wc_sec;          /* Secs  00:00:00 UTC, Jan 1, 1970.  */
+    uint32_t wc_nsec;         /* Nsecs 00:00:00 UTC, Jan 1, 1970.  */
+
+    arch_shared_info_t arch;
+
+} shared_info_t;
+</PRE>
+<P>
+<DL>
+<DT><STRONG>vcpu_info</STRONG></DT>
+<DD>An array of <B>vcpu_info_t</B> structures, each of
+  which holds either runtime information about a virtual CPU, or is
+  ``empty'' if the corresponding VCPU does not exist.
+</DD>
+<DT><STRONG>evtchn_pending</STRONG></DT>
+<DD>Guest-global array, with one bit per event
+  channel.  Bits are set if an event is currently pending on that
+  channel.
+</DD>
+<DT><STRONG>evtchn_mask</STRONG></DT>
+<DD>Guest-global array for masking notifications on
+  event channels.
+</DD>
+<DT><STRONG>wc_version</STRONG></DT>
+<DD>Version counter for current wallclock time.
+</DD>
+<DT><STRONG>wc_sec</STRONG></DT>
+<DD>Whole seconds component of current wallclock time.
+</DD>
+<DT><STRONG>wc_nsec</STRONG></DT>
+<DD>Nanoseconds component of current wallclock time.
+</DD>
+<DT><STRONG>arch</STRONG></DT>
+<DD>Host architecture-dependent portion of the shared info
+  structure.
+</DD>
+</DL>
+<P>
+
+<H2><A NAME="SECTION00511000000000000000">
+4.1.1 vcpu_info_t</A>
+</H2>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+typedef struct vcpu_info {
+    /*
+     * 'evtchn_upcall_pending' is written non-zero by Xen to indicate
+     * a pending notification for a particular VCPU. It is then cleared 
+     * by the guest OS /before/ checking for pending work, thus avoiding
+     * a set-and-check race. Note that the mask is only accessed by Xen
+     * on the CPU that is currently hosting the VCPU. This means that the
+     * pending and mask flags can be updated by the guest without special
+     * synchronisation (i.e., no need for the x86 LOCK prefix).
+     * This may seem suboptimal because if the pending flag is set by
+     * a different CPU then an IPI may be scheduled even when the mask
+     * is set. However, note:
+     *  1. The task of 'interrupt holdoff' is covered by the per-event-
+     *     channel mask bits. A 'noisy' event that is continually being
+     *     triggered can be masked at source at this very precise
+     *     granularity.
+     *  2. The main purpose of the per-VCPU mask is therefore to restrict
+     *     reentrant execution: whether for concurrency control, or to
+     *     prevent unbounded stack usage. Whatever the purpose, we expect
+     *     that the mask will be asserted only for short periods at a time,
+     *     and so the likelihood of a 'spurious' IPI is suitably small.
+     * The mask is read before making an event upcall to the guest: a
+     * non-zero mask therefore guarantees that the VCPU will not receive
+     * an upcall activation. The mask is cleared when the VCPU requests
+     * to block: this avoids wakeup-waiting races.
+     */
+    uint8_t evtchn_upcall_pending;
+    uint8_t evtchn_upcall_mask;
+    unsigned long evtchn_pending_sel;
+    arch_vcpu_info_t arch;
+    vcpu_time_info_t time;
+} vcpu_info_t; /* 64 bytes (x86) */
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<DL>
+<DT><STRONG>evtchn_upcall_pending</STRONG></DT>
+<DD>This is set non-zero by Xen to indicate
+  that there are pending events to be received.
+</DD>
+<DT><STRONG>evtchn_upcall_mask</STRONG></DT>
+<DD>This is set non-zero to disable all
+  interrupts for this CPU for short periods of time.  If individual
+  event channels need to be masked, the <B>evtchn_mask</B> in the <B>  shared_info_t</B> is used instead.
+</DD>
+<DT><STRONG>evtchn_pending_sel</STRONG></DT>
+<DD>When an event is delivered to this VCPU, a
+  bit is set in this selector to indicate which word of the <B>  evtchn_pending</B> array in the <B>shared_info_t</B> contains the
+  event in question.
+</DD>
+<DT><STRONG>arch</STRONG></DT>
+<DD>Architecture-specific VCPU info. On x86 this contains the
+  virtualized CR2 register (page fault linear address) for this VCPU.
+</DD>
+<DT><STRONG>time</STRONG></DT>
+<DD>Time values for this VCPU.
+</DD>
+</DL>
+<P>
+
+<H2><A NAME="SECTION00512000000000000000">
+4.1.2 vcpu_time_info</A>
+</H2>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+typedef struct vcpu_time_info {
+    /*
+     * Updates to the following values are preceded and followed by an
+     * increment of 'version'. The guest can therefore detect updates by
+     * looking for changes to 'version'. If the least-significant bit of
+     * the version number is set then an update is in progress and the guest
+     * must wait to read a consistent set of values.
+     * The correct way to interact with the version number is similar to
+     * Linux's seqlock: see the implementations of read_seqbegin/read_seqretry.
+     */
+    uint32_t version;
+    uint32_t pad0;
+    uint64_t tsc_timestamp;   /* TSC at last update of time vals.  */
+    uint64_t system_time;     /* Time, in nanosecs, since boot.    */
+    /*
+     * Current system time:
+     *   system_time + ((tsc - tsc_timestamp) &lt;&lt; tsc_shift) * tsc_to_system_mul
+     * CPU frequency (Hz):
+     *   ((10^9 &lt;&lt; 32) / tsc_to_system_mul) &gt;&gt; tsc_shift
+     */
+    uint32_t tsc_to_system_mul;
+    int8_t   tsc_shift;
+    int8_t   pad1[3];
+} vcpu_time_info_t; /* 32 bytes */
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<DL>
+<DT><STRONG>version</STRONG></DT>
+<DD>Used to ensure the guest gets consistent time updates.
+</DD>
+<DT><STRONG>tsc_timestamp</STRONG></DT>
+<DD>Cycle counter timestamp of last time value;
+  could be used to expolate in between updates, for instance.
+</DD>
+<DT><STRONG>system_time</STRONG></DT>
+<DD>Time since boot (nanoseconds).
+</DD>
+<DT><STRONG>tsc_to_system_mul</STRONG></DT>
+<DD>Cycle counter to nanoseconds multiplier
+(used in extrapolating current time).
+</DD>
+<DT><STRONG>tsc_shift</STRONG></DT>
+<DD>Cycle counter to nanoseconds shift (used in
+extrapolating current time).
+</DD>
+</DL>
+<P>
+
+<H2><A NAME="SECTION00513000000000000000">
+4.1.3 arch_shared_info_t</A>
+</H2>
+<P>
+<FONT SIZE="-2">On x86, the <B>arch_shared_info_t</B> is defined as follows (from
+xen/public/arch-x86_32.h):
+</FONT>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+typedef struct arch_shared_info {
+    unsigned long max_pfn;                  /* max pfn that appears in table */
+    /* Frame containing list of mfns containing list of mfns containing p2m. */
+    unsigned long pfn_to_mfn_frame_list_list; 
+} arch_shared_info_t;
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<DL>
+<DT><STRONG>max_pfn</STRONG></DT>
+<DD>The maximum PFN listed in the physical-to-machine
+  mapping table (P2M table).
+</DD>
+<DT><STRONG>pfn_to_mfn_frame_list_list</STRONG></DT>
+<DD>Machine address of the frame
+  that contains the machine addresses of the P2M table frames.
+</DD>
+</DL>
+<P>
+
+<H1><A NAME="SECTION00520000000000000000">
+4.2 Start info page</A>
+</H1>
+<P>
+<FONT SIZE="-2">The start info structure is declared as the following (in <B>xen/include/public/xen.h</B>):
+</FONT>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+#define MAX_GUEST_CMDLINE 1024
+typedef struct start_info {
+    /* THE FOLLOWING ARE FILLED IN BOTH ON INITIAL BOOT AND ON RESUME.    */
+    char magic[32];             /* "Xen-&lt;version&gt;.&lt;subversion&gt;". */
+    unsigned long nr_pages;     /* Total pages allocated to this domain.  */
+    unsigned long shared_info;  /* MACHINE address of shared info struct. */
+    uint32_t flags;             /* SIF_xxx flags.                         */
+    unsigned long store_mfn;    /* MACHINE page number of shared page.    */
+    uint32_t store_evtchn;      /* Event channel for store communication. */
+    unsigned long console_mfn;  /* MACHINE address of console page.       */
+    uint32_t console_evtchn;    /* Event channel for console messages.    */
+    /* THE FOLLOWING ARE ONLY FILLED IN ON INITIAL BOOT (NOT RESUME).     */
+    unsigned long pt_base;      /* VIRTUAL address of page directory.     */
+    unsigned long nr_pt_frames; /* Number of bootstrap p.t. frames.       */
+    unsigned long mfn_list;     /* VIRTUAL address of page-frame list.    */
+    unsigned long mod_start;    /* VIRTUAL address of pre-loaded module.  */
+    unsigned long mod_len;      /* Size (bytes) of pre-loaded module.     */
+    int8_t cmd_line[MAX_GUEST_CMDLINE];
+} start_info_t;
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<FONT SIZE="-2">The fields are in two groups: the first group are always filled in
+when a domain is booted or resumed, the second set are only used at
+boot time.
+</FONT>
+<P>
+<FONT SIZE="-2">The always-available group is as follows:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>magic</STRONG></DT>
+<DD>A text string identifying the Xen version to the guest.
+</DD>
+<DT><STRONG>nr_pages</STRONG></DT>
+<DD>The number of real machine pages available to the
+  guest.
+</DD>
+<DT><STRONG>shared_info</STRONG></DT>
+<DD>Machine address of the shared info structure,
+  allowing the guest to map it during initialisation.
+</DD>
+<DT><STRONG>flags</STRONG></DT>
+<DD>Flags for describing optional extra settings to the
+  guest.
+</DD>
+<DT><STRONG>store_mfn</STRONG></DT>
+<DD>Machine address of the Xenstore communications page.
+</DD>
+<DT><STRONG>store_evtchn</STRONG></DT>
+<DD>Event channel to communicate with the store.
+</DD>
+<DT><STRONG>console_mfn</STRONG></DT>
+<DD>Machine address of the console data page.
+</DD>
+<DT><STRONG>console_evtchn</STRONG></DT>
+<DD>Event channel to notify the console backend.
+</DD>
+</DL>
+<P>
+<FONT SIZE="-2">The boot-only group may only be safely referred to during system boot:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>pt_base</STRONG></DT>
+<DD>Virtual address of the page directory created for us
+  by the domain builder.
+</DD>
+<DT><STRONG>nr_pt_frames</STRONG></DT>
+<DD>Number of frames used by the builders' bootstrap
+  pagetables.
+</DD>
+<DT><STRONG>mfn_list</STRONG></DT>
+<DD>Virtual address of the list of machine frames this
+  domain owns.
+</DD>
+<DT><STRONG>mod_start</STRONG></DT>
+<DD>Virtual address of any pre-loaded modules
+  (e.g. ramdisk)
+</DD>
+<DT><STRONG>mod_len</STRONG></DT>
+<DD>Size of pre-loaded module (if any).
+</DD>
+<DT><STRONG>cmd_line</STRONG></DT>
+<DD>Kernel command line passed by the domain builder.
+</DD>
+</DL>
+<P>
+
+<H1><A NAME="SECTION00600000000000000000"></A>
+<A NAME="c:eventchannels"></A>
+<BR>
+5. Event Channels
+</H1>
+<P>
+<FONT SIZE="-2">Event channels are the basic primitive provided by Xen for event
+notifications.  An event is the Xen equivalent of a hardware
+interrupt.  They essentially store one bit of information, the event
+of interest is signalled by transitioning this bit from 0 to 1.
+</FONT>
+<P>
+<FONT SIZE="-2">Notifications are received by a guest via an upcall from Xen,
+indicating when an event arrives (setting the bit).  Further
+notifications are masked until the bit is cleared again (therefore,
+guests must check the value of the bit after re-enabling event
+delivery to ensure no missed notifications).
+</FONT>
+<P>
+<FONT SIZE="-2">Event notifications can be masked by setting a flag; this is
+equivalent to disabling interrupts and can be used to ensure atomicity
+of certain operations in the guest kernel.
+</FONT>
+<P>
+
+<H1><A NAME="SECTION00610000000000000000">
+5.1 Hypercall interface</A>
+</H1>
+<P>
+<FONT SIZE="-2">
+<BR><I>event_channel_op(evtchn_op_t *op)</I>
+</FONT>
+<P>
+<FONT SIZE="-2">The event channel operation hypercall is used for all operations on
+event channels / ports.  Operations are distinguished by the value of
+the <B>cmd</B> field of the <B>op</B> structure.  The possible commands
+are described below:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>EVTCHNOP_alloc_unbound</STRONG></DT>
+<DD>Allocate a new event channel port, ready to be connected to by a
+  remote domain.
+  
+<UL>
+<LI>Specified domain must exist.
+</LI>
+<LI>A free port must exist in that domain.
+  
+</LI>
+</UL>
+  Unprivileged domains may only allocate their own ports, privileged
+  domains may also allocate ports in other domains.
+</DD>
+<DT><STRONG>EVTCHNOP_bind_interdomain</STRONG></DT>
+<DD>Bind an event channel for interdomain communications.
+  
+<UL>
+<LI>Caller domain must have a free port to bind.
+</LI>
+<LI>Remote domain must exist.
+</LI>
+<LI>Remote port must be allocated and currently unbound.
+</LI>
+<LI>Remote port must be expecting the caller domain as the ``remote''.
+  
+</LI>
+</UL>
+</DD>
+<DT><STRONG>EVTCHNOP_bind_virq</STRONG></DT>
+<DD>Allocate a port and bind a VIRQ to it.
+  
+<UL>
+<LI>Caller domain must have a free port to bind.
+</LI>
+<LI>VIRQ must be valid.
+</LI>
+<LI>VCPU must exist.
+</LI>
+<LI>VIRQ must not currently be bound to an event channel.
+  
+</LI>
+</UL>
+</DD>
+<DT><STRONG>EVTCHNOP_bind_ipi</STRONG></DT>
+<DD>Allocate and bind a port for notifying other virtual CPUs.
+  
+<UL>
+<LI>Caller domain must have a free port to bind.
+</LI>
+<LI>VCPU must exist.
+  
+</LI>
+</UL>
+</DD>
+<DT><STRONG>EVTCHNOP_bind_pirq</STRONG></DT>
+<DD>Allocate and bind a port to a real IRQ.
+  
+<UL>
+<LI>Caller domain must have a free port to bind.
+</LI>
+<LI>PIRQ must be within the valid range.
+</LI>
+<LI>Another binding for this PIRQ must not exist for this domain.
+</LI>
+<LI>Caller must have an available port.
+  
+</LI>
+</UL>
+</DD>
+<DT><STRONG>EVTCHNOP_close</STRONG></DT>
+<DD>Close an event channel (no more events will be received).
+  
+<UL>
+<LI>Port must be valid (currently allocated).
+  
+</LI>
+</UL>
+</DD>
+<DT><STRONG>EVTCHNOP_send</STRONG></DT>
+<DD>Send a notification on an event channel attached
+  to a port.
+  
+<UL>
+<LI>Port must be valid.
+</LI>
+<LI>Only valid for Interdomain, IPI or Allocated Unbound ports.
+  
+</LI>
+</UL>
+</DD>
+<DT><STRONG>EVTCHNOP_status</STRONG></DT>
+<DD>Query the status of a port; what kind of port,
+  whether it is bound, what remote domain is expected, what PIRQ or
+  VIRQ it is bound to, what VCPU will be notified, etc.
+  Unprivileged domains may only query the state of their own ports.
+  Privileged domains may query any port.
+</DD>
+<DT><STRONG>EVTCHNOP_bind_vcpu</STRONG></DT>
+<DD>Bind event channel to a particular VCPU -
+  receive notification upcalls only on that VCPU.
+  
+<UL>
+<LI>VCPU must exist.
+</LI>
+<LI>Port must be valid.
+</LI>
+<LI>Event channel must be either: allocated but unbound, bound to
+  an interdomain event channel, bound to a PIRQ.
+  
+</LI>
+</UL>
+
+<P>
+</DD>
+</DL>
+<P>
+
+<H1><A NAME="SECTION00700000000000000000"></A>
+<A NAME="c:granttables"></A>
+<BR>
+6. Grant tables
+</H1>
+<P>
+<FONT SIZE="-2">Xen's grant tables provide a generic mechanism to memory sharing
+between domains.  This shared memory interface underpins the split
+device drivers for block and network IO.
+</FONT>
+<P>
+<FONT SIZE="-2">Each domain has its own <B>grant table</B>.  This is a data structure
+that is shared with Xen; it allows the domain to tell Xen what kind of
+permissions other domains have on its pages.  Entries in the grant
+table are identified by <B>grant references</B>.  A grant reference is
+an integer, which indexes into the grant table.  It acts as a
+capability which the grantee can use to perform operations on the
+granter's memory.
+</FONT>
+<P>
+<FONT SIZE="-2">This capability-based system allows shared-memory communications
+between unprivileged domains.  A grant reference also encapsulates the
+details of a shared page, removing the need for a domain to know the
+real machine address of a page it is sharing.  This makes it possible
+to share memory correctly with domains running in fully virtualised
+memory.
+</FONT>
+<P>
+
+<H1><A NAME="SECTION00710000000000000000">
+6.1 Interface</A>
+</H1>
+<P>
+
+<H2><A NAME="SECTION00711000000000000000">
+6.1.1 Grant table manipulation</A>
+</H2>
+<P>
+<FONT SIZE="-2">Creating and destroying grant references is done by direct access to
+the grant table.  This removes the need to involve Xen when creating
+grant references, modifying access permissions, etc.  The grantee
+domain will invoke hypercalls to use the grant references.  Four main
+operations can be accomplished by directly manipulating the table:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>Grant foreign access</STRONG></DT>
+<DD>allocate a new entry in the grant table
+  and fill out the access permissions accordingly.  The access
+  permissions will be looked up by Xen when the grantee attempts to
+  use the reference to map the granted frame.
+</DD>
+<DT><STRONG>End foreign access</STRONG></DT>
+<DD>check that the grant reference is not
+  currently in use, then remove the mapping permissions for the frame.
+  This prevents further mappings from taking place but does not allow
+  forced revocations of existing mappings.
+</DD>
+<DT><STRONG>Grant foreign transfer</STRONG></DT>
+<DD>allocate a new entry in the table
+  specifying transfer permissions for the grantee.  Xen will look up
+  this entry when the grantee attempts to transfer a frame to the
+  granter.
+</DD>
+<DT><STRONG>End foreign transfer</STRONG></DT>
+<DD>remove permissions to prevent a transfer
+  occurring in future.  If the transfer is already committed,
+  modifying the grant table cannot prevent it from completing.
+</DD>
+</DL>
+<P>
+
+<H2><A NAME="SECTION00712000000000000000">
+6.1.2 Hypercalls</A>
+</H2>
+<P>
+<FONT SIZE="-2">Use of grant references is accomplished via a hypercall.  The grant
+table op hypercall takes three arguments:
+</FONT>
+<P>
+<FONT SIZE="-2">
+<BR><I>grant_table_op(unsigned int cmd, void *uop, unsigned int count)</I>
+</FONT>
+<P>
+<FONT SIZE="-2"><B>cmd</B> indicates the grant table operation of interest.  <B>uop</B>
+is a pointer to a structure (or an array of structures) describing the
+operation to be performed.  The <B>count</B> field describes how many
+grant table operations are being batched together.
+</FONT>
+<P>
+<FONT SIZE="-2">The core logic is situated in <B>xen/common/grant_table.c</B>.  The
+grant table operation hypercall can be used to perform the following
+actions:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>GNTTABOP_map_grant_ref</STRONG></DT>
+<DD>Given a grant reference from another
+  domain, map the referred page into the caller's address space.
+</DD>
+<DT><STRONG>GNTTABOP_unmap_grant_ref</STRONG></DT>
+<DD>Remove a mapping to a granted frame
+  from the caller's address space.  This is used to voluntarily
+  relinquish a mapping to a granted page.
+</DD>
+<DT><STRONG>GNTTABOP_setup_table</STRONG></DT>
+<DD>Setup grant table for caller domain.
+</DD>
+<DT><STRONG>GNTTABOP_dump_table</STRONG></DT>
+<DD>Debugging operation.
+</DD>
+<DT><STRONG>GNTTABOP_transfer</STRONG></DT>
+<DD>Given a transfer reference from another
+  domain, transfer ownership of a page frame to that domain.
+</DD>
+</DL>
+<P>
+
+<H1><A NAME="SECTION00800000000000000000">
+7. Xenstore</A>
+</H1>
+<P>
+<FONT SIZE="-2">Xenstore is the mechanism by which control-plane activities occur.
+These activities include:
+</FONT>
+<P>
+
+<UL>
+<LI>Setting up shared memory regions and event channels for use with
+  the split device drivers.
+</LI>
+<LI>Notifying the guest of control events (e.g. balloon driver
+  requests)
+</LI>
+<LI>Reporting back status information from the guest
+  (e.g. performance-related statistics, etc).
+</LI>
+</UL>
+<P>
+<FONT SIZE="-2">The store is arranged as a hierarchical collection of key-value pairs.
+Each domain has a directory hierarchy containing data related to its
+configuration.  Domains are permitted to register for notifications
+about changes in subtrees of the store, and to apply changes to the
+store transactionally.
+</FONT>
+<P>
+
+<H1><A NAME="SECTION00810000000000000000">
+7.1 Guidelines</A>
+</H1>
+<P>
+<FONT SIZE="-2">A few principles govern the operation of the store:
+</FONT>
+<P>
+
+<UL>
+<LI>Domains should only modify the contents of their own
+  directories.
+</LI>
+<LI>The setup protocol for a device channel should simply consist of
+  entering the configuration data into the store.
+</LI>
+<LI>The store should allow device discovery without requiring the
+  relevant device drivers to be loaded: a Xen ``bus'' should be
+  visible to probing code in the guest.
+</LI>
+<LI>The store should be usable for inter-tool communications,
+  allowing the tools themselves to be decomposed into a number of
+  smaller utilities, rather than a single monolithic entity.  This
+  also facilitates the development of alternate user interfaces to the
+  same functionality.
+</LI>
+</UL>
+<P>
+
+<H1><A NAME="SECTION00820000000000000000">
+7.2 Store layout</A>
+</H1>
+<P>
+<FONT SIZE="-2">There are three main paths in XenStore:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>/vm</STRONG></DT>
+<DD>stores configuration information about domain
+</DD>
+<DT><STRONG>/local/domain</STRONG></DT>
+<DD>stores information about the domain on the local node (domid, etc.)
+</DD>
+<DT><STRONG>/tool</STRONG></DT>
+<DD>stores information for the various tools
+</DD>
+</DL>
+<P>
+<FONT SIZE="-2">The <B>/vm</B> path stores configuration information for a domain.
+This information doesn't change and is indexed by the domain's UUID.
+A <B>/vm</B> entry contains the following information:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>uuid</STRONG></DT>
+<DD>uuid of the domain (somewhat redundant)
+</DD>
+<DT><STRONG>on_reboot</STRONG></DT>
+<DD>the action to take on a domain reboot request (destroy or restart)
+</DD>
+<DT><STRONG>on_poweroff</STRONG></DT>
+<DD>the action to take on a domain halt request (destroy or restart)
+</DD>
+<DT><STRONG>on_crash</STRONG></DT>
+<DD>the action to take on a domain crash (destroy or restart)
+</DD>
+<DT><STRONG>vcpus</STRONG></DT>
+<DD>the number of allocated vcpus for the domain
+</DD>
+<DT><STRONG>memory</STRONG></DT>
+<DD>the amount of memory (in megabytes) for the domain Note: appears to sometimes be empty for domain-0
+</DD>
+<DT><STRONG>vcpu_avail</STRONG></DT>
+<DD>the number of active vcpus for the domain (vcpus - number of disabled vcpus)
+</DD>
+<DT><STRONG>name</STRONG></DT>
+<DD>the name of the domain
+</DD>
+</DL>
+<P>
+<FONT SIZE="-2"><B>/vm/&lt;uuid&gt;/image/</B>
+</FONT>
+<P>
+<FONT SIZE="-2">The image path is only available for Domain-Us and contains:
+</FONT><DL>
+<DT><STRONG>ostype</STRONG></DT>
+<DD>identifies the builder type (linux or vmx)
+</DD>
+<DT><STRONG>kernel</STRONG></DT>
+<DD>path to kernel on domain-0
+</DD>
+<DT><STRONG>cmdline</STRONG></DT>
+<DD>command line to pass to domain-U kernel
+</DD>
+<DT><STRONG>ramdisk</STRONG></DT>
+<DD>path to ramdisk on domain-0
+</DD>
+</DL>
+<P>
+<FONT SIZE="-2"><B>/local</B>
+</FONT>
+<P>
+<FONT SIZE="-2">The <TT>/local</TT> path currently only contains one directory, <TT>/local/domain</TT> that is indexed by domain id.  It contains the running
+domain information.  The reason to have two storage areas is that
+during migration, the uuid doesn't change but the domain id does.  The
+<TT>/local/domain</TT> directory can be created and populated before
+finalizing the migration enabling localhost to localhost migration.
+</FONT>
+<P>
+<FONT SIZE="-2"><B>/local/domain/&lt;domid&gt;</B>
+</FONT>
+<P>
+<FONT SIZE="-2">This path contains:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>cpu_time</STRONG></DT>
+<DD>xend start time (this is only around for domain-0)
+</DD>
+<DT><STRONG>handle</STRONG></DT>
+<DD>private handle for xend
+</DD>
+<DT><STRONG>name</STRONG></DT>
+<DD>see /vm
+</DD>
+<DT><STRONG>on_reboot</STRONG></DT>
+<DD>see /vm
+</DD>
+<DT><STRONG>on_poweroff</STRONG></DT>
+<DD>see /vm
+</DD>
+<DT><STRONG>on_crash</STRONG></DT>
+<DD>see /vm
+</DD>
+<DT><STRONG>vm</STRONG></DT>
+<DD>the path to the VM directory for the domain
+</DD>
+<DT><STRONG>domid</STRONG></DT>
+<DD>the domain id (somewhat redundant)
+</DD>
+<DT><STRONG>running</STRONG></DT>
+<DD>indicates that the domain is currently running
+</DD>
+<DT><STRONG>memory</STRONG></DT>
+<DD>the current memory in megabytes for the domain (empty for domain-0?)
+</DD>
+<DT><STRONG>maxmem_KiB</STRONG></DT>
+<DD>the maximum memory for the domain (in kilobytes)
+</DD>
+<DT><STRONG>memory_KiB</STRONG></DT>
+<DD>the memory allocated to the domain (in kilobytes)
+</DD>
+<DT><STRONG>cpu</STRONG></DT>
+<DD>the current CPU the domain is pinned to (empty for domain-0?)
+</DD>
+<DT><STRONG>cpu_weight</STRONG></DT>
+<DD>the weight assigned to the domain
+</DD>
+<DT><STRONG>vcpu_avail</STRONG></DT>
+<DD>a bitmap telling the domain whether it may use a given VCPU
+</DD>
+<DT><STRONG>online_vcpus</STRONG></DT>
+<DD>how many vcpus are currently online
+</DD>
+<DT><STRONG>vcpus</STRONG></DT>
+<DD>the total number of vcpus allocated to the domain
+</DD>
+<DT><STRONG>console/</STRONG></DT>
+<DD>a directory for console information
+  <DL>
+<DT><STRONG>ring-ref</STRONG></DT>
+<DD>the grant table reference of the console ring queue
+  
+</DD>
+<DT><STRONG>port</STRONG></DT>
+<DD>the event channel being used for the console ring queue (local port)
+  
+</DD>
+<DT><STRONG>tty</STRONG></DT>
+<DD>the current tty the console data is being exposed of
+  
+</DD>
+<DT><STRONG>limit</STRONG></DT>
+<DD>the limit (in bytes) of console data to buffer
+  
+</DD>
+</DL>
+</DD>
+<DT><STRONG>backend/</STRONG></DT>
+<DD>a directory containing all backends the domain hosts
+  <DL>
+<DT><STRONG>vbd/</STRONG></DT>
+<DD>a directory containing vbd backends
+    <DL>
+<DT><STRONG>&lt;domid&gt;/</STRONG></DT>
+<DD>a directory containing vbd's for domid
+      <DL>
+<DT><STRONG>&lt;virtual-device&gt;/</STRONG></DT>
+<DD>a directory for a particular
+	virtual-device on domid
+	<DL>
+<DT><STRONG>frontend-id</STRONG></DT>
+<DD>domain id of frontend
+	
+</DD>
+<DT><STRONG>frontend</STRONG></DT>
+<DD>the path to the frontend domain
+	
+</DD>
+<DT><STRONG>physical-device</STRONG></DT>
+<DD>backend device number
+	
+</DD>
+<DT><STRONG>sector-size</STRONG></DT>
+<DD>backend sector size
+	
+</DD>
+<DT><STRONG>info</STRONG></DT>
+<DD>0 read/write, 1 read-only (is this right?)
+	
+</DD>
+<DT><STRONG>domain</STRONG></DT>
+<DD>name of frontend domain
+	
+</DD>
+<DT><STRONG>params</STRONG></DT>
+<DD>parameters for device
+	
+</DD>
+<DT><STRONG>type</STRONG></DT>
+<DD>the type of the device
+	
+</DD>
+<DT><STRONG>dev</STRONG></DT>
+<DD>the virtual device (as given by the user)
+	
+</DD>
+<DT><STRONG>node</STRONG></DT>
+<DD>output from block creation script
+	
+</DD>
+</DL>
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+</DD>
+<DT><STRONG>vif/</STRONG></DT>
+<DD>a directory containing vif backends
+    <DL>
+<DT><STRONG>&lt;domid&gt;/</STRONG></DT>
+<DD>a directory containing vif's for domid
+      <DL>
+<DT><STRONG>&lt;vif number&gt;/</STRONG></DT>
+<DD>a directory for each vif
+      
+</DD>
+<DT><STRONG>frontend-id</STRONG></DT>
+<DD>the domain id of the frontend
+      
+</DD>
+<DT><STRONG>frontend</STRONG></DT>
+<DD>the path to the frontend
+      
+</DD>
+<DT><STRONG>mac</STRONG></DT>
+<DD>the mac address of the vif
+      
+</DD>
+<DT><STRONG>bridge</STRONG></DT>
+<DD>the bridge the vif is connected to
+      
+</DD>
+<DT><STRONG>handle</STRONG></DT>
+<DD>the handle of the vif
+      
+</DD>
+<DT><STRONG>script</STRONG></DT>
+<DD>the script used to create/stop the vif
+      
+</DD>
+<DT><STRONG>domain</STRONG></DT>
+<DD>the name of the frontend
+      
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+</DD>
+<DT><STRONG>vtpm/</STRONG></DT>
+<DD>a directory containing vtpm backends
+    <DL>
+<DT><STRONG>&lt;domid&gt;/</STRONG></DT>
+<DD>a directory containing vtpm's for domid
+      <DL>
+<DT><STRONG>&lt;vtpm number&gt;/</STRONG></DT>
+<DD>a directory for each vtpm
+      
+</DD>
+<DT><STRONG>frontend-id</STRONG></DT>
+<DD>the domain id of the frontend
+      
+</DD>
+<DT><STRONG>frontend</STRONG></DT>
+<DD>the path to the frontend
+      
+</DD>
+<DT><STRONG>instance</STRONG></DT>
+<DD>the instance of the virtual TPM that is used
+      
+</DD>
+<DT><STRONG>prefinstance</STRONG></DT>
+<DD>the instance number as given in the VM configuration file;
+           may be different from <B>instance</B>
+      
+</DD>
+<DT><STRONG>domain</STRONG></DT>
+<DD>the name of the domain of the frontend
+      
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+</DD>
+</DL>
+
+<P>
+</DD>
+<DT><STRONG>device/</STRONG></DT>
+<DD>a directory containing the frontend devices for the
+    domain
+    <DL>
+<DT><STRONG>vbd/</STRONG></DT>
+<DD>a directory containing vbd frontend devices for the
+      domain
+      <DL>
+<DT><STRONG>&lt;virtual-device&gt;/</STRONG></DT>
+<DD>a directory containing the vbd frontend for
+	virtual-device
+	<DL>
+<DT><STRONG>virtual-device</STRONG></DT>
+<DD>the device number of the frontend device
+	
+</DD>
+<DT><STRONG>backend-id</STRONG></DT>
+<DD>the domain id of the backend
+	
+</DD>
+<DT><STRONG>backend</STRONG></DT>
+<DD>the path of the backend in the store (/local/domain
+	  path)
+	
+</DD>
+<DT><STRONG>ring-ref</STRONG></DT>
+<DD>the grant table reference for the block request
+	  ring queue
+	
+</DD>
+<DT><STRONG>event-channel</STRONG></DT>
+<DD>the event channel used for the block request
+	  ring queue
+	
+</DD>
+</DL>
+
+<P>
+</DD>
+<DT><STRONG>vif/</STRONG></DT>
+<DD>a directory containing vif frontend devices for the
+	domain
+	<DL>
+<DT><STRONG>&lt;id&gt;/</STRONG></DT>
+<DD>a directory for vif id frontend device for the domain
+	  <DL>
+<DT><STRONG>backend-id</STRONG></DT>
+<DD>the backend domain id
+	  
+</DD>
+<DT><STRONG>mac</STRONG></DT>
+<DD>the mac address of the vif
+	  
+</DD>
+<DT><STRONG>handle</STRONG></DT>
+<DD>the internal vif handle
+	  
+</DD>
+<DT><STRONG>backend</STRONG></DT>
+<DD>a path to the backend's store entry
+	  
+</DD>
+<DT><STRONG>tx-ring-ref</STRONG></DT>
+<DD>the grant table reference for the transmission ring queue 
+	  
+</DD>
+<DT><STRONG>rx-ring-ref</STRONG></DT>
+<DD>the grant table reference for the receiving ring queue 
+	  
+</DD>
+<DT><STRONG>event-channel</STRONG></DT>
+<DD>the event channel used for the two ring queues 
+	  
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+</DD>
+<DT><STRONG>vtpm/</STRONG></DT>
+<DD>a directory containing the vtpm frontend device for the
+        domain
+        <DL>
+<DT><STRONG>&lt;id&gt;</STRONG></DT>
+<DD>a directory for vtpm id frontend device for the domain
+          <DL>
+<DT><STRONG>backend-id</STRONG></DT>
+<DD>the backend domain id
+          
+</DD>
+<DT><STRONG>backend</STRONG></DT>
+<DD>a path to the backend's store entry
+          
+</DD>
+<DT><STRONG>ring-ref</STRONG></DT>
+<DD>the grant table reference for the tx/rx ring
+          
+</DD>
+<DT><STRONG>event-channel</STRONG></DT>
+<DD>the event channel used for the ring
+          
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+</DD>
+<DT><STRONG>device-misc/</STRONG></DT>
+<DD>miscellaneous information for devices 
+	<DL>
+<DT><STRONG>vif/</STRONG></DT>
+<DD>miscellaneous information for vif devices
+	  <DL>
+<DT><STRONG>nextDeviceID</STRONG></DT>
+<DD>the next device id to use 
+	  
+</DD>
+</DL>
+</DD>
+</DL>
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+</DD>
+<DT><STRONG>security/</STRONG></DT>
+<DD>access control information for the domain
+    <DL>
+<DT><STRONG>ssidref</STRONG></DT>
+<DD>security reference identifier used inside the hypervisor
+    
+</DD>
+<DT><STRONG>access_control/</STRONG></DT>
+<DD>security label used by management tools
+      <DL>
+<DT><STRONG>label</STRONG></DT>
+<DD>security label name
+       
+</DD>
+<DT><STRONG>policy</STRONG></DT>
+<DD>security policy name
+      
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+</DD>
+<DT><STRONG>store/</STRONG></DT>
+<DD>per-domain information for the store
+    <DL>
+<DT><STRONG>port</STRONG></DT>
+<DD>the event channel used for the store ring queue 
+    
+</DD>
+<DT><STRONG>ring-ref</STRONG></DT>
+<DD>- the grant table reference used for the store's
+      communication channel 
+    
+</DD>
+</DL>
+
+<P>
+</DD>
+<DT><STRONG>image</STRONG></DT>
+<DD>- private xend information 
+</DD>
+</DL>
+<P>
+
+<H1><A NAME="SECTION00900000000000000000"></A>
+<A NAME="c:devices"></A>
+<BR>
+8. Devices
+</H1>
+<P>
+<FONT SIZE="-2">Virtual devices under Xen are provided by a <B>split device driver</B>
+architecture.  The illusion of the virtual device is provided by two
+co-operating drivers: the <B>frontend</B>, which runs an the
+unprivileged domain and the <B>backend</B>, which runs in a domain with
+access to the real device hardware (often called a <B>driver
+domain</B>; in practice domain 0 usually fulfills this function).
+</FONT>
+<P>
+<FONT SIZE="-2">The frontend driver appears to the unprivileged guest as if it were a
+real device, for instance a block or network device.  It receives IO
+requests from its kernel as usual, however since it does not have
+access to the physical hardware of the system it must then issue
+requests to the backend.  The backend driver is responsible for
+receiving these IO requests, verifying that they are safe and then
+issuing them to the real device hardware.  The backend driver appears
+to its kernel as a normal user of in-kernel IO functionality.  When
+the IO completes the backend notifies the frontend that the data is
+ready for use; the frontend is then able to report IO completion to
+its own kernel.
+</FONT>
+<P>
+<FONT SIZE="-2">Frontend drivers are designed to be simple; most of the complexity is
+in the backend, which has responsibility for translating device
+addresses, verifying that requests are well-formed and do not violate
+isolation guarantees, etc.
+</FONT>
+<P>
+<FONT SIZE="-2">Split drivers exchange requests and responses in shared memory, with
+an event channel for asynchronous notifications of activity.  When the
+frontend driver comes up, it uses Xenstore to set up a shared memory
+frame and an interdomain event channel for communications with the
+backend.  Once this connection is established, the two can communicate
+directly by placing requests / responses into shared memory and then
+sending notifications on the event channel.  This separation of
+notification from data transfer allows message batching, and results
+in very efficient device access.
+</FONT>
+<P>
+<FONT SIZE="-2">This chapter focuses on some individual split device interfaces
+available to Xen guests.
+</FONT>
+<P>
+
+<H1><A NAME="SECTION00910000000000000000">
+8.1 Network I/O</A>
+</H1>
+<P>
+<FONT SIZE="-2">Virtual network device services are provided by shared memory
+communication with a backend domain.  From the point of view of other
+domains, the backend may be viewed as a virtual ethernet switch
+element with each domain having one or more virtual network interfaces
+connected to it.
+</FONT>
+<P>
+<FONT SIZE="-2">From the point of view of the backend domain itself, the network
+backend driver consists of a number of ethernet devices.  Each of
+these has a logical direct connection to a virtual network device in
+another domain.  This allows the backend domain to route, bridge,
+firewall, etc the traffic to / from the other domains using normal
+operating system mechanisms.
+</FONT>
+<P>
+
+<H2><A NAME="SECTION00911000000000000000">
+8.1.1 Backend Packet Handling</A>
+</H2>
+<P>
+<FONT SIZE="-2">The backend driver is responsible for a variety of actions relating to
+the transmission and reception of packets from the physical device.
+With regard to transmission, the backend performs these key actions:
+</FONT>
+<P>
+
+<UL>
+<LI><B>Validation:</B> To ensure that domains do not attempt to
+  generate invalid (e.g. spoofed) traffic, the backend driver may
+  validate headers ensuring that source MAC and IP addresses match the
+  interface that they have been sent from.
+
+<P>
+Validation functions can be configured using standard firewall rules
+  (<FONT SIZE="-1"><TT>iptables</TT></FONT> in the case of Linux).
+
+<P>
+</LI>
+<LI><B>Scheduling:</B> Since a number of domains can share a single
+  physical network interface, the backend must mediate access when
+  several domains each have packets queued for transmission.  This
+  general scheduling function subsumes basic shaping or rate-limiting
+  schemes.
+
+<P>
+</LI>
+<LI><B>Logging and Accounting:</B> The backend domain can be
+  configured with classifier rules that control how packets are
+  accounted or logged.  For example, log messages might be generated
+  whenever a domain attempts to send a TCP packet containing a SYN.
+</LI>
+</UL>
+<P>
+<FONT SIZE="-2">On receipt of incoming packets, the backend acts as a simple
+demultiplexer: Packets are passed to the appropriate virtual interface
+after any necessary logging and accounting have been carried out.
+</FONT>
+<P>
+
+<H2><A NAME="SECTION00912000000000000000">
+8.1.2 Data Transfer</A>
+</H2>
+<P>
+<FONT SIZE="-2">Each virtual interface uses two ``descriptor rings'', one for
+transmit, the other for receive.  Each descriptor identifies a block
+of contiguous machine memory allocated to the domain.
+</FONT>
+<P>
+<FONT SIZE="-2">The transmit ring carries packets to transmit from the guest to the
+backend domain.  The return path of the transmit ring carries messages
+indicating that the contents have been physically transmitted and the
+backend no longer requires the associated pages of memory.
+</FONT>
+<P>
+<FONT SIZE="-2">To receive packets, the guest places descriptors of unused pages on
+the receive ring.  The backend will return received packets by
+exchanging these pages in the domain's memory with new pages
+containing the received data, and passing back descriptors regarding
+the new packets on the ring.  This zero-copy approach allows the
+backend to maintain a pool of free pages to receive packets into, and
+then deliver them to appropriate domains after examining their
+headers.
+</FONT>
+<P>
+<FONT SIZE="-2">If a domain does not keep its receive ring stocked with empty buffers
+then packets destined to it may be dropped.  This provides some
+defence against receive livelock problems because an overloaded domain
+will cease to receive further data.  Similarly, on the transmit path,
+it provides the application with feedback on the rate at which packets
+are able to leave the system.
+</FONT>
+<P>
+<FONT SIZE="-2">Flow control on rings is achieved by including a pair of producer
+indexes on the shared ring page.  Each side will maintain a private
+consumer index indicating the next outstanding message.  In this
+manner, the domains cooperate to divide the ring into two message
+lists, one in each direction.  Notification is decoupled from the
+immediate placement of new messages on the ring; the event channel
+will be used to generate notification when <EM>either</EM> a certain
+number of outstanding messages are queued, <EM>or</EM> a specified number
+of nanoseconds have elapsed since the oldest message was placed on the
+ring.
+</FONT>
+<P>
+
+<H2><A NAME="SECTION00913000000000000000">
+8.1.3 Network ring interface</A>
+</H2>
+<P>
+<FONT SIZE="-2">The network device uses two shared memory rings for communication: one
+for transmit, one for receive.
+</FONT>
+<P>
+<FONT SIZE="-2">Transmit requests are described by the following structure:
+</FONT>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+typedef struct netif_tx_request {
+    grant_ref_t gref;      /* Reference to buffer page */
+    uint16_t offset;       /* Offset within buffer page */
+    uint16_t flags;        /* NETTXF_* */
+    uint16_t id;           /* Echoed in response message. */
+    uint16_t size;         /* Packet size in bytes.       */
+} netif_tx_request_t;
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<DL>
+<DT><STRONG>gref</STRONG></DT>
+<DD>Grant reference for the network buffer
+</DD>
+<DT><STRONG>offset</STRONG></DT>
+<DD>Offset to data
+</DD>
+<DT><STRONG>flags</STRONG></DT>
+<DD>Transmit flags (currently only NETTXF_csum_blank is
+  supported, to indicate that the protocol checksum field is
+  incomplete).
+</DD>
+<DT><STRONG>id</STRONG></DT>
+<DD>Echoed to guest by the backend in the ring-level response so
+  that the guest can match it to this request
+</DD>
+<DT><STRONG>size</STRONG></DT>
+<DD>Buffer size
+</DD>
+</DL>
+<P>
+<FONT SIZE="-2">Each transmit request is followed by a transmit response at some later
+date.  This is part of the shared-memory communication protocol and
+allows the guest to (potentially) retire internal structures related
+to the request.  It does not imply a network-level response.  This
+structure is as follows:
+</FONT>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+typedef struct netif_tx_response {
+    uint16_t id;
+    int16_t  status;
+} netif_tx_response_t;
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<DL>
+<DT><STRONG>id</STRONG></DT>
+<DD>Echo of the ID field in the corresponding transmit request.
+</DD>
+<DT><STRONG>status</STRONG></DT>
+<DD>Success / failure status of the transmit request.
+</DD>
+</DL>
+<P>
+<FONT SIZE="-2">Receive requests must be queued by the frontend, accompanied by a
+donation of page-frames to the backend.  The backend transfers page
+frames full of data back to the guest
+</FONT>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+typedef struct {
+    uint16_t    id;        /* Echoed in response message.        */
+    grant_ref_t gref;      /* Reference to incoming granted frame */
+} netif_rx_request_t;
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<DL>
+<DT><STRONG>id</STRONG></DT>
+<DD>Echoed by the frontend to identify this request when
+  responding.
+</DD>
+<DT><STRONG>gref</STRONG></DT>
+<DD>Transfer reference - the backend will use this reference
+  to transfer a frame of network data to us.
+</DD>
+</DL>
+<P>
+<FONT SIZE="-2">Receive response descriptors are queued for each received frame.  Note
+that these may only be queued in reply to an existing receive request,
+providing an in-built form of traffic throttling.
+</FONT>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+typedef struct {
+    uint16_t id;
+    uint16_t offset;       /* Offset in page of start of received packet  */
+    uint16_t flags;        /* NETRXF_* */
+    int16_t  status;       /* -ve: BLKIF_RSP_* ; +ve: Rx'ed pkt size. */
+} netif_rx_response_t;
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<DL>
+<DT><STRONG>id</STRONG></DT>
+<DD>ID echoed from the original request, used by the guest to
+  match this response to the original request.
+</DD>
+<DT><STRONG>offset</STRONG></DT>
+<DD>Offset to data within the transferred frame.
+</DD>
+<DT><STRONG>flags</STRONG></DT>
+<DD>Transmit flags (currently only NETRXF_csum_valid is
+  supported, to indicate that the protocol checksum field has already
+  been validated).
+</DD>
+<DT><STRONG>status</STRONG></DT>
+<DD>Success / error status for this operation.
+</DD>
+</DL>
+<P>
+<FONT SIZE="-2">Note that the receive protocol includes a mechanism for guests to
+receive incoming memory frames but there is no explicit transfer of
+frames in the other direction.  Guests are expected to return memory
+to the hypervisor in order to use the network interface.  They <EM>must</EM> do this or they will exceed their maximum memory reservation and
+will not be able to receive incoming frame transfers.  When necessary,
+the backend is able to replenish its pool of free network buffers by
+claiming some of this free memory from the hypervisor.
+</FONT>
+<P>
+
+<H1><A NAME="SECTION00920000000000000000">
+8.2 Block I/O</A>
+</H1>
+<P>
+<FONT SIZE="-2">All guest OS disk access goes through the virtual block device VBD
+interface.  This interface allows domains access to portions of block
+storage devices visible to the the block backend device.  The VBD
+interface is a split driver, similar to the network interface
+described above.  A single shared memory ring is used between the
+frontend and backend drivers for each virtual device, across which
+IO requests and responses are sent.
+</FONT>
+<P>
+<FONT SIZE="-2">Any block device accessible to the backend domain, including
+network-based block (iSCSI, *NBD, etc), loopback and LVM/MD devices,
+can be exported as a VBD.  Each VBD is mapped to a device node in the
+guest, specified in the guest's startup configuration.
+</FONT>
+<P>
+
+<H2><A NAME="SECTION00921000000000000000">
+8.2.1 Data Transfer</A>
+</H2>
+<P>
+<FONT SIZE="-2">The per-(virtual)-device ring between the guest and the block backend
+supports two messages:
+</FONT>
+<P>
+<DL>
+<DT><STRONG><FONT SIZE="-1"><TT>READ</TT></FONT>:</STRONG></DT>
+<DD>Read data from the specified block
+  device.  The front end identifies the device and location to read
+  from and attaches pages for the data to be copied to (typically via
+  DMA from the device).  The backend acknowledges completed read
+  requests as they finish.
+
+<P>
+</DD>
+<DT><STRONG><FONT SIZE="-1"><TT>WRITE</TT></FONT>:</STRONG></DT>
+<DD>Write data to the specified block
+  device.  This functions essentially as <FONT SIZE="-1"><TT>READ</TT></FONT>, except
+  that the data moves to the device instead of from it.
+</DD>
+</DL>
+<P>
+
+<H2><A NAME="SECTION00922000000000000000">
+8.2.2 Block ring interface</A>
+</H2>
+<P>
+<FONT SIZE="-2">The block interface is defined by the structures passed over the
+shared memory interface.  These structures are either requests (from
+the frontend to the backend) or responses (from the backend to the
+frontend).
+</FONT>
+<P>
+<FONT SIZE="-2">The request structure is defined as follows:
+</FONT>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+typedef struct blkif_request {
+    uint8_t        operation;    /* BLKIF_OP_???                         */
+    uint8_t        nr_segments;  /* number of segments                   */
+    blkif_vdev_t   handle;       /* only for read/write requests         */
+    uint64_t       id;           /* private guest value, echoed in resp  */
+    blkif_sector_t sector_number;/* start sector idx on disk (r/w only)  */
+    struct blkif_request_segment {
+        grant_ref_t gref;        /* reference to I/O buffer frame        */
+        /* @first_sect: first sector in frame to transfer (inclusive).   */
+        /* @last_sect: last sector in frame to transfer (inclusive).     */
+        uint8_t     first_sect, last_sect;
+    } seg[BLKIF_MAX_SEGMENTS_PER_REQUEST];
+} blkif_request_t;
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<FONT SIZE="-2">The fields are as follows:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>operation</STRONG></DT>
+<DD>operation ID: one of the operations described above
+</DD>
+<DT><STRONG>nr_segments</STRONG></DT>
+<DD>number of segments for scatter / gather IO
+  described by this request
+</DD>
+<DT><STRONG>handle</STRONG></DT>
+<DD>identifier for a particular virtual device on this
+  interface
+</DD>
+<DT><STRONG>id</STRONG></DT>
+<DD>this value is echoed in the response message for this IO;
+  the guest may use it to identify the original request
+</DD>
+<DT><STRONG>sector_number</STRONG></DT>
+<DD>start sector on the virtual device for this
+  request
+</DD>
+<DT><STRONG>frame_and_sects</STRONG></DT>
+<DD>This array contains structures encoding
+  scatter-gather IO to be performed:
+  <DL>
+<DT><STRONG>gref</STRONG></DT>
+<DD>The grant reference for the foreign I/O buffer page.
+  
+</DD>
+<DT><STRONG>first_sect</STRONG></DT>
+<DD>First sector to access within the buffer page (0 to 7).
+  
+</DD>
+<DT><STRONG>last_sect</STRONG></DT>
+<DD>Last sector to access within the buffer page (0 to 7).
+  
+</DD>
+</DL>
+  Data will be transferred into frames at an offset determined by the
+  value of <TT>first_sect</TT>.
+</DD>
+</DL>
+<P>
+
+<H1><A NAME="SECTION00930000000000000000">
+8.3 Virtual TPM</A>
+</H1>
+<P>
+<FONT SIZE="-2">Virtual TPM (VTPM) support provides TPM functionality to each virtual
+machine that requests this functionality in its configuration file.
+The interface enables domains to access their own private TPM like it
+was a hardware TPM built into the machine.
+</FONT>
+<P>
+<FONT SIZE="-2">The virtual TPM interface is implemented as a split driver,
+similar to the network and block interfaces described above.
+The user domain hosting the frontend exports a character device /dev/tpm0
+to user-level applications for communicating with the virtual TPM.
+This is the same device interface that is also offered if a hardware TPM
+is available in the system. The backend provides a single interface
+/dev/vtpm where the virtual TPM is waiting for commands from all domains
+that have located their backend in a given domain.
+</FONT>
+<P>
+
+<H2><A NAME="SECTION00931000000000000000">
+8.3.1 Data Transfer</A>
+</H2>
+<P>
+<FONT SIZE="-2">A single shared memory ring is used between the frontend and backend
+drivers. TPM requests and responses are sent in pages where a pointer
+to those pages and other information is placed into the ring such that
+the backend can map the pages into its memory space using the grant
+table mechanism.
+</FONT>
+<P>
+<FONT SIZE="-2">The backend driver has been implemented to only accept well-formed
+TPM requests. To meet this requirement, the length indicator in the
+TPM request must correctly indicate the length of the request.
+Otherwise an error message is automatically sent back by the device driver.
+</FONT>
+<P>
+<FONT SIZE="-2">The virtual TPM implementation listens for TPM request on /dev/vtpm. Since
+it must be able to apply the TPM request packet to the virtual TPM instance
+associated with the virtual machine, a 4-byte virtual TPM instance
+identifier is pretended to each packet by the backend driver (in network
+byte order) for internal routing of the request.
+</FONT>
+<P>
+
+<H2><A NAME="SECTION00932000000000000000">
+8.3.2 Virtual TPM ring interface</A>
+</H2>
+<P>
+<FONT SIZE="-2">The TPM protocol is a strict request/response protocol and therefore
+only one ring is used to send requests from the frontend to the backend
+and responses on the reverse path.
+</FONT>
+<P>
+<FONT SIZE="-2">The request/response structure is defined as follows:
+</FONT>
+<P>
+<FONT SIZE="-2"></FONT><PRE>
+typedef struct {
+    unsigned long addr;     /* Machine address of packet.     */
+    grant_ref_t ref;        /* grant table access reference.  */
+    uint16_t unused;        /* unused                         */
+    uint16_t size;          /* Packet size in bytes.          */
+} tpmif_tx_request_t;
+</PRE><FONT SIZE="-2"></FONT>
+<P>
+<FONT SIZE="-2">The fields are as follows:
+</FONT>
+<P>
+<DL>
+<DT><STRONG>addr</STRONG></DT>
+<DD>The machine address of the page associated with the TPM
+            request/response; a request/response may span multiple
+            pages
+</DD>
+<DT><STRONG>ref</STRONG></DT>
+<DD>The grant table reference associated with the address.
+</DD>
+<DT><STRONG>size</STRONG></DT>
+<DD>The size of the remaining packet; up to
+            PAGESIZE bytes can be found in the
+            page referenced by 'addr'
+</DD>
+</DL>
+<P>
+<FONT SIZE="-2">The frontend initially allocates several pages whose addresses
+are stored in the ring. Only these pages are used for exchange of
+requests and responses.
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001000000000000000000">
+9. Further Information</A>
+</H1>
+<P>
+<FONT SIZE="-2">If you have questions that are not answered by this manual, the
+sources of information listed below may be of interest to you.  Note
+that bug reports, suggestions and contributions related to the
+software (or the documentation) should be sent to the Xen developers'
+mailing list (address below).
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001010000000000000000">
+9.1 Other documentation</A>
+</H1>
+<P>
+<FONT SIZE="-2">If you are mainly interested in using (rather than developing for)
+Xen, the <I>Xen Users' Manual</I> is distributed in the <TT>docs/</TT>
+directory of the Xen source distribution.
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001020000000000000000">
+9.2 Online references</A>
+</H1>
+<P>
+<FONT SIZE="-2">The official Xen web site can be found at:
+</FONT>
+<BLOCKQUOTE><FONT SIZE="-2"><TT>http://www.xensource.com</TT>
+</FONT></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">This contains links to the latest versions of all online
+documentation, including the latest version of the FAQ.
+</FONT>
+<P>
+<FONT SIZE="-2">Information regarding Xen is also available at the Xen Wiki at
+</FONT>
+<BLOCKQUOTE><FONT SIZE="-2"><TT>http://wiki.xensource.com/xenwiki/</TT></FONT></BLOCKQUOTE><FONT SIZE="-2">
+The Xen project uses Bugzilla as its bug tracking system. You'll find
+the Xen Bugzilla at http://bugzilla.xensource.com/bugzilla/.
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001030000000000000000">
+9.3 Mailing lists</A>
+</H1>
+<P>
+<FONT SIZE="-2">There are several mailing lists that are used to discuss Xen related
+topics. The most widely relevant are listed below. An official page of
+mailing lists and subscription information can be found at </FONT>
+<BLOCKQUOTE><FONT SIZE="-2"><TT>http://lists.xensource.com/</TT> </FONT></BLOCKQUOTE>
+<P>
+<DL>
+<DT><STRONG>xen-devel@lists.xensource.com</STRONG></DT>
+<DD>Used for development
+  discussions and bug reports.  Subscribe at: 
+<BR>  <FONT SIZE="-1"><TT>http://lists.xensource.com/xen-devel</TT></FONT>
+</DD>
+<DT><STRONG>xen-users@lists.xensource.com</STRONG></DT>
+<DD>Used for installation and usage
+  discussions and requests for help.  Subscribe at: 
+<BR>  <FONT SIZE="-1"><TT>http://lists.xensource.com/xen-users</TT></FONT>
+</DD>
+<DT><STRONG>xen-announce@lists.xensource.com</STRONG></DT>
+<DD>Used for announcements only.
+  Subscribe at: 
+<BR>  <FONT SIZE="-1"><TT>http://lists.xensource.com/xen-announce</TT></FONT>
+</DD>
+<DT><STRONG>xen-changelog@lists.xensource.com</STRONG></DT>
+<DD>Changelog feed
+  from the unstable and 2.0 trees - developer oriented.  Subscribe at: 
+<BR>  <FONT SIZE="-1"><TT>http://lists.xensource.com/xen-changelog</TT></FONT>
+</DD>
+</DL>
+<P>
+
+<P>
+
+<H1><A NAME="SECTION001100000000000000000"></A>
+<A NAME="a:hypercalls"></A>
+<BR>
+A. Xen Hypercalls
+</H1>
+<P>
+<FONT SIZE="-2">Hypercalls represent the procedural interface to Xen; this appendix 
+categorizes and describes the current set of hypercalls. 
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001110000000000000000">
+A.1 Invoking Hypercalls</A>
+</H1><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">Hypercalls are invoked in a manner analogous to system calls in a
+conventional operating system; a software interrupt is issued which
+vectors to an entry point within Xen. On x86/32 machines the
+instruction required is <TT>int $82</TT>; the (real) IDT is setup so
+that this may only be issued from within ring 1. The particular 
+hypercall to be invoked is contained in <TT>EAX</TT> -- a list 
+mapping these values to symbolic hypercall names can be found 
+in <TT>xen/include/public/xen.h</TT>. 
+</FONT>
+<P>
+<FONT SIZE="-2">On some occasions a set of hypercalls will be required to carry
+out a higher-level function; a good example is when a guest 
+operating wishes to context switch to a new process which 
+requires updating various privileged CPU state. As an optimization
+for these cases, there is a generic mechanism to issue a set of 
+hypercalls as a batch: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>multicall(void *call_list, int nr_calls)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Execute a series of hypervisor calls; <TT>nr_calls</TT> is the length of
+the array of <TT>multicall_entry_t</TT> structures pointed to be <TT>call_list</TT>. Each entry contains the hypercall operation code followed
+by up to 7 word-sized arguments.
+</FONT></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">Note that multicalls are provided purely as an optimization; there is
+no requirement to use them when first porting a guest operating
+system.
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001120000000000000000">
+A.2 Virtual CPU Setup</A>
+</H1><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">At start of day, a guest operating system needs to setup the virtual
+CPU it is executing on. This includes installing vectors for the
+virtual IDT so that the guest OS can handle interrupts, page faults,
+etc. However the very first thing a guest OS must setup is a pair 
+of hypervisor callbacks: these are the entry points which Xen will
+use when it wishes to notify the guest OS of an occurrence. 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>set_callbacks(unsigned long event_selector, unsigned long
+  event_address, unsigned long failsafe_selector, unsigned long
+  failsafe_address) </I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Register the normal (``event'') and failsafe callbacks for 
+event processing. In each case the code segment selector and 
+address within that segment are provided. The selectors must
+have RPL 1; in XenLinux we simply use the kernel's CS for both 
+<B>event_selector</B> and <B>failsafe_selector</B>.
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">The value <B>event_address</B> specifies the address of the guest OSes
+event handling and dispatch routine; the <B>failsafe_address</B>
+specifies a separate entry point which is used only if a fault occurs
+when Xen attempts to use the normal callback. 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">On x86/64 systems the hypercall takes slightly different
+arguments. This is because callback CS does not need to be specified
+(since teh callbacks are entered via SYSRET), and also because an
+entry address needs to be specified for SYSCALLs from guest user
+space:
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>set_callbacks(unsigned long event_address, unsigned long
+  failsafe_address, unsigned long syscall_address)</I>
+</FONT></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">After installing the hypervisor callbacks, the guest OS can 
+install a `virtual IDT' by using the following hypercall: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>set_trap_table(trap_info_t *table)</I> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Install one or more entries into the per-domain 
+trap handler table (essentially a software version of the IDT). 
+Each entry in the array pointed to by <B>table</B> includes the 
+exception vector number with the corresponding segment selector 
+and entry point. Most guest OSes can use the same handlers on 
+Xen as when running on the real hardware.
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">A further hypercall is provided for the management of virtual CPUs:
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>vcpu_op(int cmd, int vcpuid, void *extra_args)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">This hypercall can be used to bootstrap VCPUs, to bring them up and
+down and to test their current status.
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>
+
+<H1><A NAME="SECTION001130000000000000000">
+A.3 Scheduling and Timer</A>
+</H1>
+<P>
+<FONT SIZE="-2">Domains are preemptively scheduled by Xen according to the 
+parameters installed by domain 0 (see Section&nbsp;<A HREF="#s:dom0ops">A.10</A>). 
+In addition, however, a domain may choose to explicitly 
+control certain behavior with the following hypercall: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>sched_op_new(int cmd, void *extra_args)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Request scheduling operation from hypervisor. The following
+sub-commands are available:
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><DL>
+<DT><STRONG>SCHEDOP_yield</STRONG></DT>
+<DD>voluntarily yields the CPU, but leaves the
+caller marked as runnable. No extra arguments are passed to this
+command. 
+</DD>
+<DT><STRONG>SCHEDOP_block</STRONG></DT>
+<DD>removes the calling domain from the run queue
+and causes it to sleep until an event is delivered to it. No extra 
+arguments are passed to this command. 
+</DD>
+<DT><STRONG>SCHEDOP_shutdown</STRONG></DT>
+<DD>is used to end the calling domain's
+execution. The extra argument is a <B>sched_shutdown</B> structure
+which indicates the reason why the domain suspended (e.g., for reboot,
+halt, power-off).
+</DD>
+<DT><STRONG>SCHEDOP_poll</STRONG></DT>
+<DD>allows a VCPU to wait on a set of event channels
+with an optional timeout (all of which are specified in the <B>sched_poll</B> extra argument). The semantics are similar to the UNIX
+<B>poll</B> system call. The caller must have event-channel upcalls
+masked when executing this command.
+</DD>
+</DL><BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2"><B>sched_op_new</B>  was not available prior to Xen 3.0.2. Older versions
+provide only the following hypercall:
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>sched_op(int cmd, unsigned long extra_arg)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">This hypercall supports the following subset of <B>sched_op_new</B> commands:
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><DL>
+<DT><STRONG>SCHEDOP_yield</STRONG></DT>
+<DD>(extra argument is 0).
+</DD>
+<DT><STRONG>SCHEDOP_block</STRONG></DT>
+<DD>(extra argument is 0).
+</DD>
+<DT><STRONG>SCHEDOP_shutdown</STRONG></DT>
+<DD>(extra argument is numeric reason code).
+</DD>
+</DL><BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">To aid the implementation of a process scheduler within a guest OS,
+Xen provides a virtual programmable timer:
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>set_timer_op(uint64_t timeout)</I> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Request a timer event to be sent at the specified system time (time 
+in nanoseconds since system boot).
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">Note that calling <B>set_timer_op</B> prior to <B>sched_op</B> 
+allows block-with-timeout semantics. 
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001140000000000000000">
+A.4 Page Table Management</A>
+</H1><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">Since guest operating systems have read-only access to their page 
+tables, Xen must be involved when making any changes. The following
+multi-purpose hypercall can be used to modify page-table entries, 
+update the machine-to-physical mapping table, flush the TLB, install 
+a new page-table base pointer, and more.
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>mmu_update(mmu_update_t *req, int count, int *success_count)</I> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Update the page table for the domain; a set of <B>count</B> updates are
+submitted for processing in a batch, with <B>success_count</B> being 
+updated to report the number of successful updates.  
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Each element of <B>req[]</B> contains a pointer (address) and value; 
+the least significant 2-bits of the pointer are used to distinguish 
+the type of update requested as follows:
+</FONT></BLOCKQUOTE><DL>
+<DD><P>
+</DD>
+<DT><STRONG>MMU_NORMAL_PT_UPDATE:</STRONG></DT>
+<DD>update a page directory entry or
+page table entry to the associated value; Xen will check that the
+update is safe, as described in Chapter&nbsp;<A HREF="#c:memory">3</A>.
+
+<P>
+</DD>
+<DT><STRONG>MMU_MACHPHYS_UPDATE:</STRONG></DT>
+<DD>update an entry in the
+  machine-to-physical table. The calling domain must own the machine
+  page in question (or be privileged).
+</DD>
+</DL><BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">Explicitly updating batches of page table entries is extremely
+efficient, but can require a number of alterations to the guest
+OS. Using the writable page table mode (Chapter&nbsp;<A HREF="#c:memory">3</A>) is
+recommended for new OS ports.
+</FONT>
+<P>
+<FONT SIZE="-2">Regardless of which page table update mode is being used, however,
+there are some occasions (notably handling a demand page fault) where
+a guest OS will wish to modify exactly one PTE rather than a
+batch, and where that PTE is mapped into the current address space.
+This is catered for by the following:
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>update_va_mapping(unsigned long va, uint64_t val,
+                         unsigned long flags)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Update the currently installed PTE that maps virtual address <B>va</B>
+to new value <B>val</B>. As with <B>mmu_update</B>, Xen checks the
+modification  is safe before applying it. The <B>flags</B> determine
+which kind of TLB flush, if any, should follow the update. 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">Finally, sufficiently privileged domains may occasionally wish to manipulate 
+the pages of others: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>update_va_mapping_otherdomain(unsigned long va, uint64_t val,
+                         unsigned long flags, domid_t domid)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Identical to <B>update_va_mapping</B> save that the pages being
+mapped must belong to the domain <B>domid</B>. 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">An additional MMU hypercall provides an ``extended command''
+interface.  This provides additional functionality beyond the basic
+table updating commands:
+</FONT>
+<P>
+
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>mmuext_op(struct mmuext_op *op, int count, int *success_count, domid_t domid)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">This hypercall is used to perform additional MMU operations.  These
+include updating <TT>cr3</TT> (or just re-installing it for a TLB flush),
+requesting various kinds of TLB flush, flushing the cache, installing
+a new LDT, or pinning &amp; unpinning page-table pages (to ensure their
+reference count doesn't drop to zero which would require a
+revalidation of all entries).  Some of the operations available are
+restricted to domains with sufficient system privileges.
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">It is also possible for privileged domains to reassign page ownership
+via an extended MMU operation, although grant tables are used instead
+of this where possible; see Section&nbsp;<A HREF="#s:idc">A.8</A>.
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">Finally, a hypercall interface is exposed to activate and deactivate
+various optional facilities provided by Xen for memory management.
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>vm_assist(unsigned int cmd, unsigned int type)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Toggle various memory management modes (in particular writable page
+tables).
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001150000000000000000">
+A.5 Segmentation Support</A>
+</H1>
+<P>
+<FONT SIZE="-2">Xen allows guest OSes to install a custom GDT if they require it; 
+this is context switched transparently whenever a domain is 
+[de]scheduled.  The following hypercall is effectively a 
+`safe' version of <TT>lgdt</TT>: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>set_gdt(unsigned long *frame_list, int entries)</I> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Install a global descriptor table for a domain; <B>frame_list</B> is
+an array of up to 16 machine page frames within which the GDT resides,
+with <B>entries</B> being the actual number of descriptor-entry
+slots. All page frames must be mapped read-only within the guest's
+address space, and the table must be large enough to contain Xen's
+reserved entries (see <B>xen/include/public/arch-x86_32.h</B>).
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">Many guest OSes will also wish to install LDTs; this is achieved by
+using <B>mmu_update</B> with an extended command, passing the
+linear address of the LDT base along with the number of entries. No
+special safety checks are required; Xen needs to perform this task
+simply since <TT>lldt</TT> requires CPL 0.
+</FONT>
+<P>
+<FONT SIZE="-2">Xen also allows guest operating systems to update just an 
+individual segment descriptor in the GDT or LDT:  
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>update_descriptor(uint64_t ma, uint64_t desc)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Update the GDT/LDT entry at machine address <B>ma</B>; the new
+8-byte descriptor is stored in <B>desc</B>.
+Xen performs a number of checks to ensure the descriptor is 
+valid. 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">Guest OSes can use the above in place of context switching entire 
+LDTs (or the GDT) when the number of changing descriptors is small. 
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001160000000000000000">
+A.6 Context Switching</A>
+</H1><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">When a guest OS wishes to context switch between two processes, 
+it can use the page table and segmentation hypercalls described
+above to perform the the bulk of the privileged work. In addition, 
+however, it will need to invoke Xen to switch the kernel (ring 1) 
+stack pointer: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>stack_switch(unsigned long ss, unsigned long esp)</I> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Request kernel stack switch from hypervisor; <B>ss</B> is the new 
+stack segment, which <B>esp</B> is the new stack pointer. 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">A useful hypercall for context switching allows ``lazy'' save and
+restore of floating point state:
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>fpu_taskswitch(int set)</I> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">This call instructs Xen to set the <TT>TS</TT> bit in the <TT>cr0</TT>
+control register; this means that the next attempt to use floating
+point will cause a trap which the guest OS can trap. Typically it will
+then save/restore the FP state, and clear the <TT>TS</TT> bit, using the
+same call.
+</FONT></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">This is provided as an optimization only; guest OSes can also choose
+to save and restore FP state on all context switches for simplicity. 
+</FONT>
+<P>
+<FONT SIZE="-2">Finally, a hypercall is provided for entering vm86 mode:
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>switch_vm86</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">This allows the guest to run code in vm86 mode, which is needed for
+some legacy software.
+</FONT></BLOCKQUOTE>
+<P>
+
+<H1><A NAME="SECTION001170000000000000000">
+A.7 Physical Memory Management</A>
+</H1>
+<P>
+<FONT SIZE="-2">As mentioned previously, each domain has a maximum and current 
+memory allocation. The maximum allocation, set at domain creation 
+time, cannot be modified. However a domain can choose to reduce 
+and subsequently grow its current allocation by using the
+following call: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>memory_op(unsigned int op, void *arg)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Increase or decrease current memory allocation (as determined by 
+the value of <B>op</B>).  The available operations are:
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><DL>
+<DT><STRONG>XENMEM_increase_reservation</STRONG></DT>
+<DD>Request an increase in machine
+  memory allocation; <B>arg</B> must point to a <B>  xen_memory_reservation</B> structure.
+</DD>
+<DT><STRONG>XENMEM_decrease_reservation</STRONG></DT>
+<DD>Request a decrease in machine
+  memory allocation; <B>arg</B> must point to a <B>  xen_memory_reservation</B> structure.
+</DD>
+<DT><STRONG>XENMEM_maximum_ram_page</STRONG></DT>
+<DD>Request the frame number of the
+  highest-addressed frame of machine memory in the system.  <B>arg</B>
+  must point to an <B>unsigned long</B> where this value will be
+  stored.
+</DD>
+<DT><STRONG>XENMEM_current_reservation</STRONG></DT>
+<DD>Returns current memory reservation
+  of the specified domain.
+</DD>
+<DT><STRONG>XENMEM_maximum_reservation</STRONG></DT>
+<DD>Returns maximum memory reservation
+  of the specified domain.
+</DD>
+</DL><BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">In addition to simply reducing or increasing the current memory
+allocation via a `balloon driver', this call is also useful for 
+obtaining contiguous regions of machine memory when required (e.g. 
+for certain PCI devices, or if using superpages).  
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001180000000000000000"></A>
+<A NAME="s:idc"></A>
+<BR>
+A.8 Inter-Domain Communication
+</H1><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">Xen provides a simple asynchronous notification mechanism via
+<I>event channels</I>. Each domain has a set of end-points (or
+<I>ports</I>) which may be bound to an event source (e.g. a physical
+IRQ, a virtual IRQ, or an port in another domain). When a pair of
+end-points in two different domains are bound together, then a `send'
+operation on one will cause an event to be received by the destination
+domain.
+</FONT>
+<P>
+<FONT SIZE="-2">The control and use of event channels involves the following hypercall: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>event_channel_op(evtchn_op_t *op)</I> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Inter-domain event-channel management; <B>op</B> is a discriminated 
+union which allows the following 7 operations: 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><DL>
+<DD><P>
+</DD>
+<DT><STRONG>alloc_unbound:</STRONG></DT>
+<DD>allocate a free (unbound) local
+  port and prepare for connection from a specified domain. 
+</DD>
+<DT><STRONG>bind_virq:</STRONG></DT>
+<DD>bind a local port to a virtual 
+IRQ; any particular VIRQ can be bound to at most one port per domain. 
+</DD>
+<DT><STRONG>bind_pirq:</STRONG></DT>
+<DD>bind a local port to a physical IRQ;
+once more, a given pIRQ can be bound to at most one port per
+domain. Furthermore the calling domain must be sufficiently
+privileged.
+</DD>
+<DT><STRONG>bind_interdomain:</STRONG></DT>
+<DD>construct an interdomain event 
+channel; in general, the target domain must have previously allocated 
+an unbound port for this channel, although this can be bypassed by 
+privileged domains during domain setup. 
+</DD>
+<DT><STRONG>close:</STRONG></DT>
+<DD>close an interdomain event channel. 
+</DD>
+<DT><STRONG>send:</STRONG></DT>
+<DD>send an event to the remote end of a 
+interdomain event channel. 
+</DD>
+<DT><STRONG>status:</STRONG></DT>
+<DD>determine the current status of a local port. 
+</DD>
+</DL><BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">For more details see
+<B>xen/include/public/event_channel.h</B>. 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">Event channels are the fundamental communication primitive between 
+Xen domains and seamlessly support SMP. However they provide little
+bandwidth for communication <I>per se</I>, and hence are typically 
+married with a piece of shared memory to produce effective and 
+high-performance inter-domain communication. 
+</FONT>
+<P>
+<FONT SIZE="-2">Safe sharing of memory pages between guest OSes is carried out by
+granting access on a per page basis to individual domains. This is
+achieved by using the <TT>grant_table_op</TT> hypercall.
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>grant_table_op(unsigned int cmd, void *uop, unsigned int count)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Used to invoke operations on a grant reference, to setup the grant
+table and to dump the tables' contents for debugging.
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+
+<H1><A NAME="SECTION001190000000000000000">
+A.9 IO Configuration</A>
+</H1><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">Domains with physical device access (i.e. driver domains) receive
+limited access to certain PCI devices (bus address space and
+interrupts). However many guest operating systems attempt to 
+determine the PCI configuration by directly access the PCI BIOS, 
+which cannot be allowed for safety. 
+</FONT>
+<P>
+<FONT SIZE="-2">Instead, Xen provides the following hypercall: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>physdev_op(void *physdev_op)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Set and query IRQ configuration details, set the system IOPL, set the
+TSS IO bitmap.
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">For examples of using <TT>physdev_op</TT>, see the 
+Xen-specific PCI code in the linux sparse tree. 
+</FONT>
+<P>
+
+<H1><A NAME="SECTION0011100000000000000000"></A>
+<A NAME="s:dom0ops"></A>
+<BR>
+A.10 Administrative Operations
+</H1>
+<P>
+<FONT SIZE="-2">A large number of control operations are available to a sufficiently
+privileged domain (typically domain 0). These allow the creation and
+management of new domains, for example. A complete list is given 
+below: for more details on any or all of these, please see 
+<TT>xen/include/public/dom0_ops.h</TT> 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>dom0_op(dom0_op_t *op)</I> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Administrative domain operations for domain management. The options are:
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><DL>
+<DT><STRONG>DOM0_GETMEMLIST:</STRONG></DT>
+<DD>get list of pages used by the domain
+
+<P>
+</DD>
+<DT><STRONG>DOM0_SCHEDCTL:</STRONG></DT>
+<DD><P>
+</DD>
+<DT><STRONG>DOM0_ADJUSTDOM:</STRONG></DT>
+<DD>adjust scheduling priorities for domain
+
+<P>
+</DD>
+<DT><STRONG>DOM0_CREATEDOMAIN:</STRONG></DT>
+<DD>create a new domain
+
+<P>
+</DD>
+<DT><STRONG>DOM0_DESTROYDOMAIN:</STRONG></DT>
+<DD>deallocate all resources associated
+with a domain
+
+<P>
+</DD>
+<DT><STRONG>DOM0_PAUSEDOMAIN:</STRONG></DT>
+<DD>remove a domain from the scheduler run 
+queue. 
+
+<P>
+</DD>
+<DT><STRONG>DOM0_UNPAUSEDOMAIN:</STRONG></DT>
+<DD>mark a paused domain as schedulable
+  once again. 
+
+<P>
+</DD>
+<DT><STRONG>DOM0_GETDOMAININFO:</STRONG></DT>
+<DD>get statistics about the domain
+
+<P>
+</DD>
+<DT><STRONG>DOM0_SETDOMAININFO:</STRONG></DT>
+<DD>set VCPU-related attributes
+
+<P>
+</DD>
+<DT><STRONG>DOM0_MSR:</STRONG></DT>
+<DD>read or write model specific registers
+
+<P>
+</DD>
+<DT><STRONG>DOM0_DEBUG:</STRONG></DT>
+<DD>interactively invoke the debugger
+
+<P>
+</DD>
+<DT><STRONG>DOM0_SETTIME:</STRONG></DT>
+<DD>set system time
+
+<P>
+</DD>
+<DT><STRONG>DOM0_GETPAGEFRAMEINFO:</STRONG></DT>
+<DD><P>
+</DD>
+<DT><STRONG>DOM0_READCONSOLE:</STRONG></DT>
+<DD>read console content from hypervisor buffer ring
+
+<P>
+</DD>
+<DT><STRONG>DOM0_PINCPUDOMAIN:</STRONG></DT>
+<DD>pin domain to a particular CPU
+
+<P>
+</DD>
+<DT><STRONG>DOM0_TBUFCONTROL:</STRONG></DT>
+<DD>get and set trace buffer attributes
+
+<P>
+</DD>
+<DT><STRONG>DOM0_PHYSINFO:</STRONG></DT>
+<DD>get information about the host machine
+
+<P>
+</DD>
+<DT><STRONG>DOM0_SCHED_ID:</STRONG></DT>
+<DD>get the ID of the current Xen scheduler
+
+<P>
+</DD>
+<DT><STRONG>DOM0_SHADOW_CONTROL:</STRONG></DT>
+<DD>switch between shadow page-table modes
+
+<P>
+</DD>
+<DT><STRONG>DOM0_SETDOMAINMAXMEM:</STRONG></DT>
+<DD>set maximum memory allocation of a domain
+
+<P>
+</DD>
+<DT><STRONG>DOM0_GETPAGEFRAMEINFO2:</STRONG></DT>
+<DD>batched interface for getting
+page frame info
+
+<P>
+</DD>
+<DT><STRONG>DOM0_ADD_MEMTYPE:</STRONG></DT>
+<DD>set MTRRs
+
+<P>
+</DD>
+<DT><STRONG>DOM0_DEL_MEMTYPE:</STRONG></DT>
+<DD>remove a memory type range
+
+<P>
+</DD>
+<DT><STRONG>DOM0_READ_MEMTYPE:</STRONG></DT>
+<DD>read MTRR
+
+<P>
+</DD>
+<DT><STRONG>DOM0_PERFCCONTROL:</STRONG></DT>
+<DD>control Xen's software performance
+counters
+
+<P>
+</DD>
+<DT><STRONG>DOM0_MICROCODE:</STRONG></DT>
+<DD>update CPU microcode
+
+<P>
+</DD>
+<DT><STRONG>DOM0_IOPORT_PERMISSION:</STRONG></DT>
+<DD>modify domain permissions for an
+IO port range (enable / disable a range for a particular domain)
+
+<P>
+</DD>
+<DT><STRONG>DOM0_GETVCPUCONTEXT:</STRONG></DT>
+<DD>get context from a VCPU
+
+<P>
+</DD>
+<DT><STRONG>DOM0_GETVCPUINFO:</STRONG></DT>
+<DD>get current state for a VCPU
+</DD>
+<DT><STRONG>DOM0_GETDOMAININFOLIST:</STRONG></DT>
+<DD>batched interface to get domain
+info
+
+<P>
+</DD>
+<DT><STRONG>DOM0_PLATFORM_QUIRK:</STRONG></DT>
+<DD>inform Xen of a platform quirk it
+needs to handle (e.g. noirqbalance)
+
+<P>
+</DD>
+<DT><STRONG>DOM0_PHYSICAL_MEMORY_MAP:</STRONG></DT>
+<DD>get info about dom0's memory
+map
+
+<P>
+</DD>
+<DT><STRONG>DOM0_MAX_VCPUS:</STRONG></DT>
+<DD>change max number of VCPUs for a domain
+
+<P>
+</DD>
+<DT><STRONG>DOM0_SETDOMAINHANDLE:</STRONG></DT>
+<DD>set the handle for a domain
+
+<P>
+</DD>
+</DL><BLOCKQUOTE></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">Most of the above are best understood by looking at the code 
+implementing them (in <TT>xen/common/dom0_ops.c</TT>) and in 
+the user-space tools that use them (mostly in <TT>tools/libxc</TT>). 
+</FONT>
+<P>
+
+<H1><A NAME="SECTION0011110000000000000000"></A>
+<A NAME="s:acmops"></A>
+<BR>
+A.11 Access Control Module Hypercalls
+</H1>
+<P>
+<FONT SIZE="-2">Hypercalls relating to the management of the Access Control Module are
+also restricted to domain 0 access for now. For more details on any or
+all of these, please see <TT>xen/include/public/acm_ops.h</TT>.  A
+complete list is given below:
+</FONT>
+<P>
+
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>acm_op(int cmd, void *args)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">This hypercall can be used to configure the state of the ACM, query
+that state, request access control decisions and dump additional
+information.
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE></BLOCKQUOTE><DL>
+<DT><STRONG>ACMOP_SETPOLICY:</STRONG></DT>
+<DD>set the access control policy
+
+<P>
+</DD>
+<DT><STRONG>ACMOP_GETPOLICY:</STRONG></DT>
+<DD>get the current access control policy and
+  status
+
+<P>
+</DD>
+<DT><STRONG>ACMOP_DUMPSTATS:</STRONG></DT>
+<DD>get current access control hook invocation
+  statistics
+
+<P>
+</DD>
+<DT><STRONG>ACMOP_GETSSID:</STRONG></DT>
+<DD>get security access control information for a
+  domain
+
+<P>
+</DD>
+<DT><STRONG>ACMOP_GETDECISION:</STRONG></DT>
+<DD>get access decision based on the currently
+  enforced access control policy
+
+<P>
+</DD>
+</DL><BLOCKQUOTE></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">Most of the above are best understood by looking at the code
+implementing them (in <TT>xen/common/acm_ops.c</TT>) and in the
+user-space tools that use them (mostly in <TT>tools/security</TT> and
+<TT>tools/python/xen/lowlevel/acm</TT>).
+</FONT>
+<P>
+
+<H1><A NAME="SECTION0011120000000000000000">
+A.12 Debugging Hypercalls</A>
+</H1><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">A few additional hypercalls are mainly useful for debugging: 
+</FONT>
+<P>
+
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>console_io(int cmd, int count, char *str)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Use Xen to interact with the console; operations are:
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">CONSOLEIO_write: Output count characters from buffer str.
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">CONSOLEIO_read: Input at most count characters into buffer str.
+</FONT></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">A pair of hypercalls allows access to the underlying debug registers: 
+</FONT>
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>set_debugreg(int reg, unsigned long value)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Set debug register <B>reg</B> to <B>value</B> 
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>get_debugreg(int reg)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Return the contents of the debug register <B>reg</B>
+</FONT></BLOCKQUOTE>
+<P>
+<FONT SIZE="-2">And finally: 
+</FONT>
+<BLOCKQUOTE><FONT SIZE="-2">
+<BR><I>xen_version(int cmd)</I>
+</FONT></BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><FONT SIZE="-2">Request Xen version number.
+</FONT></BLOCKQUOTE><FONT SIZE="-2"> 
+</FONT>
+<P>
+<FONT SIZE="-2">This is useful to ensure that user-space tools are in sync 
+with the underlying hypervisor. 
+</FONT>
+<P>
+<BR><HR>
+<ADDRESS>
+root
+2012-02-23
+</ADDRESS>
+</BODY>
+</HTML>

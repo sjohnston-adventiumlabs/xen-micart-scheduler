@@ -1,0 +1,820 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:589: checking whether to enable maintainer-specific portions of Makefiles
+configure:615: checking for gcc
+configure:728: checking whether the C compiler (gcc -g -O2 ) works
+configure:744: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:770: checking whether the C compiler (gcc -g -O2 ) is a cross-compiler
+configure:775: checking whether we are using GNU C
+configure:784: gcc -E conftest.c
+configure:803: checking whether gcc accepts -g
+configure:840: checking how to run the C preprocessor
+configure:861: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:920: checking for AIX
+configure:944: checking for POSIXized ISC
+configure:968: checking for gcc option to accept ANSI C
+configure:1022: gcc  -c -g -O2  conftest.c 1>&5
+configure:1093: checking host system type
+configure:1114: checking target system type
+configure:1132: checking build system type
+configure:1170: checking for ranlib
+configure:1237: checking whether make sets ${MAKE}
+configure:1266: checking for ranlib
+configure:1294: checking for ANSI C header files
+configure:1307: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1374: gcc -o conftest -g -O2   conftest.c  1>&5
+configure: In function 'main':
+configure:1369:67: warning: incompatible implicit declaration of built-in function 'exit'
+configure:1398: checking for working const
+configure:1452: gcc -c -g -O2  conftest.c 1>&5
+configure:1473: checking for inline
+configure:1487: gcc -c -g -O2  conftest.c 1>&5
+configure:1513: checking for off_t
+configure:1546: checking for size_t
+configure:1581: checking for working alloca.h
+configure:1593: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1614: checking for alloca
+configure:1647: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1816: checking for unistd.h
+configure:1826: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1855: checking for getpagesize
+configure:1883: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1908: checking for working mmap
+configure:2056: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1987:7: warning: conflicting types for built-in function 'malloc'
+configure: In function 'main':
+configure:2004:3: warning: incompatible implicit declaration of built-in function 'exit'
+configure:2026:24: warning: cast from pointer to integer of different size
+configure:2084: checking for argz.h
+configure:2094: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2084: checking for limits.h
+configure:2094: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2084: checking for locale.h
+configure:2094: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2084: checking for nl_types.h
+configure:2094: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2084: checking for malloc.h
+configure:2094: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2084: checking for string.h
+configure:2094: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2084: checking for unistd.h
+configure:2084: checking for values.h
+configure:2094: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2084: checking for sys/param.h
+configure:2094: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2124: checking for getcwd
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2124: checking for munmap
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2124: checking for putenv
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2124: checking for setenv
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2124: checking for setlocale
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2124: checking for strchr
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2136:6: warning: conflicting types for built-in function 'strchr'
+configure:2124: checking for strcasecmp
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2136:6: warning: conflicting types for built-in function 'strcasecmp'
+configure:2124: checking for __argz_count
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2124: checking for __argz_stringify
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2124: checking for __argz_next
+configure:2152: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2181: checking for stpcpy
+configure:2209: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2193:6: warning: conflicting types for built-in function 'stpcpy'
+configure:2243: checking for LC_MESSAGES
+configure:2255: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2276: checking whether NLS is requested
+configure:2296: checking whether included gettext is requested
+configure:2315: checking for libintl.h
+configure:2325: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2342: checking for gettext in libc
+configure:2354: gcc -o conftest -g -O2   conftest.c  1>&5
+configure: In function 'main':
+configure:2350:8: warning: cast from pointer to integer of different size
+configure:2445: checking for msgfmt
+configure:2479: checking for dcgettext
+configure:2507: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2491:6: warning: conflicting types for built-in function 'dcgettext'
+configure:2534: checking for gmsgfmt
+configure:2570: checking for xgettext
+configure:2610: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:3105: checking for libunwind.h
+configure:3115: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3111:23: fatal error: libunwind.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 3110 "configure"
+#include "confdefs.h"
+#include <libunwind.h>
+configure:3145: checking for libunwind-ia64.h
+configure:3155: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3151:28: fatal error: libunwind-ia64.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 3150 "configure"
+#include "confdefs.h"
+#include <libunwind-ia64.h>
+configure:3296: checking for monstartup
+configure:3324: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:3296: checking for _mcleanup
+configure:3324: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:3349: checking for _etext
+configure:3363: gcc -o conftest -g -O2   conftest.c  1>&5
+configure: In function 'main':
+configure:3359:6: warning: attempt to free a non-heap object '_etext'
+configure:3433: checking for mawk
+configure:3433: checking for gawk
+configure:3474: checking for a BSD compatible install
+configure:3527: checking whether ln -s works
+configure:3550: checking for ranlib
+configure:3582: checking for bison
+configure:3616: checking for ar
+configure:3648: checking for dlltool
+configure:3680: checking for windres
+configure:3714: checking for mig
+configure:3750: checking for main in -lm
+configure:3765: gcc -o conftest -g -O2   conftest.c -lm   1>&5
+configure:3798: checking for wctype
+configure:3826: gcc -o conftest -g -O2   conftest.c -lm  1>&5
+configure:3896: checking for library containing gethostbyname
+configure:3914: gcc -o conftest -g -O2   conftest.c -lm  1>&5
+configure:3960: checking for library containing socketpair
+configure:3978: gcc -o conftest -g -O2   conftest.c -lm  1>&5
+configure:4106: checking for library containing tgetent
+configure:4124: gcc -o conftest -g -O2   conftest.c -lm  1>&5
+/tmp/cc5MbfPi.o: In function `main':
+/home/sjohnston/micart/xen-4.0.1-testing/tools/debugger/gdb/gdb-6.2.1-linux-i386-xen/gdb/configure:4120: undefined reference to `tgetent'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 4113 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char tgetent();
+
+int main() {
+tgetent()
+; return 0; }
+configure:4146: gcc -o conftest -g -O2   conftest.c -ltermcap  -lm  1>&5
+configure:4187: checking for library containing initscr
+configure:4205: gcc -o conftest -g -O2   conftest.c -ltermcap -lm  1>&5
+/tmp/ccao61tw.o: In function `main':
+/home/sjohnston/micart/xen-4.0.1-testing/tools/debugger/gdb/gdb-6.2.1-linux-i386-xen/gdb/configure:4201: undefined reference to `initscr'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 4194 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char initscr();
+
+int main() {
+initscr()
+; return 0; }
+configure:4227: gcc -o conftest -g -O2   conftest.c -lncurses  -ltermcap -lm  1>&5
+configure:4256: checking for library containing wborder
+configure:4274: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:4326: checking for dirent.h that defines DIR
+configure:4339: gcc -c -g -O2  conftest.c 1>&5
+configure:4364: checking for opendir in -ldir
+configure:4383: gcc -o conftest -g -O2   conftest.c -ldir  -lncurses -ltermcap -lm  1>&5
+/usr/bin/ld: cannot find -ldir
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 4372 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char opendir();
+
+int main() {
+opendir()
+; return 0; }
+configure:4447: checking whether stat file-mode macros are broken
+configure:4503: checking for ANSI C header files
+configure:4610: checking for link.h
+configure:4620: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4650: checking for machine/reg.h
+configure:4660: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4656:25: fatal error: machine/reg.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 4655 "configure"
+#include "confdefs.h"
+#include <machine/reg.h>
+configure:4690: checking for nlist.h
+configure:4700: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4696:19: fatal error: nlist.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 4695 "configure"
+#include "confdefs.h"
+#include <nlist.h>
+configure:4730: checking for poll.h
+configure:4740: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4730: checking for sys/poll.h
+configure:4740: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4770: checking for proc_service.h
+configure:4780: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4776:26: fatal error: proc_service.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 4775 "configure"
+#include "confdefs.h"
+#include <proc_service.h>
+configure:4770: checking for thread_db.h
+configure:4780: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4770: checking for gnu/libc-version.h
+configure:4780: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4810: checking for stddef.h
+configure:4820: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4850: checking for stdlib.h
+configure:4860: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4890: checking for stdint.h
+configure:4900: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4930: checking for string.h
+configure:4930: checking for memory.h
+configure:4940: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4930: checking for strings.h
+configure:4940: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4970: checking for sys/fault.h
+configure:4980: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:4976:23: fatal error: sys/fault.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 4975 "configure"
+#include "confdefs.h"
+#include <sys/fault.h>
+configure:5010: checking for sys/file.h
+configure:5020: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5050: checking for sys/filio.h
+configure:5060: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5056:23: fatal error: sys/filio.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 5055 "configure"
+#include "confdefs.h"
+#include <sys/filio.h>
+configure:5090: checking for sys/ioctl.h
+configure:5100: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5130: checking for sys/param.h
+configure:5170: checking for sys/proc.h
+configure:5180: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5176:22: fatal error: sys/proc.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 5175 "configure"
+#include "confdefs.h"
+#include <sys/proc.h>
+configure:5210: checking for sys/procfs.h
+configure:5220: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5250: checking for sys/ptrace.h
+configure:5260: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5250: checking for ptrace.h
+configure:5260: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5256:20: fatal error: ptrace.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 5255 "configure"
+#include "confdefs.h"
+#include <ptrace.h>
+configure:5290: checking for sys/reg.h
+configure:5300: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5290: checking for sys/debugreg.h
+configure:5300: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5330: checking for sys/select.h
+configure:5340: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5370: checking for sys/syscall.h
+configure:5380: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5410: checking for sys/user.h
+configure:5420: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5450: checking for sys/wait.h
+configure:5460: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5450: checking for wait.h
+configure:5460: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5490: checking for termios.h
+configure:5500: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5490: checking for termio.h
+configure:5500: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5490: checking for sgtty.h
+configure:5500: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5530: checking for unistd.h
+configure:5583: checking for curses.h
+configure:5593: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5583: checking for ncurses.h
+configure:5593: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5583: checking for term.h
+configure:5593: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5626: checking for ctype.h
+configure:5636: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5626: checking for time.h
+configure:5636: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5664: checking for member st_blocks in struct stat
+configure:5677: gcc -c -g -O2  conftest.c 1>&5
+configure:5704: checking whether getopt is declared
+configure:5721: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:5716:28: error: 'getopt' undeclared (first use in this function)
+configure:5716:28: note: each undeclared identifier is reported only once for each function it appears in
+configure: failed program was:
+#line 5709 "configure"
+#include "confdefs.h"
+#undef HAVE_DECL_GETOPT
+#define HAVE_DECL_GETOPT 1
+  
+
+int main() {
+#ifndef getopt
+char *(*pfn) = (char *(*)) getopt ;
+#endif
+; return 0; }
+configure:5758: checking return type of signal handlers
+configure:5780: gcc -c -g -O2  conftest.c 1>&5
+configure:5804: checking for working const
+configure:5879: checking for inline
+configure:5926: checking for working alloca.h
+configure:5959: checking for alloca
+configure:6161: checking for unistd.h
+configure:6200: checking for getpagesize
+configure:6253: checking for working mmap
+configure:6424: checking for pid_t
+configure:6458: checking for vfork.h
+configure:6468: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:6464:19: fatal error: vfork.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 6463 "configure"
+#include "confdefs.h"
+#include <vfork.h>
+configure:6493: checking for working vfork
+configure:6644: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure: In function 'main':
+configure:6627:5: warning: incompatible implicit declaration of built-in function 'exit'
+configure:6669: checking for canonicalize_file_name
+configure:6697: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6669: checking for realpath
+configure:6697: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6724: checking for poll
+configure:6752: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6779: checking for pread64
+configure:6807: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6834: checking for sbrk
+configure:6862: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6889: checking for setpgid
+configure:6917: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6889: checking for setpgrp
+configure:6917: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6944: checking for sigaction
+configure:6972: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6944: checking for sigprocmask
+configure:6972: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6944: checking for sigsetmask
+configure:6972: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:6999: checking for socketpair
+configure:7027: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:7054: checking for syscall
+configure:7082: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:7109: checking whether setpgrp takes no argument
+configure:7137: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure: In function 'main':
+configure:7129:5: error: too many arguments to function 'setpgrp'
+/usr/include/unistd.h:669:12: note: declared here
+configure:7130:2: warning: incompatible implicit declaration of built-in function 'exit'
+configure: failed program was:
+#line 7117 "configure"
+#include "confdefs.h"
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+/*
+ * If this system has a BSD-style setpgrp, which takes arguments, exit
+ * successfully.
+ */
+main()
+{
+    if (setpgrp(1,1) == -1)
+	exit(0);
+    else
+	exit(1);
+}
+
+configure:7205: checking for sigsetjmp
+configure:7219: gcc -c -g -O2  conftest.c 1>&5
+configure:7245: checking for GNU regex
+configure:7260: gcc -c -g -O2  conftest.c 1>&5
+configure:7294: checking for td_pcb in struct thread
+configure:7307: gcc -c -g -O2  conftest.c 1>&5
+configure:7301:22: fatal error: sys/proc.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 7299 "configure"
+#include "confdefs.h"
+#include <sys/param.h>
+#include <sys/proc.h>
+int main() {
+struct thread td; td.td_pcb;
+; return 0; }
+configure:7329: checking for struct reg in machine/reg.h
+configure:7342: gcc -c -g -O2  conftest.c 1>&5
+configure:7336:25: fatal error: machine/reg.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 7334 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <machine/reg.h>
+int main() {
+struct reg r;
+; return 0; }
+configure:7365: checking for r_fs in struct reg
+configure:7377: gcc -c -g -O2  conftest.c 1>&5
+configure:7371:25: fatal error: machine/reg.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 7370 "configure"
+#include "confdefs.h"
+#include <machine/reg.h>
+int main() {
+struct reg r; r.r_fs;
+; return 0; }
+configure:7397: checking for r_gs in struct reg
+configure:7409: gcc -c -g -O2  conftest.c 1>&5
+configure:7403:25: fatal error: machine/reg.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 7402 "configure"
+#include "confdefs.h"
+#include <machine/reg.h>
+int main() {
+struct reg r; r.r_gs;
+; return 0; }
+configure:7431: checking for PTRACE_GETREGS
+configure:7443: gcc -c -g -O2  conftest.c 1>&5
+configure:7465: checking for PTRACE_GETFPXREGS
+configure:7477: gcc -c -g -O2  conftest.c 1>&5
+configure:7499: checking for PT_GETDBREGS
+configure:7512: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:7508:1: error: 'PT_GETDBREGS' undeclared (first use in this function)
+configure:7508:1: note: each undeclared identifier is reported only once for each function it appears in
+configure: failed program was:
+#line 7504 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/ptrace.h>
+int main() {
+PT_GETDBREGS;
+; return 0; }
+configure:7534: checking for PT_GETXMMREGS
+configure:7547: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:7543:1: error: 'PT_GETXMMREGS' undeclared (first use in this function)
+configure:7543:1: note: each undeclared identifier is reported only once for each function it appears in
+configure: failed program was:
+#line 7539 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/ptrace.h>
+int main() {
+PT_GETXMMREGS;
+; return 0; }
+configure:7570: checking for uintptr_t in stdint.h
+configure:7582: gcc -c -g -O2  conftest.c 1>&5
+configure:7603: checking whether malloc must be declared
+configure:7629: gcc -c -g -O2  conftest.c 1>&5
+configure:7650: checking whether realloc must be declared
+configure:7676: gcc -c -g -O2  conftest.c 1>&5
+configure:7697: checking whether free must be declared
+configure:7723: gcc -c -g -O2  conftest.c 1>&5
+configure:7744: checking whether strerror must be declared
+configure:7770: gcc -c -g -O2  conftest.c 1>&5
+configure:7791: checking whether strdup must be declared
+configure:7817: gcc -c -g -O2  conftest.c 1>&5
+configure:7838: checking whether strstr must be declared
+configure:7864: gcc -c -g -O2  conftest.c 1>&5
+configure:7885: checking whether canonicalize_file_name must be declared
+configure:7911: gcc -c -g -O2  conftest.c 1>&5
+configure:7937: checking for HPUX save_state structure
+configure:7940:32: fatal error: machine/save_state.h: No such file or directory
+compilation terminated.
+configure:7955:32: fatal error: machine/save_state.h: No such file or directory
+compilation terminated.
+configure:8031: checking for pstatus_t in sys/procfs.h
+configure:8045: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8041:1: error: 'pstatus_t' undeclared (first use in this function)
+configure:8041:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8041:11: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8036 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+pstatus_t avar
+; return 0; }
+configure:8067: checking for prrun_t in sys/procfs.h
+configure:8081: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8077:1: error: 'prrun_t' undeclared (first use in this function)
+configure:8077:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8077:9: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8072 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+prrun_t avar
+; return 0; }
+configure:8103: checking for gregset_t in sys/procfs.h
+configure:8117: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8113:1: error: 'gregset_t' undeclared (first use in this function)
+configure:8113:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8113:11: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8108 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+gregset_t avar
+; return 0; }
+configure:8139: checking for fpregset_t in sys/procfs.h
+configure:8153: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8149:1: error: 'fpregset_t' undeclared (first use in this function)
+configure:8149:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8149:12: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8144 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+fpregset_t avar
+; return 0; }
+configure:8175: checking for prgregset_t in sys/procfs.h
+configure:8189: gcc -c -g -O2  conftest.c 1>&5
+configure:8211: checking for prfpregset_t in sys/procfs.h
+configure:8225: gcc -c -g -O2  conftest.c 1>&5
+configure:8247: checking for prgregset32_t in sys/procfs.h
+configure:8261: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8257:1: error: 'prgregset32_t' undeclared (first use in this function)
+configure:8257:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8257:15: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8252 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+prgregset32_t avar
+; return 0; }
+configure:8283: checking for prfpregset32_t in sys/procfs.h
+configure:8297: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8293:1: error: 'prfpregset32_t' undeclared (first use in this function)
+configure:8293:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8293:16: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8288 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+prfpregset32_t avar
+; return 0; }
+configure:8319: checking for lwpid_t in sys/procfs.h
+configure:8333: gcc -c -g -O2  conftest.c 1>&5
+configure:8355: checking for psaddr_t in sys/procfs.h
+configure:8369: gcc -c -g -O2  conftest.c 1>&5
+configure:8391: checking for prsysent_t in sys/procfs.h
+configure:8405: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8401:1: error: 'prsysent_t' undeclared (first use in this function)
+configure:8401:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8401:12: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8396 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+prsysent_t avar
+; return 0; }
+configure:8427: checking for pr_sigset_t in sys/procfs.h
+configure:8441: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8437:1: error: 'pr_sigset_t' undeclared (first use in this function)
+configure:8437:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8437:13: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8432 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+pr_sigset_t avar
+; return 0; }
+configure:8463: checking for pr_sigaction64_t in sys/procfs.h
+configure:8477: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8473:1: error: 'pr_sigaction64_t' undeclared (first use in this function)
+configure:8473:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8473:18: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8468 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+pr_sigaction64_t avar
+; return 0; }
+configure:8499: checking for pr_siginfo64_t in sys/procfs.h
+configure:8513: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8509:1: error: 'pr_siginfo64_t' undeclared (first use in this function)
+configure:8509:1: note: each undeclared identifier is reported only once for each function it appears in
+configure:8509:16: error: expected ';' before 'avar'
+configure: failed program was:
+#line 8504 "configure"
+#include "confdefs.h"
+
+#define _SYSCALL32
+#include <sys/procfs.h>
+int main() {
+pr_siginfo64_t avar
+; return 0; }
+configure:8540: checking whether prfpregset_t type is broken
+configure:8558: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:8583: checking for PIOCSET ioctl entry in sys/procfs.h
+configure:8601: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8596:22: error: 'PIOCSET' undeclared (first use in this function)
+configure:8596:22: note: each undeclared identifier is reported only once for each function it appears in
+configure: failed program was:
+#line 8588 "configure"
+#include "confdefs.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/procfs.h>
+
+int main() {
+
+    int dummy;;
+    dummy = ioctl(0, PIOCSET, &dummy);
+  
+; return 0; }
+configure:8625: checking for member l_addr in struct link_map
+configure:8637: gcc -c -g -O2  conftest.c 1>&5
+configure:8659: checking for member lm_addr in struct link_map
+configure:8672: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8668:30: error: 'struct link_map' has no member named 'lm_addr'
+configure: failed program was:
+#line 8664 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <link.h>
+int main() {
+struct link_map lm; (void) lm.lm_addr;
+; return 0; }
+configure:8694: checking for member som_addr in struct so_map
+configure:8710: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:8706:15: error: storage size of 'lm' isn't known
+configure: failed program was:
+#line 8699 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#ifdef HAVE_NLIST_H
+#include <nlist.h>
+#endif
+#include <link.h>
+int main() {
+struct so_map lm; (void) lm.som_addr;
+; return 0; }
+configure:8732: checking for struct link_map32 in sys/link.h
+configure:8745: gcc -c -g -O2  conftest.c 1>&5
+configure:8739:22: fatal error: sys/link.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 8737 "configure"
+#include "confdefs.h"
+#define _SYSCALL32
+#include <sys/link.h>
+int main() {
+struct link_map32 l;
+; return 0; }
+configure:8772: checking for long long support in compiler
+configure:8787: gcc -c -g -O2  conftest.c 1>&5
+configure:8809: checking for long long support in printf
+configure:8831: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure: In function 'main':
+configure:8826:3: warning: incompatible implicit declaration of built-in function 'sprintf'
+configure:8855: checking for long double support in compiler
+configure:8867: gcc -c -g -O2  conftest.c 1>&5
+configure:8889: checking for long double support in printf
+configure:8907: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure: In function 'main':
+configure:8902:3: warning: incompatible implicit declaration of built-in function 'sprintf'
+configure:8931: checking for long double support in scanf
+configure:8949: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure: In function 'main':
+configure:8944:3: warning: incompatible implicit declaration of built-in function 'sscanf'
+configure:9214: checking whether <thread_db.h> has TD_NOTALLOC
+configure:9226: gcc -c -g -O2  conftest.c 1>&5
+configure:9251: checking whether <sys/syscall.h> has __NR_tkill
+configure:9263: gcc -c -g -O2  conftest.c 1>&5
+configure:9375: checking compiler warning flags
+configure:9392: gcc -c -g -O2 -Wimplicit  conftest.c 1>&5
+configure:9392: gcc -c -g -O2 -Wreturn-type  conftest.c 1>&5
+configure:9392: gcc -c -g -O2 -Wcomment  conftest.c 1>&5
+configure:9392: gcc -c -g -O2 -Wtrigraphs  conftest.c 1>&5
+configure:9392: gcc -c -g -O2 -Wformat  conftest.c 1>&5
+configure:9392: gcc -c -g -O2 -Wparentheses  conftest.c 1>&5
+configure:9392: gcc -c -g -O2 -Wpointer-arith  conftest.c 1>&5
+configure:9392: gcc -c -g -O2 -Wuninitialized  conftest.c 1>&5
+configure:9392: gcc -c -g -O2 -Wformat-nonliteral  conftest.c 1>&5
+cc1: warning: -Wformat-nonliteral ignored without -Wformat
+cc1: warning: -Wformat-nonliteral ignored without -Wformat
+configure:9392: gcc -c -g -O2 -Wunused-label  conftest.c 1>&5
+configure:9392: gcc -c -g -O2 -Wunused-function  conftest.c 1>&5
+configure:9410: checking for cygwin
+configure:10285: checking for X
+configure:10352: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:10348:27: fatal error: X11/Intrinsic.h: No such file or directory
+compilation terminated.
+configure: failed program was:
+#line 10347 "configure"
+#include "confdefs.h"
+#include <X11/Intrinsic.h>
+configure:10428: gcc -o conftest -g -O2   conftest.c -lXt -lncurses -ltermcap -lm  1>&5
+/usr/bin/ld: cannot find -lXt
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 10421 "configure"
+#include "confdefs.h"
+
+int main() {
+XtMalloc()
+; return 0; }
+configure:10640: checking whether gdbserver is supported on this host
+configure:10704: checking for Cygwin environment
+configure:10720: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:10716:8: error: '__CYGWIN32__' undeclared (first use in this function)
+configure:10716:8: note: each undeclared identifier is reported only once for each function it appears in
+configure: failed program was:
+#line 10709 "configure"
+#include "confdefs.h"
+
+int main() {
+
+#ifndef __CYGWIN__
+#define __CYGWIN__ __CYGWIN32__
+#endif
+return __CYGWIN__;
+; return 0; }
+configure:10737: checking for mingw32 environment
+configure:10749: gcc -c -g -O2  conftest.c 1>&5
+configure: In function 'main':
+configure:10745:8: error: '__MINGW32__' undeclared (first use in this function)
+configure:10745:8: note: each undeclared identifier is reported only once for each function it appears in
+configure: failed program was:
+#line 10742 "configure"
+#include "confdefs.h"
+
+int main() {
+return __MINGW32__;
+; return 0; }
+configure:10768: checking for executable suffix
+configure:10778: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:10820: checking for iconv
+configure:10838: gcc -o conftest -g -O2   conftest.c -lncurses -ltermcap -lm  1>&5
+configure:10881: checking for iconv declaration
+configure:10906: gcc -c -g -O2  conftest.c 1>&5

@@ -1,0 +1,36 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:540: checking for gcc
+configure:653: checking whether the C compiler (gcc -g -O2 ) works
+configure:669: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:695: checking whether the C compiler (gcc -g -O2 ) is a cross-compiler
+configure:700: checking whether we are using GNU C
+configure:709: gcc -E conftest.c
+configure:728: checking whether gcc accepts -g
+configure:790: checking for a BSD compatible install
+configure:849: checking host system type
+configure:870: checking build system type
+configure:896: checking for ar
+configure:928: checking for ranlib
+configure:994: checking how to run the C preprocessor
+configure:1015: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1077: checking for unistd.h
+configure:1087: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1116: checking for getpagesize
+configure:1144: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1169: checking for working mmap
+configure:1317: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1248:7: warning: conflicting types for built-in function 'malloc'
+configure: In function 'main':
+configure:1265:3: warning: incompatible implicit declaration of built-in function 'exit'
+configure:1287:24: warning: cast from pointer to integer of different size
+configure:1343: checking for limits.h
+configure:1353: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1343: checking for stddef.h
+configure:1353: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1343: checking for unistd.h
+configure:1381: checking whether sbrk must be declared
+configure:1407: gcc -c -g -O2  conftest.c 1>&5
+configure:1428: checking whether getpagesize must be declared
+configure:1454: gcc -c -g -O2  conftest.c 1>&5

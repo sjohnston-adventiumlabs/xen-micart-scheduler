@@ -1,0 +1,12 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:563: checking build system type
+configure:587: checking host system type
+configure:608: checking target system type
+configure:723: checking how to run the C preprocessor
+configure:806: checking for pthread.h
+configure:816: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:844: checking for Cygwin environment
+configure:877: checking for mingw32 environment
+configure:908: checking for executable suffix

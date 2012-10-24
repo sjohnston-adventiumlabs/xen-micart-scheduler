@@ -1,0 +1,1 @@
+../../gdb-6.2.1/gdb/config/i386/nm-linux64.h
