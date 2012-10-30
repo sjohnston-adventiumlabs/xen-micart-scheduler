@@ -173,7 +173,8 @@ class SrvDomain(SrvDir):
 	print "\n\nSrvDomain\n\n"
 
         fn = FormFn(self.xd.domain_sched_micart_get,
-                   [['dom', 'int']])
+                   [['function', 'str'],
+		    ['domid', 'int']])
         val = fn(req.args, {'dom': self.dom.getName()})
         return val
 

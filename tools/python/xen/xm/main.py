@@ -72,7 +72,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 
 from xen.xend.XendDomain import XendDomain
-#XendDomain = xen.xend.XendDomain.XendDomain
+XendDomain = xen.xend.XendDomain.XendDomain()
 
 
 # getopt.gnu_getopt is better, but only exists in Python 2.3+.  Use
@@ -2090,7 +2090,7 @@ def xm_sched_micart(args):
 		#print "domain == %d" % domid
 		#Let function = 3 to signal XEN_MIC_FUNCTION_opts (set/clear options)
 		function = 3
-		b = server.xend.domain.sched_micart_get(function, domid)
+		b = XendDomain.domain_sched_micart_get(function, 0, 0)
 		print "\ninfo == %s\n" % b
 
 

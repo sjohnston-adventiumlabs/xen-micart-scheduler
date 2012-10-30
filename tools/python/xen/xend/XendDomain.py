@@ -1703,7 +1703,7 @@ class XendDomain:
 
 
 	
-    def domain_sched_micart_get(self, function, domid = None, vcpu = None):
+    def domain_sched_micart_get(self, function, domid, vcpu):
 	"""Get Simple EDF scheduler parameters for a domain.
 
         @param domid: Domain ID or Name
@@ -1711,10 +1711,10 @@ class XendDomain:
         @rtype: SXP object
         @return: The parameters for Simple EDF schedule for a domain.
         """
-	dominfo = self.domain_lookup_nr(domid)
+	#dominfo = self.domain_lookup_nr(domid)
 
-        if not dominfo:
-            raise XendInvalidDomain(str(domid))
+        #if not dominfo:
+        #    raise XendInvalidDomain(str(domid))
 
         try:
 	    #SJJ - Was - micart_info = xc.sched_micart_domain_get(dominfo.getDomid())
