@@ -1716,14 +1716,17 @@ class XendDomain:
         #if not dominfo:
         #    raise XendInvalidDomain(str(domid))
 
+	options = 0
+
         try:
-	    #SJJ - Was - micart_info = xc.sched_micart_domain_get(dominfo.getDomid())
 	    # First input is 3 to select XEN_MIC_FUNCTION_opts
 	    # TODO pcpu, slice, and new values set to zero in get funciton
 	    if vcpu is None:
 		vcpu = int(0)
 
-	    micart_info = xc.sched_micart_domain_get(function, domid, 0, 0, vcpu, 0)
+	    options = (options + 8) #XEN_MIC_OPTION_NEW == 8
+
+	    micart_info = xc.sched_micart_domain_get(function, domid, 0, 0, vcpu, options)
 	    return micart_info
 
 

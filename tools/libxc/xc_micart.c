@@ -72,18 +72,20 @@ xc_sched_micart_domain_get(
     domctl.u.scheduler_op.u.micart = *sdom;
 
     //TODO
-    pFile = fopen ("/home/sjohnston/DEBUG.txt","a");
+    
+    pFile = fopen ("/home/sjohnston/DEBUG.txt","w");
     if (pFile!=NULL)
     {
 	fprintf (pFile, "\nxc_micart_get\n");
-	/*fprintf (pFile, "domctl.cmd == %d\n", domctl.cmd);
+	fprintf (pFile, "domctl.cmd == %d\n", domctl.cmd);
 	fprintf (pFile, "domctl.domain == %d\n", domctl.domain);
 	fprintf (pFile, "domctl.u.scheduler_op.sched_id == %d\n", XEN_SCHEDULER_MICART);
-	fprintf (pFile, "domctl.u.scheduler_op.cmd == %d\n", XEN_DOMCTL_SCHEDOP_putinfo);
+	fprintf (pFile, "domctl.u.scheduler_op.cmd == %d\n", XEN_DOMCTL_SCHEDOP_getinfo);
 	fprintf (pFile, "sdom.vcpu == %d\n", sdom->vcpu);
 	fprintf (pFile, "sdom.pcpu == %d\n", sdom->pcpu);
 	fprintf (pFile, "sdom.period == %d\n", sdom->period);
-	fprintf (pFile, "sdom.helper == %d\n", sdom->helper);*/
+	fprintf (pFile, "sdom.options == %d\n", sdom->options);
+	fprintf (pFile, "sdom.helper == %d\n", sdom->helper);
 	fclose (pFile);
     }
     //
@@ -93,6 +95,6 @@ xc_sched_micart_domain_get(
         *sdom = domctl.u.scheduler_op.u.micart;
     }
     
-    return err;
+    return 0;//do_domctl(xc_handle, &domctl);//err;
 }
 

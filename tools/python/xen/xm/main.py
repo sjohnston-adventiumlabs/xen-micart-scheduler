@@ -1883,7 +1883,7 @@ def xm_sched_micart(args):
         ## TBD
 
 	try:
-	    #TODO - SJJ - Using credit scheduler example set micart scheduler slice
+	    #Using credit scheduler example set micart scheduler slice
 	    #Let function = 0 to signal XEN_MIC_FUNCTION_slice (set/clear options)
 	    function = 0; 
 	    result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
@@ -1937,7 +1937,7 @@ def xm_sched_micart(args):
         ## TBD
 
 	try:
-	    #TODO - SJJ - Using credit scheduler example set micart scheduler
+	    #Using credit scheduler example set micart scheduler
 	    #Let function = 3 to signal XEN_MIC_FUNCTION_opts (set/clear options)
 	    #Let function = 0 to signal XEN_MIC_FUNCTION_slice (set/get parameters)
 	    function = 0 
@@ -1986,12 +1986,10 @@ def xm_sched_micart(args):
             print "   Domain dom-%d will be flagged as: realtime" % domid
         if ( None != helper ):
             print "   Domain dom-%d gets helper domain: dom-%d" % (domid,helper)
-        ## TBD
 
 	try:
-	    #TODO - SJJ - Using credit scheduler example set micart scheduler
+	    #Using credit scheduler example set micart scheduler
 	    #Let function = 3 to signal XEN_MIC_FUNCTION_opts (set/clear options)
-	    #Let function = 0 to signal XEN_MIC_FUNCTION_slice (set/get parameters)
 	    function = 3; 
 	    result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
 						     helper, realtime, duration)
@@ -2012,7 +2010,7 @@ def xm_sched_micart(args):
         print "\n Swap new and current schedules.\n"
 
 	try:
-	    #TODO - SJJ - Using credit scheduler example set micart scheduler
+	    #Using credit scheduler example swap micart scheduler
 	    #Let function = 2 to signal XEN_MIC_FUNCTION_swap (swap current and new schedule)
 	    function = 2; 
 	    result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
@@ -2049,7 +2047,6 @@ def xm_sched_micart(args):
 
     def do_default():
         print "\nSet DEFAULT new schedule.\n"
-        ## TBD
 
 	if None==domid:
 	    print "Error: slice must specify a domain"
@@ -2057,7 +2054,6 @@ def xm_sched_micart(args):
 
 	try:
 	    #Let function = 3 to signal XEN_MIC_FUNCTION_opts (set/clear options)
-	    #Let function = 0 to signal XEN_MIC_FUNCTION_slice (set/get parameters)
 	    function = 3
 	    vcpu = 0
 	    pcpu = 0
@@ -2070,26 +2066,27 @@ def xm_sched_micart(args):
 		print "result == %s" % result
 
 	except xmlrpclib.Fault, err:
-	    #print "A xmlrpclib.Fault occurred"
-	    #print "Fault code: %d" % err.faultCode
-	    #print "Fault string: %s" % err.faultString
+	    print "A xmlrpclib.Fault occurred"
+	    print "Fault code: %d" % err.faultCode
+	    print "Fault string: %s" % err.faultString
 	    pass 
 
 
 
 
     def do_get():
-        print "\nRunning schedule.\n"
-        ## TBD
+        print "\nGet schedule.\n"
+
 	try:
 	    if serverType == SERVER_XEN_API:
 		info = server.xenapi.VM_metrics.get_VCPUs_params(
                     server.xenapi.VM.get_metrics(
                     get_single_vm(domid)))
 	    else:
-		#print "domain == %d" % domid
+		#Let function = 0 to signal XEN_MIC_FUNCTION_slice (set/get parameters)
 		#Let function = 3 to signal XEN_MIC_FUNCTION_opts (set/clear options)
-		function = 3
+		function = 0
+		print "function == %d" % function
 		b = XendDomain.domain_sched_micart_get(function, 0, 0)
 		print "\ninfo == %s\n" % b
 

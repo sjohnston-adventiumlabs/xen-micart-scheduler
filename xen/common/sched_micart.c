@@ -321,6 +321,7 @@ mic_clear_new_schedule(void)
     // us by schedule.c
     int k;
     MPRINT(0,"** there are %d PCPUs to clear new schedules on\n", mic_priv.ncpus);
+    MPRINT(0,"**\n");
 
     for (k=0; k<mic_priv.ncpus; k++) {
         struct mic_pcpu_info *pinfo = PCPU_INFO(k);
@@ -1278,6 +1279,7 @@ static int mic_put_set( struct domain *dom,
 static int mic_putinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
 {
     int func = op->u.micart.function;
+    MPRINT(0,"mic_putinfo");
 
     /* Handle the 'swap' function: make new schedule current
      */
@@ -1350,15 +1352,15 @@ static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
     int newp = (XEN_MIC_OPTION_NEW & sdom->options);
 
     // Debug printing
-    MPRINT (1, "\nmic_getinfo\n");
-    MPRINT (1, "sdom.function == %d\n", sdom->function);
-    MPRINT (1, "sdom.helper == %d\n", sdom->helper);
-    MPRINT (1, "sdom.vcpu == %d\n", sdom->vcpu);
-    MPRINT (1, "sdom.pcpu == %d\n", sdom->pcpu);
-    MPRINT (1, "sdom.period == %ld\n", sdom->period);
-    MPRINT (1, "sdom.options == %d\n", sdom->options);
-    MPRINT (1, "sdom.phase == %ld\n", sdom->phase);
-    MPRINT (1, "sdom.duration == %ld\n", sdom->duration);
+    MPRINT (0, "\nmic_getinfo\n");
+    MPRINT (0, "sdom.function == %d\n", sdom->function);
+    MPRINT (0, "sdom.helper == %d\n", sdom->helper);
+    MPRINT (0, "sdom.vcpu == %d\n", sdom->vcpu);
+    MPRINT (0, "sdom.pcpu == %d\n", sdom->pcpu);
+    MPRINT (0, "sdom.period == %ld\n", sdom->period);
+    MPRINT (0, "sdom.options == %d\n", sdom->options);
+    MPRINT (0, "sdom.phase == %ld\n", sdom->phase);
+    MPRINT (0, "sdom.duration == %ld\n", sdom->duration);
     //
 
     if (XEN_MIC_FUNCTION_slice == func) { /* get SLICE info */
@@ -1371,7 +1373,7 @@ static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
         //sdom->options = 0;
 
         if (vcpuid >= MAX_VIRT_CPUS) {
-            MPRINT(1,"*** MiCART invalid vcpuid: %u\n", vcpuid );
+            MPRINT(0,"*** MiCART invalid vcpuid: %u\n", vcpuid );
             return( -EINVAL );
         }
         if (dinfo->helper) {
@@ -1389,7 +1391,7 @@ static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
     }
 
     /* No other getinfo functions */
-    MPRINT(1,"*** MiCART invalid function (%d) to MiCART getinfo\n", func);
+    MPRINT(0,"*** MiCART invalid function (%d) to MiCART getinfo\n", func);
     return (-EINVAL);
 }
 
@@ -1410,16 +1412,19 @@ mic_get_slice_info( struct xen_domctl_sched_micart *sdom, int newp )
     struct mic_schedule *sched;
     struct mic_slice *mslice;
 
-    MPRINT(1,"** MiCART getinfo for slice %u on PCPU-%d (%s schedule)\n",
+    MPRINT(0, "\nmic_get_slice_info\n");
+    MPRINT(0, "newp == %d\n", newp);
+    MPRINT(0,"** MiCART getinfo for slice %u on PCPU-%d (%s schedule)\n",
            slice_index, pcpuid, (newp ? "NEW" : "RUNNING") );
 
     sched = mic_get_sched( pcpuid, newp );
     if (NULL == sched) {
-        MPRINT(2,"** MiCART schedule not found for pcpu-%d (%d)\n", pcpuid,newp );
+        MPRINT(0,"** MiCART schedule not found for pcpu-%d (%d)\n", pcpuid, newp);
         return (-EINVAL);
     }
     mslice = mic_get_slice( sched, slice_index );
     if (NULL == mslice) {
+	MPRINT(0,"** MiCART schedule mslice == NULL\n");
         return (-EINVAL);
     }
     sdom->phase    = mslice->phase;
@@ -1427,6 +1432,16 @@ mic_get_slice_info( struct xen_domctl_sched_micart *sdom, int newp )
     sdom->pcpu     = mslice->pcpu;
     sdom->duration = mslice->dur;
     sdom->helper   = mslice->vcpu->domain->domain_id;
+    // Debug printing
+    MPRINT (0, "sdom.function == %d\n", sdom->function);
+    MPRINT (0, "sdom.helper == %d\n", sdom->helper);
+    MPRINT (0, "sdom.vcpu == %d\n", sdom->vcpu);
+    MPRINT (0, "sdom.pcpu == %d\n", sdom->pcpu);
+    MPRINT (0, "sdom.period == %ld\n", sdom->period);
+    MPRINT (0, "sdom.options == %d\n", sdom->options);
+    MPRINT (0, "sdom.phase == %ld\n", sdom->phase);
+    MPRINT (0, "sdom.duration == %ld\n", sdom->duration);
+    //
     return(0);
 }
 
@@ -1467,6 +1482,7 @@ static struct mic_schedule*
 mic_get_sched( int pcpuid, int newp )
 {
     struct mic_pcpu_info *pinfo = PCPU_INFO(pcpuid);
+    MPRINT(0, "\nmic_get_sched\n");
     if (NULL == pinfo) {
         /* oops */
         return NULL;
@@ -2304,6 +2320,7 @@ MICAPI(int)
 api_adjust(struct domain *d, struct xen_domctl_scheduler_op *op)
 {
   mic_priv.nadjust++;
+  MPRINT(0, "\napi_adjust\n");
 
   if ( op->cmd == XEN_DOMCTL_SCHEDOP_putinfo )  {            /* set */
       return mic_putinfo( d, op );
