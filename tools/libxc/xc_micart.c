@@ -40,6 +40,7 @@ xc_sched_micart_domain_set(
 	fprintf (pFile, "domctl.domain == %d\n", domctl.domain);
 	fprintf (pFile, "domctl.u.scheduler_op.sched_id == %d\n", XEN_SCHEDULER_MICART);
 	fprintf (pFile, "domctl.u.scheduler_op.cmd == %d\n", XEN_DOMCTL_SCHEDOP_putinfo);
+	fprintf (pFile, "sdom.function == %d\n", sdom->function);
 	fprintf (pFile, "sdom.vcpu == %d\n", sdom->vcpu);
 	fprintf (pFile, "sdom.pcpu == %d\n", sdom->pcpu);
 	fprintf (pFile, "sdom.period == %d\n", sdom->period);

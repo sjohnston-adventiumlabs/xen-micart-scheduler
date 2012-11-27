@@ -1888,7 +1888,10 @@ def xm_sched_micart(args):
 	    function = 0; 
 	    result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
 						     helper, realtime, duration, phase)
-	    print "result == %s" % result
+	    if (result == 0):
+		print "Slice created\n"
+	    else:
+		print "result == %s" % result
 
 	except xmlrpclib.Fault, err:
 	    print "A xmlrpclib.Fault occurred"
@@ -1927,14 +1930,13 @@ def xm_sched_micart(args):
 	#Correct inputs given, set scheduler options
         print "\n Set scheduler options:\n"
         if ( None != frame ):
-            print "   Frame size on PCPU-%d := %d ns" % (pcpu,frame)
+            print "   Frame size on PCPU-%d := %d ns\n" % (pcpu,frame)
         if ( 1 == slacktime ):
             print "   VCPU-%d of dom-%d set to accept slacktime" % (vcpu,domid)
         if ( 1 == realtime ):
             print "   Domain dom-%d will be flagged as: realtime" % domid
         if ( None != helper ):
             print "   Domain dom-%d gets helper domain: dom-%d" % (domid,helper)
-        ## TBD
 
 	try:
 	    #Using credit scheduler example set micart scheduler
@@ -1945,7 +1947,10 @@ def xm_sched_micart(args):
 	    function = 4
 	    result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
 						     helper, realtime, duration)
-	    print "result == %s" % result
+	    if (result == 0):
+		print "Schedule slice set\n"
+	    else:
+		print "result == %s" % result
 
 	except xmlrpclib.Fault, err:
 	    print "A xmlrpclib.Fault occurred"
@@ -1993,7 +1998,10 @@ def xm_sched_micart(args):
 	    function = 3; 
 	    result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
 						     helper, realtime, duration)
-	    print "result == %s" % result
+	    if (result == 0):
+		print "Schedule slice created\n"
+	    else:
+		print "result == %s" % result
 
 	except xmlrpclib.Fault, err:
 	    print "A xmlrpclib.Fault occurred"
@@ -2015,7 +2023,10 @@ def xm_sched_micart(args):
 	    function = 2; 
 	    result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
 						     helper, realtime, duration)
-	    print "result == %s" % result
+	    if (result == 0):
+		print "Schedule swapped\n"
+	    else:
+		print "result == %s" % result
 
 	except xmlrpclib.Fault, err:
 	    print "A xmlrpclib.Fault occurred"
@@ -2034,7 +2045,10 @@ def xm_sched_micart(args):
 	    function = 1; 
 	    result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
 						     helper, realtime, duration)
-	    print "result == %s" % result
+	    if (result == 0):
+		print "Schedule cleared\n"
+	    else:
+		print "result == %s" % result
 
 	except xmlrpclib.Fault, err:
 	    print "A xmlrpclib.Fault occurred"
@@ -2063,7 +2077,10 @@ def xm_sched_micart(args):
 						     helper, realtime, duration)
 		vcpu = vcpu + 1
 		pcpu = pcpu + 1
-		print "result == %s" % result
+		if (result == 0):
+		    print "Schedule cleared\n"
+	        else:
+		    print "result == %s" % result
 
 	except xmlrpclib.Fault, err:
 	    print "A xmlrpclib.Fault occurred"
@@ -2087,7 +2104,7 @@ def xm_sched_micart(args):
 		#Let function = 3 to signal XEN_MIC_FUNCTION_opts (set/clear options)
 		function = 0
 		print "function == %d" % function
-		b = XendDomain.domain_sched_micart_get(function, 0, 0)
+		b = XendDomain.domain_sched_micart_get(function, 1, 0)
 		print "\ninfo == %s\n" % b
 
 

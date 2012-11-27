@@ -1279,7 +1279,7 @@ static int mic_put_set( struct domain *dom,
 static int mic_putinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
 {
     int func = op->u.micart.function;
-    MPRINT(0,"mic_putinfo");
+    MPRINT(0,"mic_putinfo\n");
 
     /* Handle the 'swap' function: make new schedule current
      */
