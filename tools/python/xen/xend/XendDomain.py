@@ -1717,16 +1717,18 @@ class XendDomain:
         #    raise XendInvalidDomain(str(domid))
 
 	options = 0
+	pcpu = 0
+	slice = 0
 
         try:
 	    # First input is 3 to select XEN_MIC_FUNCTION_opts
-	    # TODO pcpu, slice, and new values set to zero in get funciton
+	    # TODO - SJJ -pcpu, slice, and new values set to zero in get funciton
 	    if vcpu is None:
 		vcpu = int(0)
 
 	    options = (options + 8) #XEN_MIC_OPTION_NEW == 8
 
-	    micart_info = xc.sched_micart_domain_get(function, domid, 0, 0, vcpu, options)
+	    micart_info = xc.sched_micart_domain_get(function, domid, pcpu, slice, vcpu, options)
 	    return micart_info
 
 

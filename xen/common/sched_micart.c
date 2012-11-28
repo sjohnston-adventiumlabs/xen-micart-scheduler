@@ -1299,10 +1299,9 @@ static int mic_putinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
         return mic_new_schedule_opts(d,&op->u.micart);
     }
 
-    /* Handle the 'default' function: parse and set options
-     * 'default' function is configured right now set a frame
+    /* Handle the 'set' function: parse and set options
      */
-    if (XEN_MIC_FUNCTION_default == func) {
+    if (XEN_MIC_FUNCTION_set == func) {
         return mic_put_set(d, &op->u.micart);
     }
     //
