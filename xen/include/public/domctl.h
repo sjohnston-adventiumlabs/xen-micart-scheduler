@@ -322,6 +322,7 @@ DEFINE_XEN_GUEST_HANDLE(xen_domctl_max_vcpus_t);
 #define XEN_MIC_FUNCTION_opts      3
 #define XEN_MIC_FUNCTION_default   4
 #define XEN_MIC_FUNCTION_set	   5
+#define XEN_MIC_FUNCTION_get	   6
 
 /* When the options function is invoked these bits will be examined:
  *  SLACK:     0=VCPU does not use slacktime, 1=will burn slack time

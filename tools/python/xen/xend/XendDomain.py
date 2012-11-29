@@ -1703,7 +1703,7 @@ class XendDomain:
 
 
 	
-    def domain_sched_micart_get(self, function, domid, vcpu):
+    def domain_sched_micart_get(self, function, domid, pcpu, vcpu):
 	"""Get Simple EDF scheduler parameters for a domain.
 
         @param domid: Domain ID or Name
@@ -1717,7 +1717,7 @@ class XendDomain:
         #    raise XendInvalidDomain(str(domid))
 
 	options = 0
-	pcpu = 0
+	#pcpu = 0
 	slice = 0
 
         try:

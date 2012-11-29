@@ -98,6 +98,7 @@ static struct vcpu* mic_find_helper_vcpu( struct vcpu* );
 static struct mic_schedule* mic_get_sched( int, int );
 static struct mic_slice* mic_get_slice( struct mic_schedule *, unsigned int );
 static int mic_get_slice_info( struct xen_domctl_sched_micart *, int );
+static int mic_get_schedule_info( struct xen_domctl_sched_micart *, int );
 static int mic_getinfo(struct domain*, struct xen_domctl_scheduler_op*);
 static int  mic_init_pcpu( int );
 struct vcpu* mic_next_slacker( struct mic_schedule * );
@@ -1284,24 +1285,28 @@ static int mic_putinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
     /* Handle the 'swap' function: make new schedule current
      */
     if (XEN_MIC_FUNCTION_swap == func) {
+	MPRINT(0,"XEN_MIC_FUNCTION_swap\n");
         return mic_set_swap_schedule();
     }
 
     /* Handle the 'clear' function: clear out the new schedule
      */
     if (XEN_MIC_FUNCTION_clear == func) {
+	MPRINT(0,"XEN_MIC_FUNCTION_clear\n");
         return mic_clear_new_schedule();
     }
 
     /* Handle the 'opts' function: parse and set options
      */
     if (XEN_MIC_FUNCTION_opts == func) {
+	MPRINT(0,"XEN_MIC_FUNCTION_opts\n");
         return mic_new_schedule_opts(d,&op->u.micart);
     }
 
     /* Handle the 'set' function: parse and set options
      */
     if (XEN_MIC_FUNCTION_set == func) {
+	MPRINT(0,"XEN_MIC_FUNCTION_set\n");
         return mic_put_set(d, &op->u.micart);
     }
     //
@@ -1361,6 +1366,10 @@ static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
     MPRINT (0, "sdom.phase == %ld\n", sdom->phase);
     MPRINT (0, "sdom.duration == %ld\n", sdom->duration);
     //
+
+    if (XEN_MIC_FUNCTION_get == func) { /* get schedule info */
+        return mic_get_schedule_info( sdom, newp );
+    } 
 
     if (XEN_MIC_FUNCTION_slice == func) { /* get SLICE info */
         return mic_get_slice_info( sdom, newp );
@@ -1441,6 +1450,135 @@ mic_get_slice_info( struct xen_domctl_sched_micart *sdom, int newp )
     MPRINT (0, "sdom.phase == %ld\n", sdom->phase);
     MPRINT (0, "sdom.duration == %ld\n", sdom->duration);
     //
+    return(0);
+}
+
+
+
+/**
+ * Fetch information about the slice indicated in sdom for running
+ * schedule (or new schedule if newp is nonzero).
+ * The caller specifies a particular PCPU and a SLICE index (as VCPU).
+ * On return the parameters for the indexed slice on the PCPU will be 
+ * filled in the micart_schedule structure: pcpu, vcpu, domid (helper),
+ * period, phase, duration.  The calling domain arg d is ignored here.
+ * return error status (0=ok)
+ */
+static int
+mic_get_schedule_info( struct xen_domctl_sched_micart *sdom, int newp )
+{
+    unsigned int slice_index = sdom->vcpu;
+    int pcpuid = sdom->pcpu;
+    struct mic_schedule *sched;// = &SNEW(PCPU_INFO(sdom->pcpu));
+
+    //struct mic_slice *mslice;
+
+
+
+struct list_head *p, *tmplh;
+    struct mic_slice *slice;
+    struct vcpu* vc;
+    struct mic_slack_vcpu *msvc;
+    int scount, i=0;
+
+
+
+    MPRINT(0, "\nmic_get_schedule_info\n");
+    MPRINT(0, "newp == %d\n", newp);
+    MPRINT(0,"** MiCART getinfo for slice %u on PCPU-%d (%s schedule)\n",
+           slice_index, pcpuid, (newp ? "NEW" : "RUNNING") );
+
+    MPRINT(0, "  \\------------------(New)-------------------\n");
+    //mic_dump_sched(&SNEW(PCPU_INFO(cpu)));
+
+
+
+
+
+/*
+    sched = mic_get_sched( pcpuid, newp );
+    if (NULL == sched) {
+        MPRINT(0,"** MiCART schedule not found for pcpu-%d (%d)\n", pcpuid, newp);
+        return (-EINVAL);
+    }
+    mslice = mic_get_slice( sched, slice_index );
+    if (NULL == mslice) {
+	MPRINT(0,"** MiCART schedule mslice == NULL\n");
+        return (-EINVAL);
+    }
+    sdom->phase    = mslice->phase;
+    sdom->vcpu     = mslice->vcpu->vcpu_id;
+    sdom->pcpu     = mslice->pcpu;
+    sdom->duration = mslice->dur;
+    sdom->helper   = mslice->vcpu->domain->domain_id;
+    // Debug printing
+    MPRINT (0, "sdom.function == %d\n", sdom->function);
+    MPRINT (0, "sdom.helper == %d\n", sdom->helper);
+    MPRINT (0, "sdom.vcpu == %d\n", sdom->vcpu);
+    MPRINT (0, "sdom.pcpu == %d\n", sdom->pcpu);
+    MPRINT (0, "sdom.period == %ld\n", sdom->period);
+    MPRINT (0, "sdom.options == %d\n", sdom->options);
+    MPRINT (0, "sdom.phase == %ld\n", sdom->phase);
+    MPRINT (0, "sdom.duration == %ld\n", sdom->duration);
+    //
+*/
+
+    sched = &SNEW(PCPU_INFO(sdom->pcpu));    
+
+    if (NULL == sched) {
+        MPRINT(0, "   ? NULL schedule ?\n");
+        return(1);
+    }
+    /* dump slices */
+    scount = sched->slice_count;
+    if (0 == scount) {
+        MPRINT(0, "   0 slices have been configured.\n");
+    } else {
+        mic_print_dur("   Frame duration is ", sched->frame_dur, 1);
+        if (1==scount) {
+            MPRINT(0, "   1 slice has been configured, ");
+        } else {
+            MPRINT(0, "   %d slices have been configured, ", sched->slice_count);
+        }
+        MPRINT(0, "spanning %ld\n", sched->allocated);
+        list_for_each_safe(p, tmplh, &sched->slice_list) {
+            slice = list_entry(p, struct mic_slice, list);
+            vc = slice->vcpu;
+            if (vc) {
+                MPRINT(0, "  %2d: Dom%d.vcpu_%d ",i++,
+                       vc->domain->domain_id, vc->vcpu_id);
+                //mic_print_dur("phase=", slice->phase,0);
+                //mic_print_dur(", duration=",slice->dur,1);
+		MPRINT(0, "phase=%ld", slice->phase);
+                MPRINT(0, ", duration=%ld\n",slice->dur);
+            } else {
+                MPRINT(0, "  %2d: (missing vcpu)\n",i++);
+            }
+        }
+    }
+
+    /* dump slacktime vcpus */
+    if (list_empty(&sched->slack_list)) {
+        MPRINT(0, "   Slack VCPUs:  (none)\n");
+        return(1);
+    }
+    MPRINT(0, "   Slack VCPUs:\n");
+    i = 0;
+    list_for_each_safe(p, tmplh, &sched->slack_list) {
+        msvc = list_entry(p, struct mic_slack_vcpu, list);
+        vc = msvc->vcpu;
+        if (vc) {
+            MPRINT(0, "   %2d: Dom%d.vcpu_%d",i++,
+                   vc->domain->domain_id,vc->vcpu_id);
+            if (msvc == sched->cur_slack_vcpu) {
+                MPRINT(0, " (current)\n");
+            } else {
+                MPRINT(0, "\n");
+            }
+        }
+    }
+    printk("  \n");
+
     return(0);
 }
 

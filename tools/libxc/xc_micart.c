@@ -20,7 +20,7 @@ xc_sched_micart_domain_set(
 {
     DECLARE_DOMCTL;
 
-//TODO
+//TODO - SJJ
     FILE * pFile;
     uint32_t retval;
     //
@@ -61,7 +61,7 @@ xc_sched_micart_domain_get(
     DECLARE_DOMCTL;
     int err;
 
-//TODO
+//TODO - SJJ
     FILE * pFile;
     uint32_t retval;
     //

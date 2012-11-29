@@ -1577,6 +1577,10 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
         sdom.vcpu = vcpu;
         /* domid: passed explicitly */
 
+    } else if (function == XEN_MIC_FUNCTION_get) { /* GET schedule */
+	sdom.pcpu = pcpu;
+        sdom.vcpu = vcpu;
+        /* domid: passed explicitly */
     } else {
         return NULL;
     }
@@ -1591,13 +1595,14 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
     if (XEN_MIC_FUNCTION_slice == function) { /* SLICE */
 
 	//TODO return Py_BuildValue("{s:I,s:I,s:I,s:K,s:K,s:K}",
-	return Py_BuildValue("{s:I,s:I,s:I,s:I,s:I,s:I}",
+	return Py_BuildValue("{s:I,s:I,s:I,s:I,s:I,s:I,s:I,s:I}",
                              "pcpu",     sdom.pcpu,
                              "vcpu",     sdom.vcpu,
                              "domid",    sdom.helper, /* slice domain id */
                              "period",   sdom.period,
                              "phase",    sdom.phase,
-                             "duration", sdom.duration);
+                             "duration", sdom.duration,
+			     "options",  sdom.options);
     }
     if (XEN_MIC_FUNCTION_opts == function) { /* SET */
         return Py_BuildValue("{s:I,s:I}",
