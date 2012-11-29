@@ -1776,7 +1776,7 @@ def micart_usage():
     print "   get [args] : inquire about running schedule"
     print "   swap  : swaps current with new schedule"
     print "   clear : clears new schedule"
-    print "   default : sets new schedule to boot default of slack only"
+    print "   default [args] : sets new schedule to boot default of slack only"
 
     print "\nslice args:"
     print "   --domain=D  : domain (name or number)"
@@ -2060,12 +2060,12 @@ def xm_sched_micart(args):
 	    sys.exit(1)
 
 	try:
+	#if (1 == 1):
 	    #Let function = 3 to signal XEN_MIC_FUNCTION_opts (set/clear options)
 	    function = 3
 	    vcpu = 0
 	    pcpu = 0
 	    slacktime = 1
-
 	    #Domain-0 (domid 0) can be spread across all cpu cores, other domains will be tied to one core
 	    if (domid == 0):
 		while 1:
@@ -2078,12 +2078,26 @@ def xm_sched_micart(args):
 		    else:
 			print "result == %s" % result
 	    else:
- 	        result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
+		a = 1
+		function = 0
+		while (a <= domid):
+		    print "a == %d, domid == %d, pcpu == %d\n" % (a, domid, pcpu)
+		    result = None
+		    result = XendDomain.domain_sched_micart_get(function, a, pcpu, vcpu)
+		    if (result['domid'] == a):
+		        print "Schedule retrieved\n"
+			a = a + 1
+			pcpu = pcpu + 1
+		    else:
+			print "___a == %d, domid == %d, pcpu == %d\n" % (a, domid, pcpu)
+		        function = 3
+ 	        	result = server.xend.domain.sched_micart_set(function, domid, pcpu, frame, vcpu, slacktime, 
 						     helper, realtime, duration)
-		if (result == 0):
-		    print "Schedule cleared\n"
-		else:
-		    print "result == %s" % result
+			if (result == 0):
+		    	    print "Schedule cleared\n"
+			else:
+		    	    print "result == %s" % result
+			break
 		
 	except xmlrpclib.Fault, err:
 	    print "A xmlrpclib.Fault occurred"
@@ -2097,22 +2111,27 @@ def xm_sched_micart(args):
     def do_get():
         print "\nGET schedule.\n"
 
+        if None==domid:
+            print "Error: slice must specify a domain"
+            sys.exit(1)
+        if None==pcpu:
+            print "Error: slice must specify a pcpu"
+            sys.exit(1)
+
 	try:
 	    if serverType == SERVER_XEN_API:
 		info = server.xenapi.VM_metrics.get_VCPUs_params(
                     server.xenapi.VM.get_metrics(
                     get_single_vm(domid)))
 	    else:
-		#Let function = 0 to signal XEN_MIC_FUNCTION_slice (set/get parameters)
-		function = 0
 		#TODO - SJJ - Grab entire schedule?  Or just per pcpu?
-		domid = 0
+		#Let function = 6 to signal XEN_MIC_FUNCTION_get (get schedule)
+		function = 6
 		vcpu = 0
-		result = XendDomain.domain_sched_micart_get(function, domid, vcpu)
-		if (result == 0):
-		    print "Schedule cleared\n"
-		else:
-		    print "result == %s" % result
+		print "function == %d" % (function)
+		result = XendDomain.domain_sched_micart_get(function, domid, pcpu, vcpu)
+		print "result == %s\n" % result['domid']
+		print "result == %s\n" % result
 
 
 
