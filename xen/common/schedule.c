@@ -812,7 +812,7 @@ long sched_adjust(struct domain *d, struct xen_domctl_scheduler_op *op)
     if ( d == current->domain )
         vcpu_schedule_lock_irq(current);
 
-    if ( (ret = SCHED_OP(adjust, d, op)) == 0 )
+    if ( (ret = SCHED_OP(adjust, d, op)) == 0 ) 
         TRACE_1D(TRC_SCHED_ADJDOM, d->domain_id);
 
     if ( d == current->domain )

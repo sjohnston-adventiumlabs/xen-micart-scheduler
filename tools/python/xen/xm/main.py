@@ -2126,9 +2126,9 @@ def xm_sched_micart(args):
 	    else:
 		#TODO - SJJ - Grab entire schedule?  Or just per pcpu?
 		#Let function = 6 to signal XEN_MIC_FUNCTION_get (get schedule)
-		function = 6
+		function = 0
 		vcpu = 0
-		print "function == %d" % (function)
+		print "function == %d\n" % (function)
 		result = XendDomain.domain_sched_micart_get(function, domid, pcpu, vcpu)
 		print "result == %s\n" % result['domid']
 		print "result == %s\n" % result

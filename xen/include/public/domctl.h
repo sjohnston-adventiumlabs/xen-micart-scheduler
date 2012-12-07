@@ -361,6 +361,15 @@ struct xen_domctl_scheduler_op {
             uint64_aligned_t phase;  /* nanosecond slice offset */
             uint64_aligned_t duration; /* nanosecond slice duration */
         } micart;
+	struct xen_domctl_sched_micart_slice {
+	    uint8_t domain_id[4];
+	    uint8_t vcpu_id[4];
+	    uint32_t frame_dur[4];
+	    uint8_t slice_count[4];
+	    uint32_t allocated[4];
+	    uint32_t phase[4];
+	    uint32_t dur[4];
+	} micart_slice;
     } u;
 };
 typedef struct xen_domctl_scheduler_op xen_domctl_scheduler_op_t;

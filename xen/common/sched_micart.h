@@ -299,6 +299,7 @@ struct mic_domain_info {
 /* API */
 #ifdef FAKE_XEN
 int  api_adjust(struct domain *, struct xen_domctl_scheduler_op *);
+int  api_mic_adjust(struct domain *, struct xen_domctl_scheduler_op *);
 void api_destroy_domain(struct domain *);
 struct task_slice api_do_schedule(s_time_t);
 void api_dump_cpu_state(int);

@@ -49,6 +49,7 @@
 #include <asm-x86/hvm/vioapic.h>
 #include <asm-x86/hvm/vpt.h>
 #include <xen/hvm/hpet.h>
+#include <xen/sched-if.h>
 #include "sched_micart.h"
 
 typedef struct {
@@ -98,8 +99,8 @@ static struct vcpu* mic_find_helper_vcpu( struct vcpu* );
 static struct mic_schedule* mic_get_sched( int, int );
 static struct mic_slice* mic_get_slice( struct mic_schedule *, unsigned int );
 static int mic_get_slice_info( struct xen_domctl_sched_micart *, int );
-static int mic_get_schedule_info( struct xen_domctl_sched_micart *, int );
-static int mic_getinfo(struct domain*, struct xen_domctl_scheduler_op*);
+static int mic_get_schedule_info( struct xen_domctl_sched_micart *, int);//, struct mic_schedule * );
+static int mic_getinfo( struct domain*, struct xen_domctl_scheduler_op*);//, struct mic_schedule * );
 static int  mic_init_pcpu( int );
 struct vcpu* mic_next_slacker( struct mic_schedule * );
 static struct task_slice mic_pick_alternate( s_time_t, struct mic_schedule *,
@@ -1349,11 +1350,13 @@ static int mic_putinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
  * [opts] The caller specifies the DOMAIN and VCPU.  On return, the OPTIONS
  *    and HELPER fields are set.
  */
-static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
+static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)//, struct mic_schedule *sched)
 {
     struct xen_domctl_sched_micart *sdom = &op->u.micart;
     int func = sdom->function;
     int newp = (XEN_MIC_OPTION_NEW & sdom->options);
+
+    //sched->slice_count = 10;
 
     // Debug printing
     MPRINT (0, "\nmic_getinfo\n");
@@ -1368,7 +1371,7 @@ static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
     //
 
     if (XEN_MIC_FUNCTION_get == func) { /* get schedule info */
-        return mic_get_schedule_info( sdom, newp );
+        return mic_get_schedule_info( sdom, newp);//, sched );
     } 
 
     if (XEN_MIC_FUNCTION_slice == func) { /* get SLICE info */
@@ -1465,7 +1468,7 @@ mic_get_slice_info( struct xen_domctl_sched_micart *sdom, int newp )
  * return error status (0=ok)
  */
 static int
-mic_get_schedule_info( struct xen_domctl_sched_micart *sdom, int newp )
+mic_get_schedule_info( struct xen_domctl_sched_micart *sdom, int newp)//, struct mic_schedule *sched )
 {
     unsigned int slice_index = sdom->vcpu;
     int pcpuid = sdom->pcpu;
@@ -1522,8 +1525,7 @@ struct list_head *p, *tmplh;
     MPRINT (0, "sdom.duration == %ld\n", sdom->duration);
     //
 */
-
-    sched = &SNEW(PCPU_INFO(sdom->pcpu));    
+    sched = &SNEW(PCPU_INFO(sdom->pcpu));
 
     if (NULL == sched) {
         MPRINT(0, "   ? NULL schedule ?\n");
@@ -1534,7 +1536,7 @@ struct list_head *p, *tmplh;
     if (0 == scount) {
         MPRINT(0, "   0 slices have been configured.\n");
     } else {
-        mic_print_dur("   Frame duration is ", sched->frame_dur, 1);
+        MPRINT(0, "   Frame duration is %ld\n", sched->frame_dur);
         if (1==scount) {
             MPRINT(0, "   1 slice has been configured, ");
         } else {
@@ -1594,6 +1596,7 @@ mic_get_slice( struct mic_schedule *sched, unsigned int sindex )
     struct list_head *p0 = &sched->slice_list;
     struct list_head *p = p0;
     int ns=0;
+    MPRINT(0, "\nmic_get_slice\n");
     while (p->next != p0) {
         p = p->next;
         if (sindex) {
@@ -2456,6 +2459,7 @@ api_init_scheduler(void)
 MICAPI(int)
 api_adjust(struct domain *d, struct xen_domctl_scheduler_op *op)
 {
+  //struct mic_schedule *sched = &SNEW(PCPU_INFO(0));
   mic_priv.nadjust++;
   MPRINT(0, "\napi_adjust\n");
 
@@ -2463,7 +2467,7 @@ api_adjust(struct domain *d, struct xen_domctl_scheduler_op *op)
       return mic_putinfo( d, op );
 
   } else if ( op->cmd == XEN_DOMCTL_SCHEDOP_getinfo ) {      /*  get */
-      return mic_getinfo( d, op );
+      return mic_getinfo( d, op );//, sched );
   }
   return 0;
 }

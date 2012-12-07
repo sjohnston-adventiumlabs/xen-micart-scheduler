@@ -76,6 +76,7 @@ struct scheduler {
     int          (*pick_cpu)       (struct vcpu *);
     int          (*adjust)         (struct domain *,
                                     struct xen_domctl_scheduler_op *);
+    
     void         (*dump_settings)  (void);
     void         (*dump_cpu_state) (int);
 

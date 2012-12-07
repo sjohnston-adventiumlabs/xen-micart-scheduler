@@ -11,7 +11,6 @@
 #include "xc_private.h"
 #include <stdio.h>
 
-
 int
 xc_sched_micart_domain_set(
     int xc_handle,
@@ -60,6 +59,7 @@ xc_sched_micart_domain_get(
 {
     DECLARE_DOMCTL;
     int err;
+    struct mic_schedule *sched;
 
 //TODO - SJJ
     FILE * pFile;
@@ -78,6 +78,7 @@ xc_sched_micart_domain_get(
     if (pFile!=NULL)
     {
 	fprintf (pFile, "\nxc_micart_get\n");
+	fprintf (pFile, "xc_handle == %d\n", xc_handle);
 	fprintf (pFile, "domctl.cmd == %d\n", domctl.cmd);
 	fprintf (pFile, "domctl.domain == %d\n", domctl.domain);
 	fprintf (pFile, "domctl.u.scheduler_op.sched_id == %d\n", XEN_SCHEDULER_MICART);
@@ -87,6 +88,7 @@ xc_sched_micart_domain_get(
 	fprintf (pFile, "sdom.period == %d\n", sdom->period);
 	fprintf (pFile, "sdom.options == %d\n", sdom->options);
 	fprintf (pFile, "sdom.helper == %d\n", sdom->helper);
+	fprintf (pFile, "sched.slice_count == %d\n", sched->slice_count);
 	fclose (pFile);
     }
     //
