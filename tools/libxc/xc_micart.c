@@ -88,7 +88,7 @@ xc_sched_micart_domain_get(
 	fprintf (pFile, "sdom.period == %d\n", sdom->period);
 	fprintf (pFile, "sdom.options == %d\n", sdom->options);
 	fprintf (pFile, "sdom.helper == %d\n", sdom->helper);
-	fprintf (pFile, "sched.slice_count == %d\n", sched->slice_count);
+	//fprintf (pFile, "sched.slice_count == %d\n", sched->slice_count);
 	fclose (pFile);
     }
     //

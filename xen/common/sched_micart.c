@@ -99,7 +99,8 @@ static struct vcpu* mic_find_helper_vcpu( struct vcpu* );
 static struct mic_schedule* mic_get_sched( int, int );
 static struct mic_slice* mic_get_slice( struct mic_schedule *, unsigned int );
 static int mic_get_slice_info( struct xen_domctl_sched_micart *, int );
-static int mic_get_schedule_info( struct xen_domctl_sched_micart *, int);//, struct mic_schedule * );
+static int mic_get_schedule_info( struct xen_domctl_sched_micart *, int, 
+				  struct xen_domctl_sched_micart_sched * );//, struct mic_schedule * );
 static int mic_getinfo( struct domain*, struct xen_domctl_scheduler_op*);//, struct mic_schedule * );
 static int  mic_init_pcpu( int );
 struct vcpu* mic_next_slacker( struct mic_schedule * );
@@ -1353,6 +1354,7 @@ static int mic_putinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
 static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)//, struct mic_schedule *sched)
 {
     struct xen_domctl_sched_micart *sdom = &op->u.micart;
+    struct xen_domctl_sched_micart_sched *sdom_sched = &op->u.micart_sched;
     int func = sdom->function;
     int newp = (XEN_MIC_OPTION_NEW & sdom->options);
 
@@ -1371,7 +1373,7 @@ static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)//, 
     //
 
     if (XEN_MIC_FUNCTION_get == func) { /* get schedule info */
-        return mic_get_schedule_info( sdom, newp);//, sched );
+        return mic_get_schedule_info( sdom, newp, sdom_sched);//, sched );
     } 
 
     if (XEN_MIC_FUNCTION_slice == func) { /* get SLICE info */
@@ -1468,12 +1470,13 @@ mic_get_slice_info( struct xen_domctl_sched_micart *sdom, int newp )
  * return error status (0=ok)
  */
 static int
-mic_get_schedule_info( struct xen_domctl_sched_micart *sdom, int newp)//, struct mic_schedule *sched )
+mic_get_schedule_info( struct xen_domctl_sched_micart *sdom, int newp, 
+		       struct xen_domctl_sched_micart_sched *micart_sched)//, struct mic_schedule *sched )
 {
     unsigned int slice_index = sdom->vcpu;
     int pcpuid = sdom->pcpu;
     struct mic_schedule *sched;// = &SNEW(PCPU_INFO(sdom->pcpu));
-
+    //struct xen_domctl_sched_micart_sched micart_sched;
     //struct mic_slice *mslice;
 
 
@@ -1543,6 +1546,8 @@ struct list_head *p, *tmplh;
             MPRINT(0, "   %d slices have been configured, ", sched->slice_count);
         }
         MPRINT(0, "spanning %ld\n", sched->allocated);
+	micart_sched->allocated = (uint64_t)sched->allocated;
+	MPRINT(0, "\ntesting %ld\n", micart_sched->allocated);
         list_for_each_safe(p, tmplh, &sched->slice_list) {
             slice = list_entry(p, struct mic_slice, list);
             vc = slice->vcpu;
