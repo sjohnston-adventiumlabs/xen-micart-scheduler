@@ -1555,9 +1555,17 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
     uint32_t vcpu=0;
     uint32_t new=0;
     struct xen_domctl_sched_micart sdom;
+    struct xen_domctl_sched_micart_slice sdom_slice;
     
     static char *kwd_list[] = {"function","domid","pcpu","slice","vcpu","new",NULL};
     static char kwd_type[] = "I|IIIII";
+
+    /*PyObject *domain_id_lst = PyList_New(4);
+    PyObject *vcpu_id_lst = PyList_New(4);
+    PyObject *phase_lst = PyList_New(4);
+    PyObject *dur_lst = PyList_New(4);
+    PyObject *num;
+    uint8_t i;*/
 
     if( !PyArg_ParseTupleAndKeywords( args, kwds, kwd_type, kwd_list, 
                                       &function, &domid, &pcpu, &slice, &vcpu, &new ) ) {
@@ -1586,7 +1594,11 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
     }
 
     /* Pose the query */
-    if ( xc_sched_micart_domain_get(self->xc_handle, domid, &sdom) != 0 ) {
+    if ( xc_sched_micart_domain_get(self->xc_handle, domid, &sdom, &sdom_slice) != 0 ) {
+	
+	//TODO return Py_BuildValue("{s:I,s:I,s:I,s:K,s:K,s:K}",
+	//return Py_BuildValue("{s:I}",
+        //                     "allocated",     sdom_sched.allocated);     
         return pyxc_error_to_exception();
     }
 
@@ -1608,6 +1620,88 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
         return Py_BuildValue("{s:I,s:I}",
                              "options",  sdom.options,
                              "helper",   sdom.helper);
+    }
+    if (XEN_MIC_FUNCTION_get == function) { /* GET */
+
+	
+	/*if (!domain_id_lst)
+	{
+    		return NULL;
+	}
+	for (i = 0; i < 4; i++) 
+	{
+    	    num = PyFloat_FromDouble(sdom_slice.domain_id[i]);
+	
+    	    if (!num) 
+	    {
+        	Py_DECREF(domain_id_lst);
+		return NULL;
+	    }
+	    PyList_SET_ITEM(domain_id_lst, i, num);   // reference to num stolen
+	}
+
+	if (!vcpu_id_lst)
+	{
+    		return NULL;
+	}
+	for (i = 0; i < 4; i++) 
+	{
+    	    num = PyFloat_FromDouble(sdom_slice.vcpu_id[i]);
+	
+    	    if (!num) 
+	    {
+        	Py_DECREF(vcpu_id_lst);
+		return NULL;
+	    }
+	    PyList_SET_ITEM(vcpu_id_lst, i, num);   // reference to num stolen
+	}
+
+	if (!phase_lst)
+	{
+    		return NULL;
+	}
+	for (i = 0; i < 4; i++) 
+	{
+    	    num = PyFloat_FromDouble(sdom_slice.phase[i]);
+	
+    	    if (!num) 
+	    {
+        	Py_DECREF(phase_lst);
+		return NULL;
+	    }
+	    PyList_SET_ITEM(phase_lst, i, num);   // reference to num stolen
+	}
+
+	if (!dur_lst)
+	{
+    		return NULL;
+	}
+	for (i = 0; i < 4; i++) 
+	{
+    	    num = PyFloat_FromDouble(sdom_slice.dur[i]);
+	
+    	    if (!num) 
+	    {
+        	Py_DECREF(dur_lst);
+		return NULL;
+	    }
+	    PyList_SET_ITEM(dur_lst, i, num);   // reference to num stolen
+	}
+
+
+        return Py_BuildValue("{s:I,s:O,s:O,s:O,s:O}",
+                             "allocated",  sdom_slice.allocated,
+			     "domain_id",  domain_id_lst,
+			     "vcpu_id",	   vcpu_id_lst,
+			     "phase",	   phase_lst,
+			     "dur",	   dur_lst);*/
+
+        return Py_BuildValue("{s:I,s:I,s:I,s:I,s:I}",
+                             "allocated",  sdom_slice.allocated,
+			     "domain_id",  sdom_slice.domain_id,
+			     "vcpu_id",	   sdom_slice.vcpu_id,
+			     "phase",	   sdom_slice.phase,
+			     "dur",	   sdom_slice.dur);
     }
 
     return NULL;

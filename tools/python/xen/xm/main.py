@@ -2130,7 +2130,7 @@ def xm_sched_micart(args):
 		vcpu = 0
 		print "function == %d\n" % (function)
 		result = XendDomain.domain_sched_micart_get(function, domid, pcpu, vcpu)
-		print "result == %s\n" % result['domid']
+		#print "result == %s\n" % result['domid']
 		print "result == %s\n" % result
 
 

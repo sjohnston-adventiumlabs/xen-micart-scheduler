@@ -361,15 +361,17 @@ struct xen_domctl_scheduler_op {
             uint64_aligned_t phase;  /* nanosecond slice offset */
             uint64_aligned_t duration; /* nanosecond slice duration */
         } micart;
-	struct xen_domctl_sched_micart_sched {
-	    uint8_t domain_id[4];
-	    uint8_t vcpu_id[4];
-	    uint32_t frame_dur[14];
-	    uint8_t slice_count[4];
-	    uint64_t allocated;
-	    uint32_t phase[4];
-	    uint32_t dur[4];
-	} micart_sched;
+	struct xen_domctl_sched_micart_slice {
+	    struct list_head *p;	/* the &struct list_head to use as a loop cursor */
+	    struct list_head *tmplh; 	/* another &struct list_head to use as temporary storage */
+	    //struct mic_schedule *sched;	/* the head for your list */
+	    uint8_t slice_id;		/* numbered order of slice */
+	    uint32_t domain_id;		/* domain id of slice */
+	    uint32_t vcpu_id;		/* vcpu id of slice */
+	    uint64_t allocated;		/* nanosecond frame duration */
+	    uint64_t phase;		/* nanosecond slice offset */
+	    uint64_t dur;		/* nanosecond slice duration */
+	} micart_slice;
     } u;
 };
 typedef struct xen_domctl_scheduler_op xen_domctl_scheduler_op_t;

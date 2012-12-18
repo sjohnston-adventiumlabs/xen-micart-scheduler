@@ -471,7 +471,8 @@ int xc_sched_micart_domain_set(int xc_handle,
 
 int xc_sched_micart_domain_get(int xc_handle,
                                uint32_t domid,
-                               struct xen_domctl_sched_micart *sdom);
+                               struct xen_domctl_sched_micart *sdom,
+			       struct xen_domctl_sched_micart_slice *sdom_slice);
 
 
 /**
