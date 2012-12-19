@@ -1553,12 +1553,12 @@ struct list_head *p, *tmplh;
 	    for (pos = (head)->next, n = pos->next; pos != (head);		\
         	pos = n, n = pos->next)*/
 
-	p = (&sched->slice_list)->next;
-	tmplh = p->next;
+	//p = (&sched->slice_list)->next;
+	//tmplh = p->next;
 
-	if (p != (&sched->slice_list) {
+	//if (p != (&sched->slice_list)) {
 	//for (p = (&sched->slice_list)->next, tmplh = p->next; p != (&sched->slice_list); p = tmplh, tmplh = p->next) {
-        //list_for_each_safe(p, tmplh, &sched->slice_list) {
+        list_for_each_safe(p, tmplh, &sched->slice_list) {
             slice = list_entry(p, struct mic_slice, list);
             vc = slice->vcpu;
             if (vc) {
@@ -1579,9 +1579,8 @@ struct list_head *p, *tmplh;
 	}//list_for_each_safe
 
 	// Copy list information for next iteration
-	micart_slice->p = p;
-	micart_slice->tmplh = tmplh;
-	//micart_slice->sched = sched;
+	//micart_slice->p = p;
+	//micart_slice->tmplh = tmplh;
     }
 
     /* dump slacktime vcpus */

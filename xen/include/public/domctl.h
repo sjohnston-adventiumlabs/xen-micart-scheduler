@@ -371,6 +371,7 @@ struct xen_domctl_scheduler_op {
 	    uint64_t allocated;		/* nanosecond frame duration */
 	    uint64_t phase;		/* nanosecond slice offset */
 	    uint64_t dur;		/* nanosecond slice duration */
+	    uint8_t flag;		/* flag to indicate if first search */
 	} micart_slice;
     } u;
 };

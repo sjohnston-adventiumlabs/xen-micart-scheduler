@@ -1556,10 +1556,12 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
     uint32_t new=0;
     struct xen_domctl_sched_micart sdom;
     struct xen_domctl_sched_micart_slice sdom_slice;
-    
+
     static char *kwd_list[] = {"function","domid","pcpu","slice","vcpu","new",NULL};
     static char kwd_type[] = "I|IIIII";
 
+    //PyObject *refchain;
+    //struct list_head *test;
     /*PyObject *domain_id_lst = PyList_New(4);
     PyObject *vcpu_id_lst = PyList_New(4);
     PyObject *phase_lst = PyList_New(4);
@@ -1595,10 +1597,7 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
 
     /* Pose the query */
     if ( xc_sched_micart_domain_get(self->xc_handle, domid, &sdom, &sdom_slice) != 0 ) {
-	
-	//TODO return Py_BuildValue("{s:I,s:I,s:I,s:K,s:K,s:K}",
-	//return Py_BuildValue("{s:I}",
-        //                     "allocated",     sdom_sched.allocated);     
+
         return pyxc_error_to_exception();
     }
 
@@ -1696,12 +1695,18 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
 			     "phase",	   phase_lst,
 			     "dur",	   dur_lst);*/
 
+	//refchain = sdom_slice.p.next;
+	//test = sdom_slice.p;
+
+
         return Py_BuildValue("{s:I,s:I,s:I,s:I,s:I}",
                              "allocated",  sdom_slice.allocated,
 			     "domain_id",  sdom_slice.domain_id,
 			     "vcpu_id",	   sdom_slice.vcpu_id,
 			     "phase",	   sdom_slice.phase,
-			     "dur",	   sdom_slice.dur);
+			     "dur",	   sdom_slice.dur,
+			     "flag",	   sdom_slice.flag);/*,
+			     "tmplh",	   sdom_slice.tmplh.next);*/
     }
 
     return NULL;

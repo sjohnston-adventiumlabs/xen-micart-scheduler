@@ -110,6 +110,7 @@ xc_sched_micart_domain_get(
 	fprintf (pFile, "sdom_slice.vcpu_id == %d\n", sdom_slice->vcpu_id);
 	fprintf (pFile, "sdom_slice.phase == %d\n", sdom_slice->phase);
 	fprintf (pFile, "sdom_slice.dur == %d\n", sdom_slice->dur);
+	fprintf (pFile, "sdom_slice.flag == %d\n", sdom_slice->flag);
 
 
 /*	fprintf (pFile, "sdom_slice.domain_id[0] == %d\n", sdom_slice->domain_id);
