@@ -361,19 +361,19 @@ struct xen_domctl_scheduler_op {
             uint64_aligned_t phase;  /* nanosecond slice offset */
             uint64_aligned_t duration; /* nanosecond slice duration */
         } micart;
-	struct xen_domctl_sched_micart_slice {
-	    struct list_head *p;	/* the &struct list_head to use as a loop cursor */
-	    struct list_head *tmplh; 	/* another &struct list_head to use as temporary storage */
-	    //struct mic_schedule *sched;	/* the head for your list */
-	    uint8_t slice_id;		/* numbered order of slice */
-	    uint32_t domain_id;		/* domain id of slice */
-	    uint32_t vcpu_id;		/* vcpu id of slice */
-	    uint64_t allocated;		/* nanosecond frame duration */
-	    uint64_t phase;		/* nanosecond slice offset */
-	    uint64_t dur;		/* nanosecond slice duration */
-	    uint8_t flag;		/* flag to indicate if first search */
-	} micart_slice;
     } u;
+    struct xen_domctl_sched_micart_slice {
+	//struct list_head *p;	/* the &struct list_head to use as a loop cursor */
+	//struct list_head *tmplh; 	/* another &struct list_head to use as temporary storage */
+	//struct mic_schedule *sched;	/* the head for your list */
+	uint32_t slice_id;		/* numbered order of slice */
+	uint32_t domain_id;		/* domain id of slice */
+	uint32_t vcpu_id;		/* vcpu id of slice */
+	uint64_t allocated;		/* nanosecond frame duration */
+	uint64_t phase;		/* nanosecond slice offset */
+	uint64_t dur;		/* nanosecond slice duration */
+	uint32_t flag;		/* flag to indicate if first search */
+    } micart_slice;
 };
 typedef struct xen_domctl_scheduler_op xen_domctl_scheduler_op_t;
 DEFINE_XEN_GUEST_HANDLE(xen_domctl_scheduler_op_t);

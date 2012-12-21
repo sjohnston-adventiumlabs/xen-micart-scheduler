@@ -1699,14 +1699,14 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
 	//test = sdom_slice.p;
 
 
-        return Py_BuildValue("{s:I,s:I,s:I,s:I,s:I}",
+        return Py_BuildValue("{s:I,s:I,s:I,s:I,s:I,s:I,s:I}",
                              "allocated",  sdom_slice.allocated,
 			     "domain_id",  sdom_slice.domain_id,
 			     "vcpu_id",	   sdom_slice.vcpu_id,
 			     "phase",	   sdom_slice.phase,
 			     "dur",	   sdom_slice.dur,
-			     "flag",	   sdom_slice.flag);/*,
-			     "tmplh",	   sdom_slice.tmplh.next);*/
+			     "flag",	   sdom_slice.flag,
+			     "slice_id",   sdom_slice.slice_id);
     }
 
     return NULL;

@@ -97,7 +97,7 @@ xc_sched_micart_domain_get(
     err = do_domctl(xc_handle, &domctl);
     if ( 0 == err ) {
         *sdom = domctl.u.scheduler_op.u.micart;
-	*sdom_slice = domctl.u.scheduler_op.u.micart_slice;
+	*sdom_slice = domctl.u.scheduler_op.micart_slice;
 
     //TODO
     pFile = fopen ("/home/sjohnston/DEBUG.txt","w");

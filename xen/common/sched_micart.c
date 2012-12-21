@@ -1354,7 +1354,7 @@ static int mic_putinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
 static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)//, struct mic_schedule *sched)
 {
     struct xen_domctl_sched_micart *sdom = &op->u.micart;
-    struct xen_domctl_sched_micart_slice *sdom_slice = &op->u.micart_slice;
+    struct xen_domctl_sched_micart_slice *sdom_slice = &op->micart_slice;
     int func = sdom->function;
     int newp = (XEN_MIC_OPTION_NEW & sdom->options);
 
