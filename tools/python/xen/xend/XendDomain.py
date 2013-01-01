@@ -40,12 +40,7 @@ from xen.xend.XendError import XendError, XendInvalidDomain, VmError
 from xen.xend.XendError import VMBadState
 from xen.xend.XendLogging import log
 from xen.xend.XendAPIConstants import XEN_API_VM_POWER_STATE
-from xen.xend.XendConstants import XS_VMROOT
-from xen.xend.XendConstants import DOM_STATE_HALTED, DOM_STATE_PAUSED
-from xen.xend.XendConstants import DOM_STATE_RUNNING, DOM_STATE_SUSPENDED
-from xen.xend.XendConstants import DOM_STATE_SHUTDOWN, DOM_STATE_UNKNOWN
-from xen.xend.XendConstants import DOM_STATE_CRASHED, HVM_PARAM_ACPI_S_STATE
-from xen.xend.XendConstants import TRIGGER_TYPE, TRIGGER_S3RESUME
+from xen.xend.XendConstants import *
 from xen.xend.XendDevices import XendDevices
 from xen.xend.XendAPIConstants import *
 
@@ -210,7 +205,7 @@ class XendDomain:
                         # domain config file.
                         for vbd_ref in running_dom.info['vbd_refs']:
                             if dom['devices'].has_key(vbd_ref):
-                                r_devtype, r_devinfo = running_dom.info['devices'][vbd_ref]
+                                r_devtype, r_devinfo = rmicunning_dom.info['devices'][vbd_ref]
                                 _, m_devinfo = dom['devices'][vbd_ref]
                                 r_devinfo['VDI'] = m_devinfo.get('VDI', '')
                                 running_dom.info['devices'][vbd_ref] = (r_devtype, r_devinfo)
@@ -1647,119 +1642,43 @@ class XendDomain:
     ## These interface to the libxc functions that tickle Xen kernel device
     #def domain_sched_micart_set(self, function, domid, options, helper, pcpu, vcpu, 
     #							  period, phase, duration):
-    def domain_sched_micart_set(self, function, domid = None, pcpu = None, period = None, vcpu = None, 
-				slacktime = None, helper = None, realtime = None, duration = None, phase = None):
-        """Set Simple EDF scheduler parameters for a domain.
-		
-        @param domid: Domain ID or Name
-        @type domid: int or string.
-        @rtype: 0
-        """
-	options = 0
-##TODO
-	if not (function == 0) or (function == 3):
-	    if domid is None:
-		domid = int(0)
-
-	##TODO Filter commands and put into options struct
+    def domain_sched_micart_set(self, function,domid =int(0),pcpu = int(0),vcpu= int(0),options = XEN_MIC_OPTION_NONE, period =int(0),  helper=int(0)):
+        phase = int(0)
+        duration = int(0)
+    	##TODO Filter commands and put into options struct
         try:
-	    if pcpu is None:
-		pcpu = int(0)
-	    if period is None:
-		period = int(0)
-	    if vcpu is None:
-		vcpu = int(0)
-	    if slacktime is None:
-		slacktime = int(0)
-	    else:
-		options = (options + 1) #XEN_MIC_OPTION_SLACK == 1
-	    if realtime is None:
-		realtime = int(0)
-	    else:
-		options = (options + 2) #XEN_MIC_OPTION_REALTIME == 2
-	    if helper is None:
-		helper = int(0)
-	    else:
-		options = (options + 4) #XEN_MIC_OPTION_HELPER == 4
-	    if phase is None:
-		phase = int(0)
-	    if duration is None:
-		duration = int(0)
-	    else:
-	 	print "Helper Options"
-		##TODO Helper options for set, need to do for no inputs other than domain also
+	
+	        return xc.sched_micart_domain_set(function, domid, options, helper, pcpu, 
+					          vcpu, period, phase, duration)
+        except Exception, ex:
+            raise XendError(str(ex))
 
 
-            #return xc.sched_micart_domain_set(function, dominfo.getDomid(), options, helper, pcpu, 
-	    #				      vcpu, period, phase, duration)
-	    # First input is 3 to select XEN_MIC_FUNCTION_opts
-	    return xc.sched_micart_domain_set(function, domid, options, helper, pcpu, 
-					      vcpu, period, phase, duration)
+    def domain_sched_micart_slice(self, function, domid = int(0), pcpu= int(0),vcpu= int(0),duration = int(0),phase = int(0)):
+        options = int(0)
+        helper = int(0)
+        period = int(0)
+    	##TODO Filter commands and put into options struct
+        try:
+	        return xc.sched_micart_domain_set(function, domid, int(0), int(0), pcpu, 
+					          vcpu, period, phase, duration)
         except Exception, ex:
             raise XendError(str(ex))
 
 
 
-
-
 	
-    def domain_sched_micart_get(self, function, domid, pcpu, vcpu):
-	"""Get Simple EDF scheduler parameters for a domain.
+    def domain_sched_micart_get(self, function, domid, pcpu, vcpu = int(0)):
+        slice = int(0)
+        options = XEN_MIC_OPTION_NEW
 
-        @param domid: Domain ID or Name
-        @type domid: int or string.
-        @rtype: SXP object
-        @return: The parameters for Simple EDF schedule for a domain.
-        """
-	#dominfo = self.domain_lookup_nr(domid)
-
-        #if not dominfo:
-        #    raise XendInvalidDomain(str(domid))
-
-	options = 0
-	#pcpu = 0
-	slice = 0
 
         try:
 	    # First input is 3 to select XEN_MIC_FUNCTION_opts
 	    # TODO - SJJ -pcpu, slice, and new values set to zero in get funciton
-	    if vcpu is None:
-		vcpu = int(0)
-
-	    options = (options + 8) #XEN_MIC_OPTION_NEW == 8
-
-	    micart_info = xc.sched_micart_domain_get(function, domid, pcpu, slice, vcpu, options)
-	    return micart_info
-
-
-	#dictionary return of values
-	#if domid == 0:
-	#    dict1['domid'] = 2
-	#    dict1['vcpu'] = 2
-	#    return dict1
-	#elif domid != 0:
-	#    dict1['domid'] = 3
-	#    dict1['vcpu'] = 3
-	#    return dict1
-	#dict1['domid'] = 4
-	#dict1['vcpu'] = 4	
-	#return dict1
-   
-
-
-            #return ['micart',
-            #        ['pcpu',     micart_info['pcpu']],
-            #        ['vcpu',     micart_info['vcpu']],
-            #        ['domid',    micart_info['domid']],
-            #        ['period',   micart_info['period']],
-            #        ['phase',    micart_info['phase']],
-            #        ['duration', micart_info['duration']],
-	    #	     ['options',  micart_info['options']],
-	    #        ['helper',   micart_info['helper']]]
-						
-		    ## Might have to remove
-		    ## ['options',  micart_info['options']],
-		    ## ['helper',   micart_info['helper']]
+	            
+	        micart_info = xc.sched_micart_domain_get(function, domid, pcpu, slice, vcpu, options)
+	        return micart_info
 	
         except Exception, ex:
 	    #return "\n\nException\n\n"

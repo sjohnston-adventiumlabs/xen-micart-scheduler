@@ -1555,8 +1555,7 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
     uint32_t vcpu=0;
     uint32_t new=0;
     struct xen_domctl_sched_micart sdom;
-    struct xen_domctl_sched_micart_slice sdom_slice;
-
+    struct xen_domctl_sched_micart_slice * sdom_slice = NULL;
     static char *kwd_list[] = {"function","domid","pcpu","slice","vcpu","new",NULL};
     static char kwd_type[] = "I|IIIII";
 
@@ -1568,11 +1567,12 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
     PyObject *dur_lst = PyList_New(4);
     PyObject *num;
     uint8_t i;*/
-
     if( !PyArg_ParseTupleAndKeywords( args, kwds, kwd_type, kwd_list, 
                                       &function, &domid, &pcpu, &slice, &vcpu, &new ) ) {
         return NULL;
     }
+  
+
 
     // Marshall query arguments: 2 cases
     sdom.function = function;
@@ -1588,16 +1588,21 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
         /* domid: passed explicitly */
 
     } else if (function == XEN_MIC_FUNCTION_get) { /* GET schedule */
-	sdom.pcpu = pcpu;
+        sdom_slice = calloc(MAX_MIC_SLICES, sizeof(struct xen_domctl_sched_micart_slice));
+        if (sdom_slice == NULL)
+            return PyErr_NoMemory();
+    	sdom.pcpu = pcpu;
         sdom.vcpu = vcpu;
+	    sdom_slice[0].flag = 1;
         /* domid: passed explicitly */
     } else {
         return NULL;
     }
-
+    
+    
     /* Pose the query */
-    if ( xc_sched_micart_domain_get(self->xc_handle, domid, &sdom, &sdom_slice) != 0 ) {
-
+    if ( xc_sched_micart_domain_get(self->xc_handle, domid, &sdom, sdom_slice) != 0 ) {
+        free(sdom_slice);
         return pyxc_error_to_exception();
     }
 
@@ -1616,97 +1621,26 @@ static PyObject *pyxc_sched_micart_domain_get(XcObject *self, PyObject *args,
 			     "options",  sdom.options);
     }
     if (XEN_MIC_FUNCTION_opts == function) { /* SET */
+        
         return Py_BuildValue("{s:I,s:I}",
                              "options",  sdom.options,
                              "helper",   sdom.helper);
     }
     if (XEN_MIC_FUNCTION_get == function) { /* GET */
-
+	PyObject * slice_list = PyList_New(0);
+	for(int i=0; (i < sdom.num_slices) && (i < MAX_MIC_SLICES); i++){
+    	PyList_Append(slice_list,Py_BuildValue("{s:I,s:I,s:I,s:I,s:I,s:I,s:I}",
+                             "allocated",  sdom_slice[i].allocated,
+	    		     "domain_id",  sdom_slice[i].domain_id,
+    			     "vcpu_id",	   sdom_slice[i].vcpu_id,
+    			     "phase",	   sdom_slice[i].phase,
+    			     "dur",	   sdom_slice[i].dur,
+    			     "flag",	   sdom_slice[i].flag,
+    			     "slice_id",   sdom_slice[i].slice_id));
+	}
+    free(sdom_slice);
+	return  slice_list;
 	
-	/*if (!domain_id_lst)
-	{
-    		return NULL;
-	}
-	for (i = 0; i < 4; i++) 
-	{
-    	    num = PyFloat_FromDouble(sdom_slice.domain_id[i]);
-	
-    	    if (!num) 
-	    {
-        	Py_DECREF(domain_id_lst);
-		return NULL;
-	    }
-	    PyList_SET_ITEM(domain_id_lst, i, num);   // reference to num stolen
-	}
-
-	if (!vcpu_id_lst)
-	{
-    		return NULL;
-	}
-	for (i = 0; i < 4; i++) 
-	{
-    	    num = PyFloat_FromDouble(sdom_slice.vcpu_id[i]);
-	
-    	    if (!num) 
-	    {
-        	Py_DECREF(vcpu_id_lst);
-		return NULL;
-	    }
-	    PyList_SET_ITEM(vcpu_id_lst, i, num);   // reference to num stolen
-	}
-
-	if (!phase_lst)
-	{
-    		return NULL;
-	}
-	for (i = 0; i < 4; i++) 
-	{
-    	    num = PyFloat_FromDouble(sdom_slice.phase[i]);
-	
-    	    if (!num) 
-	    {
-        	Py_DECREF(phase_lst);
-		return NULL;
-	    }
-	    PyList_SET_ITEM(phase_lst, i, num);   // reference to num stolen
-	}
-
-	if (!dur_lst)
-	{
-    		return NULL;
-	}
-	for (i = 0; i < 4; i++) 
-	{
-    	    num = PyFloat_FromDouble(sdom_slice.dur[i]);
-	
-    	    if (!num) 
-	    {
-        	Py_DECREF(dur_lst);
-		return NULL;
-	    }
-	    PyList_SET_ITEM(dur_lst, i, num);   // reference to num stolen
-	}
-
-
-        return Py_BuildValue("{s:I,s:O,s:O,s:O,s:O}",
-                             "allocated",  sdom_slice.allocated,
-			     "domain_id",  domain_id_lst,
-			     "vcpu_id",	   vcpu_id_lst,
-			     "phase",	   phase_lst,
-			     "dur",	   dur_lst);*/
-
-	//refchain = sdom_slice.p.next;
-	//test = sdom_slice.p;
-
-
-        return Py_BuildValue("{s:I,s:I,s:I,s:I,s:I,s:I,s:I}",
-                             "allocated",  sdom_slice.allocated,
-			     "domain_id",  sdom_slice.domain_id,
-			     "vcpu_id",	   sdom_slice.vcpu_id,
-			     "phase",	   sdom_slice.phase,
-			     "dur",	   sdom_slice.dur,
-			     "flag",	   sdom_slice.flag,
-			     "slice_id",   sdom_slice.slice_id);
     }
 
     return NULL;

@@ -357,6 +357,7 @@ struct xen_domctl_scheduler_op {
             uint32_t helper;    /* domid that can share slice */
             uint32_t pcpu;      /* particular physical CPU */
             uint32_t vcpu;      /* particular virtual CPU  */
+            uint32_t num_slices; /* output, number of slices returned */
             uint64_aligned_t period; /* nanosecond frame duration */
             uint64_aligned_t phase;  /* nanosecond slice offset */
             uint64_aligned_t duration; /* nanosecond slice duration */
@@ -374,10 +375,12 @@ struct xen_domctl_scheduler_op {
 	uint64_t dur;		/* nanosecond slice duration */
 	uint32_t flag;		/* flag to indicate if first search */
     } micart_slice;
+    struct xen_domctl_sched_micart_slice * return_slices;
 };
 typedef struct xen_domctl_scheduler_op xen_domctl_scheduler_op_t;
 DEFINE_XEN_GUEST_HANDLE(xen_domctl_scheduler_op_t);
 
+#define MAX_MIC_SLICES 128
 
 /* XEN_DOMCTL_setdomainhandle */
 struct xen_domctl_setdomainhandle {

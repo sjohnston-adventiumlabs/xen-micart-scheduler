@@ -1354,7 +1354,7 @@ static int mic_putinfo(struct domain *d, struct xen_domctl_scheduler_op *op)
 static int mic_getinfo(struct domain *d, struct xen_domctl_scheduler_op *op)//, struct mic_schedule *sched)
 {
     struct xen_domctl_sched_micart *sdom = &op->u.micart;
-    struct xen_domctl_sched_micart_slice *sdom_slice = &op->micart_slice;
+    struct xen_domctl_sched_micart_slice *sdom_slice = op->return_slices;
     int func = sdom->function;
     int newp = (XEN_MIC_OPTION_NEW & sdom->options);
 
@@ -1546,8 +1546,8 @@ struct list_head *p, *tmplh;
             MPRINT(0, "   %d slices have been configured, ", sched->slice_count);
         }
         MPRINT(0, "spanning %ld\n", sched->allocated);	
-	micart_slice->allocated = (uint64_t)sched->allocated;
-	MPRINT(0, "\ntesting %ld\n\n", micart_slice->allocated);
+	micart_slice[0].allocated = (uint64_t)sched->allocated;
+	//MPRINT(0, "\ntesting %ld\n\n", micart_slice->allocated);
 
 	/*#define list_for_each_safe(pos, n, head)			\
 	    for (pos = (head)->next, n = pos->next; pos != (head);		\
@@ -1562,25 +1562,28 @@ struct list_head *p, *tmplh;
             slice = list_entry(p, struct mic_slice, list);
             vc = slice->vcpu;
             if (vc) {
-                MPRINT(0, "  %2d: Dom%d.vcpu_%d ",i++,
+ 
+                if(i < MAX_MIC_SLICES){
+                    micart_slice[i].slice_id = i;
+                    micart_slice[i].domain_id = (uint32_t)vc->domain->domain_id;
+                    micart_slice[i].vcpu_id = (uint32_t)vc->vcpu_id;
+                    micart_slice[i].phase = (uint64_t)slice->phase;
+	            micart_slice[i].dur = (uint64_t)slice->dur;
+                }
+               MPRINT(0, "  %2d: Dom%d.vcpu_%d ",i++,
                        vc->domain->domain_id, vc->vcpu_id);
-		micart_slice->slice_id = i;
-		micart_slice->domain_id = (uint32_t)vc->domain->domain_id;
-		MPRINT(0, "\ntesting domain_id %d really %d\n\n", micart_slice->domain_id, vc->domain->domain_id);
-		micart_slice->vcpu_id = (uint32_t)vc->vcpu_id;
-		MPRINT(0, "\ntesting vcpu_id %d really %d\n\n", micart_slice->vcpu_id, vc->vcpu_id);
-		micart_slice->phase = (uint64_t)slice->phase;
-		MPRINT(0, "testing phase %ld really %ld\n\n", micart_slice->phase, slice->phase);
-		micart_slice->dur = (uint64_t)slice->dur;
-                MPRINT(0, "testing duration %ld really %ld\n\n", micart_slice->dur, slice->dur);
             } else {
                 MPRINT(0, "  %2d: (missing vcpu)\n",i++);
             }
-	}//list_for_each_safe
+            
 
-	// Copy list information for next iteration
-	//micart_slice->p = p;
-	//micart_slice->tmplh = tmplh;
+	    if (micart_slice[i].flag == 1) {
+		MPRINT(0, "\n\nFirst time getting schedule\n\n");
+	    }
+
+
+	}//list_for_each_safe
+	sdom->num_slices = i; //Number of returned slices.
     }
 
     /* dump slacktime vcpus */
@@ -1603,6 +1606,7 @@ struct list_head *p, *tmplh;
             }
         }
     }
+    
     printk("  \n");
 
     return(0);

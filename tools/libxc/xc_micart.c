@@ -21,8 +21,6 @@ xc_sched_micart_domain_set(
 
 //TODO - SJJ
     FILE * pFile;
-    uint32_t retval;
-    //
 
     domctl.cmd = XEN_DOMCTL_scheduler_op;
     domctl.domain = (domid_t) domid;
@@ -42,8 +40,9 @@ xc_sched_micart_domain_set(
 	fprintf (pFile, "sdom.function == %d\n", sdom->function);
 	fprintf (pFile, "sdom.vcpu == %d\n", sdom->vcpu);
 	fprintf (pFile, "sdom.pcpu == %d\n", sdom->pcpu);
-	fprintf (pFile, "sdom.period == %d\n", sdom->period);
-	fprintf (pFile, "sdom.helper == %d\n", sdom->helper);
+	fprintf (pFile, "sdom.period == %ld\n", sdom->period);
+	fprintf (pFile, "sdom.helper == %ld\n", sdom->helper);
+	fprintf (pFile, "sdom.phase == %ld\n", sdom->phase);
 	fclose (pFile);
     }
     //
@@ -72,6 +71,7 @@ xc_sched_micart_domain_get(
     domctl.u.scheduler_op.sched_id = XEN_SCHEDULER_MICART;
     domctl.u.scheduler_op.cmd = XEN_DOMCTL_SCHEDOP_getinfo;
     domctl.u.scheduler_op.u.micart = *sdom;
+    domctl.u.scheduler_op.return_slices = sdom_slice;
 
     //TODO
     
@@ -86,7 +86,7 @@ xc_sched_micart_domain_get(
 	fprintf (pFile, "domctl.u.scheduler_op.cmd == %d\n", XEN_DOMCTL_SCHEDOP_getinfo);
 	fprintf (pFile, "sdom.vcpu == %d\n", sdom->vcpu);
 	fprintf (pFile, "sdom.pcpu == %d\n", sdom->pcpu);
-	fprintf (pFile, "sdom.period == %d\n", sdom->period);
+	fprintf (pFile, "sdom.period == %ld\n", sdom->period);
 	fprintf (pFile, "sdom.options == %d\n", sdom->options);
 	fprintf (pFile, "sdom.helper == %d\n", sdom->helper);
 	//fprintf (pFile, "sched.slice_count == %d\n", sched->slice_count);
@@ -96,8 +96,8 @@ xc_sched_micart_domain_get(
 
     err = do_domctl(xc_handle, &domctl);
     if ( 0 == err ) {
-        *sdom = domctl.u.scheduler_op.u.micart;
-	*sdom_slice = domctl.u.scheduler_op.micart_slice;
+           *sdom = domctl.u.scheduler_op.u.micart;
+	//*sdom_slice = domctl.u.scheduler_op.micart_slice;
 
     //TODO
     pFile = fopen ("/home/sjohnston/DEBUG.txt","w");
@@ -108,8 +108,8 @@ xc_sched_micart_domain_get(
 	fprintf (pFile, "sdom_slice.slice_id == %d\n", sdom_slice->slice_id);
 	fprintf (pFile, "sdom_slice.domain_id == %d\n", sdom_slice->domain_id);
 	fprintf (pFile, "sdom_slice.vcpu_id == %d\n", sdom_slice->vcpu_id);
-	fprintf (pFile, "sdom_slice.phase == %d\n", sdom_slice->phase);
-	fprintf (pFile, "sdom_slice.dur == %d\n", sdom_slice->dur);
+	fprintf (pFile, "sdom_slice.phase == %ld\n", sdom_slice->phase);
+	fprintf (pFile, "sdom_slice.dur == %ld\n", sdom_slice->dur);
 	fprintf (pFile, "sdom_slice.flag == %d\n", sdom_slice->flag);
 
 
